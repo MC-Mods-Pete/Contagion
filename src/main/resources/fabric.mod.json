@@ -1,0 +1,37 @@
+{
+	"schemaVersion": 1,
+	"id": "contagion",
+	"version": "${version}",
+	"name": "Contagion",
+	"description": "This Mod adds the functionality that Zombies are able to give you a deadly infection.",
+	"authors": [
+		"Me!"
+	],
+	"contact": {
+		"homepage": "",
+		"sources": ""
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/contagion/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"net.petemc.contagion.Contagion"
+		],
+		"fabric-datagen": [
+			"net.petemc.contagion.ContagionDataGenerator"
+		]
+	},
+	"mixins": [
+		"contagion.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.15.10",
+		"minecraft": "~1.20.4",
+		"java": ">=17",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}

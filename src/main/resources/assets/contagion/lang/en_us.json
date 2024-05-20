@@ -1,0 +1,22 @@
+{
+  "item.contagion.cure": "Cure",
+  "itemgroup.contagion": "Contagion",
+
+  "item.contagion.contagious_flesh": "Contagious Zombie Flesh",
+  "item.contagion.heat_treated_flesh": "Heat Treated Zombie Flesh",
+  "item.contagion.gold_streaked_flesh": "Gold Streaked Zombie Flesh",
+
+  "effect.contagion.infection": "Infection",
+  "effect.contagion.resistance": "Resistance",
+  "effect.contagion.reset_infection": "Reset Infection",
+  "effect.contagion.infected_msg": "You have been infected...",
+  "effect.contagion.reset_infection_msg": "You bought yourself more time...",
+  "effect.contagion.cured_msg": "The infection has been cured",
+  "effect.contagion.infection_resistance_msg": "New infection prevented",
+
+  "item.minecraft.potion.effect.cure_potion": "Cure Potion",
+  "item.minecraft.splash_potion.effect.cure_potion": "Splash Cure Potion",
+  "item.minecraft.lingering_potion.effect.cure_potion": "Lingering Cure Potion",
+
+  "death.attack.infection": "%1$s died from the Infection"
+}

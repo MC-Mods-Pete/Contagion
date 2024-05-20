@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minecraft:gold_ingot"
+    },
+    "X": {
+      "item": "contagion:heat_treated_flesh"
+    }
+  },
+  "pattern": [
+    "# #",
+    "#X#",
+    "# #"
+  ],
+  "result": {
+    "item": "contagion:gold_streaked_flesh"
+  }
+}
