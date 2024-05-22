@@ -5,18 +5,21 @@
 	"name": "Contagion",
 	"description": "This Mod adds the functionality that Zombies are able to give you a deadly infection.",
 	"authors": [
-		"Me!"
+		"Pete MC Mods, mcmods.pete@gmail.com"
 	],
 	"contact": {
-		"homepage": "",
-		"sources": ""
+		"homepage": "https://github.com/MC-Mods-Pete/Contagion",
+		"sources": "https://github.com/MC-Mods-Pete/Contagion"
 	},
-	"license": "CC0-1.0",
+	"license": "MIT",
 	"icon": "assets/contagion/icon.png",
 	"environment": "*",
 	"entrypoints": {
 		"main": [
 			"net.petemc.contagion.Contagion"
+		],
+		"client": [
+			"net.petemc.contagion.ContagionClient"
 		],
 		"fabric-datagen": [
 			"net.petemc.contagion.ContagionDataGenerator"
