@@ -15,13 +15,15 @@ public class ContagionInfectionEffect extends StatusEffect {
         super(statusEffectCategory, color);
     }
 
+    private final long defaultCooldown = 60;
+
     private long ticks = (long) ContagionConfigs.DURATION_INFECTION_TOTAL * 20;
-    private long coolDown = 60 * 20;
+    private long coolDown = defaultCooldown * 20;
 
     @Override
     public void onApplied(LivingEntity pLivingEntity, int pAmplifier) {
         ticks = (long) ContagionConfigs.DURATION_INFECTION_TOTAL * 20;
-        coolDown = 60 * 20;
+        coolDown = defaultCooldown * 20;
     }
 
     @Override
@@ -51,7 +53,7 @@ public class ContagionInfectionEffect extends StatusEffect {
                                     pLivingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, (ContagionConfigs.DURATION_INFECTION_SYMPTOMS * 20), 0));
                                     break;
                             }
-                            this.coolDown = (ContagionConfigs.DURATION_INFECTION_SYMPTOMS + 60) * 20L;
+                            this.coolDown = (ContagionConfigs.DURATION_INFECTION_SYMPTOMS + defaultCooldown) * 20L;
                         }
                     }
                 } else if (this.ticks == (ContagionConfigs.DURATION_INFECTION_SYMPTOMS * 20L / 2)) {
