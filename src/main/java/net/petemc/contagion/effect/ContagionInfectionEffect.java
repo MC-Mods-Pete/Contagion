@@ -15,14 +15,11 @@ public class ContagionInfectionEffect extends StatusEffect {
         super(statusEffectCategory, color);
     }
 
-    private long ticks = (long) ContagionConfigs.DURATION_INFECTION_TOTAL * 20;
-    private long coolDown = 60 * 20;
+    private final long defaultCooldown = 60;
 
-    @Override
-    public void onApplied(LivingEntity pLivingEntity, int pAmplifier) {
-        ticks = (long) ContagionConfigs.DURATION_INFECTION_TOTAL * 20;
-        coolDown = 60 * 20;
-    }
+    private long ticks = (long) ContagionConfigs.DURATION_INFECTION_TOTAL * 20;
+    private long coolDown = defaultCooldown * 20;
+    public static boolean resetInfection = false;
 
     @Override
     public void applyUpdateEffect(LivingEntity pLivingEntity, int pAmplifier) {
@@ -30,6 +27,11 @@ public class ContagionInfectionEffect extends StatusEffect {
             --this.ticks;
             if (this.coolDown != 0) {
                 --this.coolDown;
+            }
+            if (resetInfection) {
+                this.ticks = (long) ContagionConfigs.DURATION_INFECTION_TOTAL * 20;
+                this.coolDown = defaultCooldown * 20;
+                resetInfection = false;
             }
             if (ContagionConfigs.RANDOM_SYMPTOMS) {
                 if ((coolDown == 0) && (this.ticks > (ContagionConfigs.DURATION_INFECTION_SYMPTOMS * 20L))) {
@@ -61,6 +63,8 @@ public class ContagionInfectionEffect extends StatusEffect {
 
             if (this.ticks == 1) {
                 pLivingEntity.damage(ContagionDamageTypes.of(pLivingEntity.getWorld(), ContagionDamageTypes.INFECTION), 500.0f);
+                ticks = (long) ContagionConfigs.DURATION_INFECTION_TOTAL * 20;
+                coolDown = defaultCooldown * 20;
             }
         }
 
