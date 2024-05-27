@@ -27,7 +27,7 @@ public class ContagionInfectionEffect extends StatusEffect {
     }
 
     @Override
-    public void applyUpdateEffect(LivingEntity pLivingEntity, int pAmplifier) {
+    public boolean applyUpdateEffect(LivingEntity pLivingEntity, int pAmplifier) {
         if (!pLivingEntity.getEntityWorld().isClient()) {
             --this.ticks;
             if (this.coolDown != 0) {
@@ -66,7 +66,7 @@ public class ContagionInfectionEffect extends StatusEffect {
             }
         }
 
-        super.applyUpdateEffect(pLivingEntity, pAmplifier);
+        return super.applyUpdateEffect(pLivingEntity, pAmplifier);
     }
 
     @Override

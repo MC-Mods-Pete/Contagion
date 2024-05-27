@@ -24,8 +24,8 @@ public class ContagionResetInfectionEffect extends StatusEffect {
     }
 
     @Override
-    public void applyUpdateEffect(LivingEntity pLivingEntity, int pAmplifier) {
-        super.applyUpdateEffect(pLivingEntity, pAmplifier);
+    public boolean applyUpdateEffect(LivingEntity pLivingEntity, int pAmplifier) {
+        return super.applyUpdateEffect(pLivingEntity, pAmplifier);
     }
 
     @Override

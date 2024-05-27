@@ -1,7 +1,7 @@
 package net.petemc.contagion.infection;
 
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
-import net.minecraft.entity.EntityGroup;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.text.Text;
@@ -33,7 +33,7 @@ public class ContagionZombieAttackEffects {
         } else if (pAttacker != null) {
             int randomValue = MathHelper.nextInt(Random.create(), 1, 100);
             int effectiveInfectChance = getEffectiveInfectChance(pPlayer);
-            if (pAttacker.getGroup() == EntityGroup.UNDEAD && (randomValue > effectiveInfectChance)) {
+            if (pAttacker.getType() == EntityType.ZOMBIE && (randomValue > effectiveInfectChance)) {
 
                 // Do nothing if Player is already infected
                 if (pPlayer.hasStatusEffect(ContagionEffects.INFECTION)) {
