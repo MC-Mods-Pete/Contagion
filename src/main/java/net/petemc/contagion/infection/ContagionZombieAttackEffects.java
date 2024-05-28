@@ -41,7 +41,7 @@ public class ContagionZombieAttackEffects {
                 }
 
                 // Do nothing if the Player has the Resistance effect
-                if (pPlayer.hasStatusEffect(ContagionEffects.RESISTANCE)) {
+                if (pPlayer.hasStatusEffect(ContagionEffects.IMMUNITY)) {
                     pPlayer.sendMessage(Text.translatable("effect.contagion.infection_resistance_msg"));
                     return;
                 }
