@@ -10,7 +10,7 @@ import net.minecraft.util.Identifier;
 public class ContagionEffects {
     public static StatusEffect INFECTION;
     public static StatusEffect RESET_INFECTION;
-    public static StatusEffect RESISTANCE;
+    public static StatusEffect IMMUNITY;
 
     public static StatusEffect registerInfectionStatusEffect(String name) {
         return Registry.register(Registries.STATUS_EFFECT, new Identifier(Contagion.MOD_ID, name),
@@ -24,12 +24,12 @@ public class ContagionEffects {
 
     public static StatusEffect registerResistanceStatusEffect(String name) {
         return Registry.register(Registries.STATUS_EFFECT, new Identifier(Contagion.MOD_ID, name),
-                new ContagionResistanceEffect(StatusEffectCategory.BENEFICIAL, 16755200));
+                new ContagionImmunityEffect(StatusEffectCategory.BENEFICIAL, 0x651b74));
     }
 
     public static void registerEffects() {
         INFECTION = registerInfectionStatusEffect("infection");
         RESET_INFECTION = registerResetInfectionStatusEffect("reset_infection");
-        RESISTANCE = registerResistanceStatusEffect("resistance");
+        IMMUNITY = registerResistanceStatusEffect("immunity");
     }
 }

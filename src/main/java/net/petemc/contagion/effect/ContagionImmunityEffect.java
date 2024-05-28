@@ -5,8 +5,8 @@ import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.text.Text;
 
-public class ContagionResistanceEffect extends StatusEffect {
-    public ContagionResistanceEffect(StatusEffectCategory statusEffectCategory, int color) {
+public class ContagionImmunityEffect extends StatusEffect {
+    public ContagionImmunityEffect(StatusEffectCategory statusEffectCategory, int color) {
         super(statusEffectCategory, color);
     }
 
