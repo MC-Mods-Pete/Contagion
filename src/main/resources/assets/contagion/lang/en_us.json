@@ -7,7 +7,7 @@
   "item.contagion.gold_streaked_flesh": "Gold Streaked Zombie Flesh",
 
   "effect.contagion.infection": "Infection",
-  "effect.contagion.resistance": "Resistance",
+  "effect.contagion.immunity": "Immunity",
   "effect.contagion.reset_infection": "Reset Infection",
   "effect.contagion.infected_msg": "You have been infected...",
   "effect.contagion.reset_infection_msg": "You bought yourself more time...",

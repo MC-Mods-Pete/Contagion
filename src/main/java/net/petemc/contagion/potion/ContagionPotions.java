@@ -21,7 +21,7 @@ public class ContagionPotions {
     }
 
     public static void registerPotions() {
-        CURE_POTION = registerPotion("cure_potion", new StatusEffectInstance(ContagionEffects.RESISTANCE, ContagionConfigs.DURATION_RESISTANCE*20, 0));
+        CURE_POTION = registerPotion("cure_potion", new StatusEffectInstance(ContagionEffects.IMMUNITY, ContagionConfigs.DURATION_IMMUNITY *20, 0));
         registerPotionRecipes();
     }
 
