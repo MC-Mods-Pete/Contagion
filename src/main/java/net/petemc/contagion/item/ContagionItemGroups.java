@@ -12,7 +12,7 @@ import net.petemc.contagion.potion.ContagionPotions;
 
 public class ContagionItemGroups {
     public static final ItemGroup CONTAGION_GROUP = Registry.register(Registries.ITEM_GROUP,
-            new Identifier(Contagion.MOD_ID, "contagion"),
+            Identifier.of(Contagion.MOD_ID, "contagion"),
             FabricItemGroup.builder().displayName(Text.translatable("itemgroup.contagion"))
                     .icon(() -> new ItemStack(ContagionItems.CONTAGIOUS_FLESH)).entries((displayContext, entries) -> {
                         entries.add(ContagionItems.CONTAGIOUS_FLESH);

@@ -20,6 +20,6 @@ public class ContagionEffects {
     }
 
     private static RegistryEntry<StatusEffect> registerContagionEffect(String name, StatusEffect statusEffect) {
-        return Registry.registerReference(Registries.STATUS_EFFECT, new Identifier(Contagion.MOD_ID, name), statusEffect);
+        return Registry.registerReference(Registries.STATUS_EFFECT, Identifier.of(Contagion.MOD_ID, name), statusEffect);
     }
 }
