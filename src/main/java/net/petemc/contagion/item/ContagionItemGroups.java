@@ -21,6 +21,9 @@ public class ContagionItemGroups {
                         entries.add(PotionContentsComponent.createStack(Items.POTION, ContagionPotions.CURE_POTION));
                         entries.add(PotionContentsComponent.createStack(Items.LINGERING_POTION, ContagionPotions.CURE_POTION));
                         entries.add(PotionContentsComponent.createStack(Items.SPLASH_POTION, ContagionPotions.CURE_POTION));
+                        entries.add(PotionContentsComponent.createStack(Items.POTION, ContagionPotions.LONG_CURE_POTION));
+                        entries.add(PotionContentsComponent.createStack(Items.LINGERING_POTION, ContagionPotions.LONG_CURE_POTION));
+                        entries.add(PotionContentsComponent.createStack(Items.SPLASH_POTION, ContagionPotions.LONG_CURE_POTION));
                     }).build());
 
     public static void registerItemGroups() {
