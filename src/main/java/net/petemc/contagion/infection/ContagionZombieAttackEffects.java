@@ -33,7 +33,8 @@ public class ContagionZombieAttackEffects {
         } else if (pAttacker != null) {
             int randomValue = MathHelper.nextInt(Random.create(), 1, 100);
             int effectiveInfectChance = getEffectiveInfectChance(pPlayer);
-            if (pAttacker.getType() == EntityType.ZOMBIE && (randomValue > effectiveInfectChance)) {
+            if (((pAttacker.getType() == EntityType.ZOMBIE) || (pAttacker.getType() == EntityType.HUSK))
+                    && (randomValue > effectiveInfectChance)) {
 
                 // Do nothing if Player is already infected
                 if (pPlayer.hasStatusEffect(ContagionEffects.INFECTION)) {
