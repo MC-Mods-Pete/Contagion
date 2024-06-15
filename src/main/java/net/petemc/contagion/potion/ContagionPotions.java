@@ -1,6 +1,7 @@
 package net.petemc.contagion.potion;
 
 import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.item.Items;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.Potions;
 import net.minecraft.registry.Registries;
@@ -15,7 +16,9 @@ import net.petemc.contagion.mixin.BrewingRecipeRegistryMixin;
 
 public class ContagionPotions {
     public static final Potion CURE_POTION = registerPotion("cure_potion",
-            new Potion(new StatusEffectInstance(ContagionEffects.IMMUNITY, ContagionConfigs.DURATION_IMMUNITY *20, 0)));
+            new Potion(new StatusEffectInstance(ContagionEffects.IMMUNITY, ContagionConfigs.DURATION_IMMUNITY * 20, 0)));
+    public static final Potion LONG_CURE_POTION = registerPotion("long_cure_potion",
+            new Potion(new StatusEffectInstance(ContagionEffects.IMMUNITY, ContagionConfigs.DURATION_IMMUNITY * 3 * 20, 0)));
 
     private static Potion registerPotion(String name, Potion potion) {
         return Registry.register(Registries.POTION, new Identifier(Contagion.MOD_ID, name), potion);
@@ -29,5 +32,8 @@ public class ContagionPotions {
     private static void registerPotionRecipes() {
         BrewingRecipeRegistryMixin.invokeRegisterPotionRecipe(Potions.AWKWARD, ContagionItems.GOLD_STREAKED_FLESH,
                 ContagionPotions.CURE_POTION);
+        BrewingRecipeRegistryMixin.invokeRegisterPotionRecipe(ContagionPotions.CURE_POTION, Items.REDSTONE,
+                ContagionPotions.LONG_CURE_POTION);
+
     }
 }

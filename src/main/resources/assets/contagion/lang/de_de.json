@@ -1,0 +1,26 @@
+{
+  "item.contagion.cure": "Heilmittel",
+  "itemgroup.contagion": "Contagion",
+
+  "item.contagion.contagious_flesh": "Infektöses Zombiefleisch",
+  "item.contagion.heat_treated_flesh": "Erhitztes Zombiefleisch",
+  "item.contagion.gold_streaked_flesh": "Golddurchzogenes Zombiefleisch",
+
+  "effect.contagion.infection": "Infektion",
+  "effect.contagion.immunity": "Immunität",
+  "effect.contagion.reset_infection": "Infection Zurücksetzen",
+  "effect.contagion.infected_msg": "Du wurdest infiziert...",
+  "effect.contagion.reset_infection_msg": "Du hast dir mehr Zeit verschafft...",
+  "effect.contagion.cured_msg": "Die Infektion wurde geheilt",
+  "effect.contagion.infection_resistance_msg": "Neue Infektion verhindert",
+
+  "item.minecraft.potion.effect.cure_potion": "Trank des Heilmittels",
+  "item.minecraft.splash_potion.effect.cure_potion": "Wurftrank des Heilmittels",
+  "item.minecraft.lingering_potion.effect.cure_potion": "Verweiltrank des Heilmittels",
+
+  "item.minecraft.potion.effect.long_cure_potion": "Trank des Heilmittels II",
+  "item.minecraft.splash_potion.effect.long_cure_potion": "Wurftrank des Heilmittels II",
+  "item.minecraft.lingering_potion.effect.long_cure_potion": "Verweiltrank des Heilmittels II",
+
+  "death.attack.infection": "%1$s ist an der Infektion gestorben"
+}
