@@ -23,6 +23,9 @@ public class ContagionItemGroups {
                         entries.add(PotionUtil.setPotion(new ItemStack(Items.POTION), ContagionPotions.CURE_POTION));
                         entries.add(PotionUtil.setPotion(new ItemStack(Items.LINGERING_POTION), ContagionPotions.CURE_POTION));
                         entries.add(PotionUtil.setPotion(new ItemStack(Items.SPLASH_POTION), ContagionPotions.CURE_POTION));
+                        entries.add(PotionUtil.setPotion(new ItemStack(Items.POTION), ContagionPotions.LONG_CURE_POTION));
+                        entries.add(PotionUtil.setPotion(new ItemStack(Items.LINGERING_POTION), ContagionPotions.LONG_CURE_POTION));
+                        entries.add(PotionUtil.setPotion(new ItemStack(Items.SPLASH_POTION), ContagionPotions.LONG_CURE_POTION));
                     }).build());
 
     public static void registerItemGroups() {
