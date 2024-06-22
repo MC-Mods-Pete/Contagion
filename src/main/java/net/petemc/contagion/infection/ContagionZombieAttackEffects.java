@@ -19,7 +19,7 @@ public class ContagionZombieAttackEffects {
     public ContagionZombieAttackEffects() {
         ServerLivingEntityEvents.ALLOW_DAMAGE.register((entity, damageSource, amount) -> {
             pPlayer = entity;
-            pAttacker = (LivingEntity) damageSource.getAttacker();
+            pAttacker = damageSource.getAttacker() instanceof LivingEntity ? ((LivingEntity) damageSource.getAttacker()) : null;
             execute();
             return true;
         });
@@ -30,7 +30,9 @@ public class ContagionZombieAttackEffects {
             Contagion.LOGGER.warn("Failed to load Player entity!");
         } else if (pPlayer.getWorld() == null) {
             Contagion.LOGGER.warn("Failed to load World!");
-        } else if (pAttacker != null) {
+        } else if (pAttacker == null) {
+            Contagion.LOGGER.warn("Failed to load valid living attacker entity!");
+        } else  {
             int randomValue = MathHelper.nextInt(Random.create(), 1, 100);
             int effectiveInfectChance = getEffectiveInfectChance(pPlayer);
             if (((pAttacker.getType() == EntityType.ZOMBIE) || (pAttacker.getType() == EntityType.HUSK) || (pAttacker.getType() == EntityType.DROWNED))
