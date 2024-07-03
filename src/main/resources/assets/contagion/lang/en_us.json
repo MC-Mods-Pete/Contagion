@@ -22,5 +22,27 @@
   "item.minecraft.splash_potion.effect.long_cure_potion": "Splash Cure Potion II",
   "item.minecraft.lingering_potion.effect.long_cure_potion": "Lingering Cure Potion II",
 
-  "death.attack.infection": "%1$s died from the Infection"
+  "death.attack.infection": "%1$s died from the Infection",
+
+  "text.autoconfig.contagion.title": "Contagion",
+  "text.autoconfig.contagion.option.infectionDuration": "Infection duration (in seconds)",
+  "text.autoconfig.contagion.option.infectionDuration.@Tooltip": "Time in seconds until the infection kills the player | default: 600",
+  "text.autoconfig.contagion.option.baseInfectionChance": "Base infection chance (in %)",
+  "text.autoconfig.contagion.option.baseInfectionChance.@Tooltip": "Base chance in % an attack will infect the player | default: 80 | range: 0 - 100",
+  "text.autoconfig.contagion.option.minimumInfectionChance": "Minimum infection chance (in %)",
+  "text.autoconfig.contagion.option.minimumInfectionChance.@Tooltip": "The infection chance can not be lower than this value (even with armor) | default: 10 | range: 0 - 100",
+  "text.autoconfig.contagion.option.armorLowersInfectionChance": "Wearing armor lowers the infection chance",
+  "text.autoconfig.contagion.option.armorLowersInfectionChance.@Tooltip": "If enabled, wearing armor will lower the infection chance (full Netherite will lower the chance by 60%) | default: enabled",
+  "text.autoconfig.contagion.option.enableRandomSymptoms": "Random symptoms can occur when infected",
+  "text.autoconfig.contagion.option.enableRandomSymptoms.@Tooltip": "If enabled, random symptoms can occur when infected | default: enabled",
+  "text.autoconfig.contagion.option.randomSymptomsDuration": "Random symptom duration (in seconds)",
+  "text.autoconfig.contagion.option.randomSymptomsDuration.@Tooltip": "Time in seconds a random symptom will last | default: 30",
+  "text.autoconfig.contagion.option.randomSymptomsChance": "Random symptom chance (in %, checked every second)",
+  "text.autoconfig.contagion.option.randomSymptomsChance.@Tooltip": "Chance in % a random symptom can occur when infected | default: 3 | range: 0 - 100",
+  "text.autoconfig.contagion.option.immunityDuration": "Immunity duration (in seconds)",
+  "text.autoconfig.contagion.option.immunityDuration.@Tooltip": "Time in seconds after drinking a cure the player is immune to new infections | default: 120",
+  "text.autoconfig.contagion.option.milkCuresInfection": "The infection can be cured by drinking milk",
+  "text.autoconfig.contagion.option.milkCuresInfection.@Tooltip": "If enabled, drinking milk will cure the player if infected | default: false",
+  "text.autoconfig.contagion.option.totemPreventsDyingFromInfection": "Holding a totem will prevent death from infection",
+  "text.autoconfig.contagion.option.totemPreventsDyingFromInfection.@Tooltip": "If true, holding a totem will prevent the player from dying when the infection timer runs out | default: true"
 }

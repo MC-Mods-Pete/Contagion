@@ -8,7 +8,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.random.Random;
 import net.petemc.contagion.Contagion;
-import net.petemc.contagion.config.ContagionConfigs;
+import net.petemc.contagion.config.ContagionConfig;
 import net.petemc.contagion.effect.ContagionEffects;
 
 public class ContagionZombieAttackEffects {
@@ -51,7 +51,7 @@ public class ContagionZombieAttackEffects {
 
                 // Give the Player the Infection effect
                 if (!pPlayer.getWorld().isClient()) {
-                    pPlayer.addStatusEffect(new StatusEffectInstance(ContagionEffects.INFECTION, ContagionConfigs.DURATION_INFECTION_TOTAL * 20, 0));
+                    pPlayer.addStatusEffect(new StatusEffectInstance(ContagionEffects.INFECTION, ContagionConfig.INSTANCE.infectionDuration * 20, 0));
                     pPlayer.sendMessage(Text.translatable("effect.contagion.infected_msg"));
                 }
             }
@@ -60,16 +60,16 @@ public class ContagionZombieAttackEffects {
 
     private static int getEffectiveInfectChance(LivingEntity _entity) {
         int effectInfect;
-        if (ContagionConfigs.BASE_INFECTION_CHANCE > 100) {
+        if (ContagionConfig.INSTANCE.baseInfectionChance > 100) {
             effectInfect = 0;
         } else {
-            effectInfect = 100 - ContagionConfigs.BASE_INFECTION_CHANCE;
+            effectInfect = 100 - ContagionConfig.INSTANCE.baseInfectionChance;
         }
-        if (ContagionConfigs.ARMOR_PROTECTS) {
+        if (ContagionConfig.INSTANCE.armorLowersInfectionChance) {
             effectInfect = effectInfect + (_entity.getArmor() * 3);
         }
-        if (effectInfect > (100 - ContagionConfigs.MIN_INFECTION_CHANCE)) {
-            effectInfect = 100 - ContagionConfigs.MIN_INFECTION_CHANCE;
+        if (effectInfect > (100 - ContagionConfig.INSTANCE.minimumInfectionChance)) {
+            effectInfect = 100 - ContagionConfig.INSTANCE.minimumInfectionChance;
         }
         return effectInfect;
     }

@@ -18,7 +18,6 @@ public class ContagionImmunityEffect extends StatusEffect {
                 pLivingEntity.sendMessage(Text.translatable("effect.contagion.cured_msg"));
             }
         }
-
         return super.applyUpdateEffect(pLivingEntity, pAmplifier);
     }
 
