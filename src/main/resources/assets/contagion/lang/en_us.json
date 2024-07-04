@@ -12,7 +12,7 @@
   "effect.contagion.infected_msg": "You have been infected...",
   "effect.contagion.reset_infection_msg": "You bought yourself more time...",
   "effect.contagion.cured_msg": "The infection has been cured",
-  "effect.contagion.infection_resistance_msg": "New infection prevented",
+  "effect.contagion.infection_immunity_msg": "New infection prevented",
 
   "item.minecraft.potion.effect.cure_potion": "Cure Potion",
   "item.minecraft.splash_potion.effect.cure_potion": "Splash Cure Potion",
@@ -37,7 +37,7 @@
   "text.autoconfig.contagion.option.enableRandomSymptoms.@Tooltip": "If enabled, random symptoms can occur when infected | default: enabled",
   "text.autoconfig.contagion.option.randomSymptomsDuration": "Random symptom duration (in seconds)",
   "text.autoconfig.contagion.option.randomSymptomsDuration.@Tooltip": "Time in seconds a random symptom will last | default: 30",
-  "text.autoconfig.contagion.option.randomSymptomsChance": "Random symptom chance (in %, checked every second)",
+  "text.autoconfig.contagion.option.randomSymptomsChance": "Random symptom chance (in % | checked every second)",
   "text.autoconfig.contagion.option.randomSymptomsChance.@Tooltip": "Chance in % a random symptom can occur when infected | default: 3 | range: 0 - 100",
   "text.autoconfig.contagion.option.immunityDuration": "Immunity duration (in seconds)",
   "text.autoconfig.contagion.option.immunityDuration.@Tooltip": "Time in seconds after drinking a cure the player is immune to new infections | default: 120",

@@ -31,11 +31,12 @@ public class ContagionZombieAttackEffects {
         } else if (pPlayer.getWorld() == null) {
             Contagion.LOGGER.warn("Failed to load World!");
         } else if (pAttacker == null) {
-            Contagion.LOGGER.warn("Failed to load valid living attacker entity!");
+            Contagion.LOGGER.info("Attacker was not a living entity");
         } else  {
             int randomValue = MathHelper.nextInt(Random.create(), 1, 100);
             int effectiveInfectChance = getEffectiveInfectChance(pPlayer);
-            if (((pAttacker.getType() == EntityType.ZOMBIE) || (pAttacker.getType() == EntityType.HUSK) || (pAttacker.getType() == EntityType.DROWNED))
+            if (((pAttacker.getType() == EntityType.ZOMBIE)  || (pAttacker.getType() == EntityType.HUSK) || (pAttacker.getType() == EntityType.ZOMBIFIED_PIGLIN) ||
+                 (pAttacker.getType() == EntityType.DROWNED) || (pAttacker.getType() == EntityType.ZOMBIE_VILLAGER))
                     && (randomValue > effectiveInfectChance)) {
 
                 // Do nothing if Player is already infected
@@ -43,9 +44,9 @@ public class ContagionZombieAttackEffects {
                     return;
                 }
 
-                // Do nothing if the Player has the Resistance effect
+                // Do nothing if the Player is currently immune
                 if (pPlayer.hasStatusEffect(ContagionEffects.IMMUNITY)) {
-                    pPlayer.sendMessage(Text.translatable("effect.contagion.infection_resistance_msg"));
+                    pPlayer.sendMessage(Text.translatable("effect.contagion.infection_immunity_msg"));
                     return;
                 }
 
