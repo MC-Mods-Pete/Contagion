@@ -3,6 +3,7 @@
 	"package": "net.petemc.contagion.mixin",
 	"compatibilityLevel": "JAVA_17",
 	"mixins": [
+		"MilkBucketMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

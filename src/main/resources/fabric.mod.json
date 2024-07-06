@@ -8,8 +8,9 @@
 		"Pete MC Mods, mcmods.pete@gmail.com"
 	],
 	"contact": {
-		"homepage": "https://github.com/MC-Mods-Pete/Contagion",
-		"sources": "https://github.com/MC-Mods-Pete/Contagion"
+		"homepage": "https://modrinth.com/mod/contagion",
+		"sources": "https://github.com/MC-Mods-Pete/Contagion",
+		"issues": "https://github.com/MC-Mods-Pete/Contagion/issues"
 	},
 	"license": "MIT",
 	"icon": "assets/contagion/icon.png",
@@ -23,6 +24,9 @@
 		],
 		"fabric-datagen": [
 			"net.petemc.contagion.ContagionDataGenerator"
+		],
+		"modmenu": [
+			"net.petemc.contagion.util.ModMenuIntegration"
 		]
 	},
 	"mixins": [
@@ -30,11 +34,13 @@
 	],
 	"depends": {
 		"fabricloader": ">=0.15.11",
-		"minecraft": "~1.20.6",
+		"minecraft": "=1.20.6",
 		"java": ">=21",
-		"fabric-api": "*"
+		"fabric-api": "*",
+		"cloth-config": ">=14.0.126"
 	},
 	"suggests": {
+		"modmenu": ">=10.0.0",
 		"another-mod": "*"
 	}
 }
