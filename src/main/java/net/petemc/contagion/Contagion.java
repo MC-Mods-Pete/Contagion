@@ -2,7 +2,7 @@ package net.petemc.contagion;
 
 import net.fabricmc.api.ModInitializer;
 
-import net.petemc.contagion.config.ContagionConfigs;
+import net.petemc.contagion.config.ContagionConfig;
 import net.petemc.contagion.damage_type.ContagionDamageTypes;
 import net.petemc.contagion.effect.ContagionEffects;
 import net.petemc.contagion.infection.ContagionZombieAttackEffects;
@@ -20,7 +20,7 @@ public class Contagion implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		LOGGER.info("Initializing Contagion Mod");
-		ContagionConfigs.registerConfigs();
+		ContagionConfig.init();
 		ContagionEffects.registerEffects();
 		ContagionItems.registerItems();
 		ContagionItemGroups.registerItemGroups();
