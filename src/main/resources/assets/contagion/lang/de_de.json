@@ -12,7 +12,7 @@
   "effect.contagion.infected_msg": "Du wurdest infiziert...",
   "effect.contagion.reset_infection_msg": "Du hast dir mehr Zeit verschafft...",
   "effect.contagion.cured_msg": "Die Infektion wurde geheilt",
-  "effect.contagion.infection_resistance_msg": "Neue Infektion verhindert",
+  "effect.contagion.infection_immunity_msg": "Neue Infektion verhindert",
 
   "item.minecraft.potion.effect.cure_potion": "Trank des Heilmittels",
   "item.minecraft.splash_potion.effect.cure_potion": "Wurftrank des Heilmittels",
@@ -22,5 +22,27 @@
   "item.minecraft.splash_potion.effect.long_cure_potion": "Wurftrank des Heilmittels II",
   "item.minecraft.lingering_potion.effect.long_cure_potion": "Verweiltrank des Heilmittels II",
 
-  "death.attack.infection": "%1$s ist an der Infektion gestorben"
+  "death.attack.infection": "%1$s ist an der Infektion gestorben",
+
+  "text.autoconfig.contagion.title": "Contagion",
+  "text.autoconfig.contagion.option.infectionDuration": "Infektionsdauer (in Sekunden)",
+  "text.autoconfig.contagion.option.infectionDuration.@Tooltip": "Dauer in Sekunden bis der Spieler an der Infektion stirbt | Default: 600",
+  "text.autoconfig.contagion.option.baseInfectionChance": "Grundinfektionswahrscheinlichkeit (in %)",
+  "text.autoconfig.contagion.option.baseInfectionChance.@Tooltip": "Wahrscheinlichkeit in % das ein Angriff den Spieler infiziert (ohne Abzüge z.B. durch Rüstung) | Default: 80 | Bereich: 0 - 100",
+  "text.autoconfig.contagion.option.minimumInfectionChance": "Minimale Infektionswahrscheinlichkeit (in %)",
+  "text.autoconfig.contagion.option.minimumInfectionChance.@Tooltip": "Die Infektionswahrscheinlichkeit kann nicht kleiner werden als dieser Wert (sogar mit Rüstung) | Default: 10 | Bereich: 0 - 100",
+  "text.autoconfig.contagion.option.armorLowersInfectionChance": "Das Tragen von Rüstung verringert die Infektionswahrscheinlichkeit",
+  "text.autoconfig.contagion.option.armorLowersInfectionChance.@Tooltip": "Wenn aktiviert, verringert das Tragen von Rüstung die Infektionswahrscheinlichkeit (Voll-Netherite bewirkt eine Verringerung um 60%) | Default: aktiviert",
+  "text.autoconfig.contagion.option.enableRandomSymptoms": "Bei einer Infektion können zufällige Symptome auftreten",
+  "text.autoconfig.contagion.option.enableRandomSymptoms.@Tooltip": "Wenn aktiviert, können zufällige Symptome auftreten, wenn der Spieler infiziert ist | Default: aktiviert",
+  "text.autoconfig.contagion.option.randomSymptomsDuration": "Dauer der zufällige Symptome (in Sekunden)",
+  "text.autoconfig.contagion.option.randomSymptomsDuration.@Tooltip": "Dauer in Sekunden, die ein zufälliges Symptom aktiv ist | Default: 30",
+  "text.autoconfig.contagion.option.randomSymptomsChance": "Wahrscheinlichkeit das zufällige Symptome auftreten (in % | wird einmal pro Sekunde geprüft)",
+  "text.autoconfig.contagion.option.randomSymptomsChance.@Tooltip": "Wahrscheinlichkeit in % das zufällige Symptome auftreten, wenn der Spieler infiziert ist | Default: 3 | Bereich: 0 - 100",
+  "text.autoconfig.contagion.option.immunityDuration": "Immunitätsdauer (in Sekunden)",
+  "text.autoconfig.contagion.option.immunityDuration.@Tooltip": "Dauer in Sekunden, die der Spieler immun gegen neue Infektionen ist, nachdem das Heilmittel getrunken wurde | Default: 120",
+  "text.autoconfig.contagion.option.milkCuresInfection": "Eine Infektion kann durch das Trinken von Milch beseitigt werden",
+  "text.autoconfig.contagion.option.milkCuresInfection.@Tooltip": "Wenn aktiviert, können Infektionen durch das Trinken von Milch beseitigt werden | Default: deaktiviert",
+  "text.autoconfig.contagion.option.totemPreventsDyingFromInfection": "Ein Totem in der Hand verhindert das Sterben durch Infektionen",
+  "text.autoconfig.contagion.option.totemPreventsDyingFromInfection.@Tooltip": "Wenn aktiviert, verhindert das Halten eines Totems, das der Spieler am Ende der Infektionsdauer stirbt | Default: aktiviert"
 }
