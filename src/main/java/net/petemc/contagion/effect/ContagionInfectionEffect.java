@@ -1,15 +1,12 @@
 package net.petemc.contagion.effect;
 
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.random.Random;
-import net.petemc.contagion.Contagion;
 import net.petemc.contagion.config.ContagionConfig;
 import net.petemc.contagion.damage_type.ContagionDamageTypes;
 
@@ -31,19 +28,13 @@ public class ContagionInfectionEffect extends StatusEffect {
         ticks = ticksVal;
     }
 
+
     @Override
     public void onApplied(LivingEntity pLivingEntity, int pAmplifier) {
         ticks = (long) ContagionConfig.INSTANCE.infectionDuration * 20;
         coolDown = defaultCooldown * 20;
     }
 
-    @Override
-    public void onEntityRemoval(LivingEntity entity, int amplifier, Entity.RemovalReason reason) {
-        Contagion.LOGGER.info("Removing");
-        if (entity instanceof PlayerEntity) {
-            entity.addStatusEffect(new StatusEffectInstance(ContagionEffects.INFECTION, ContagionConfig.INSTANCE.infectionDuration * 20, 0));
-        }
-    }
 
     @Override
     public boolean applyUpdateEffect(LivingEntity pLivingEntity, int pAmplifier) {
@@ -90,6 +81,7 @@ public class ContagionInfectionEffect extends StatusEffect {
         }
         return super.applyUpdateEffect(pLivingEntity, pAmplifier);
     }
+
 
     @Override
     public boolean canApplyUpdateEffect(int pDuration, int pAmplifier) {
