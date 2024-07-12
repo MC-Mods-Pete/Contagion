@@ -82,4 +82,8 @@ public class ContagionConfig implements ConfigData
     @ConfigEntry.Gui.Tooltip()
     @Comment("If true, holding a totem will not prevent the player from dying when the infection timer runs out | default: true")
     public boolean totemPreventsDyingFromInfection = true;
+
+    @ConfigEntry.Gui.Tooltip()
+    @Comment("If true,  | default: false")
+    public boolean tridentCanGiveInfection = false;
 }
