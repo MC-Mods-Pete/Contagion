@@ -50,7 +50,7 @@ public class ContagionZombieAttackEffects {
                 }
 
                 // if attack was caused by trident, check if infecting by trident is enabled
-                if (pSource.isOf(DamageTypes.TRIDENT) && !ContagionConfig.INSTANCE.tridentCanGiveInfection) {
+                if (pSource.isOf(DamageTypes.TRIDENT)) {
                     return;
                 }
 
