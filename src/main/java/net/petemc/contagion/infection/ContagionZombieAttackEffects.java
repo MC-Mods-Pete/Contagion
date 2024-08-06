@@ -4,6 +4,7 @@ import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.minecraft.entity.EntityGroup;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.damage.DamageTypes;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.MathHelper;
@@ -33,6 +34,9 @@ public class ContagionZombieAttackEffects {
 
 
     public static void execute() {
+        // currently not used, because getting infected is handled via injecting code into the Entity tryAttack methods (mixin)
+        // TODO: remove if no issues arise
+
         if (pPlayer == null) {
             Contagion.LOGGER.warn("Failed to load Player entity!");
         } else if (pPlayer.getWorld() == null) {
@@ -44,6 +48,11 @@ public class ContagionZombieAttackEffects {
 
                 // Attack was blocked and infection prevented
                 if (pAmount > 0.0f && pPlayer.blockedByShield(pSource)) {
+                    return;
+                }
+
+                // if attack was caused by trident, check if infecting by trident is enabled
+                if (pSource.isOf(DamageTypes.TRIDENT)) {
                     return;
                 }
 
