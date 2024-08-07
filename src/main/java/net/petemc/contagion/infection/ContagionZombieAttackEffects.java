@@ -69,7 +69,7 @@ public class ContagionZombieAttackEffects {
 
                 // Give the Player the Infection effect
                 if (!pPlayer.getWorld().isClient()) {
-                    ContagionInfectionEffect.resetValues();
+                    ContagionInfectionEffect.resetValues(pPlayer);
                     pPlayer.addStatusEffect(new StatusEffectInstance(ContagionEffects.INFECTION, ContagionConfig.INSTANCE.infectionDuration * 20, 0));
                     pPlayer.sendMessage(Text.translatable("effect.contagion.infected_msg"));
                 }

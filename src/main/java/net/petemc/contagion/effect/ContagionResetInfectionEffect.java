@@ -19,7 +19,7 @@ public class ContagionResetInfectionEffect extends StatusEffect {
             if (pLivingEntity.hasStatusEffect(ContagionEffects.INFECTION)) {
                 pLivingEntity.sendMessage(Text.translatable("effect.contagion.reset_infection_msg"));
                 pLivingEntity.removeStatusEffect(ContagionEffects.INFECTION);
-                ContagionInfectionEffect.resetValues();
+                ContagionInfectionEffect.resetValues(pLivingEntity);
                 pLivingEntity.addStatusEffect(new StatusEffectInstance(ContagionEffects.INFECTION, ContagionConfig.INSTANCE.infectionDuration * 20, 0));
             }
         }
