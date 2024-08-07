@@ -26,10 +26,10 @@ public class MilkBucketMixin {
         }
         StatusEffect effect = effectInst.getEffectType();
         if (effect instanceof ContagionInfectionEffect infectEffect) {
-            int localTicks = (int) infectEffect.getTicks();
+            int localTicks = (int) infectEffect.getTicks(user);
             retVal = user.clearStatusEffects();
             user.addStatusEffect(effectInst);
-            infectEffect.setTicks(localTicks);
+            infectEffect.setTicks(user, localTicks);
         }
         return retVal;
     }

@@ -25,11 +25,18 @@ public class ContagionInfectionEffect extends StatusEffect {
     public static ConcurrentHashMap<UUID, Long> cooldownByPlayerUUID = new ConcurrentHashMap<>();
 
 
+    public long getTicks(LivingEntity livingEntity) {
+        return ticksByPlayerUUID.get(livingEntity.getUuid());
+    }
+
+    public void setTicks(LivingEntity livingEntity, long ticksVal) {
+        ticksByPlayerUUID.put(livingEntity.getUuid(), ticksVal);
+    }
+
     public static void resetValues(LivingEntity pLivingEntity) {
         ticksByPlayerUUID.put(pLivingEntity.getUuid(), (long) ContagionConfig.INSTANCE.infectionDuration * 20);
         cooldownByPlayerUUID.put(pLivingEntity.getUuid(), defaultCooldown * 20);
     }
-
 
     @Override
     public void applyUpdateEffect(LivingEntity pLivingEntity, int pAmplifier) {
@@ -84,7 +91,6 @@ public class ContagionInfectionEffect extends StatusEffect {
         }
         super.applyUpdateEffect(pLivingEntity, pAmplifier);
     }
-
 
     @Override
     public boolean canApplyUpdateEffect(int duration, int amplifier) {
