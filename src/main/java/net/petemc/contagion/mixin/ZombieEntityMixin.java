@@ -11,6 +11,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.random.Random;
 import net.petemc.contagion.config.ContagionConfig;
 import net.petemc.contagion.effect.ContagionEffects;
+import net.petemc.contagion.effect.ContagionInfectionEffect;
 import net.petemc.contagion.sound.ContagionSounds;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -33,6 +34,7 @@ public class ZombieEntityMixin {
                     } else {
                         if (!pPlayer.getWorld().isClient()) {
                             pPlayer.addStatusEffect(new StatusEffectInstance(ContagionEffects.INFECTION, ContagionConfig.INSTANCE.infectionDuration * 20, 0));
+                            ContagionInfectionEffect.resetValues(pPlayer);
                             pPlayer.sendMessage(Text.translatable("effect.contagion.infected_msg"));
                         }
                     }
