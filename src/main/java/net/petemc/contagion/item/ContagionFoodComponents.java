@@ -12,5 +12,5 @@ public class ContagionFoodComponents {
             .statusEffect(new StatusEffectInstance(StatusEffects.HUNGER, 600, 0), 0.6f).build();
     public static final FoodComponent HEAT_TREATED_FLESH = new FoodComponent.Builder().nutrition(4).saturationModifier(0.3f).build();
     public static final FoodComponent GOLD_STREAKED_FLESH = new FoodComponent.Builder().nutrition(6).saturationModifier(1.0f)
-            .statusEffect(new StatusEffectInstance(ContagionEffects.RESET_INFECTION, 20), 1.0f).alwaysEdible().build();
+            .statusEffect(new StatusEffectInstance(ContagionEffects.RESET_INFECTION, 1), 1.0f).alwaysEdible().build();
 }

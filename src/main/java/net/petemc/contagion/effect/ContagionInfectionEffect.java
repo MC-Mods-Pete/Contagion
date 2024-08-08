@@ -10,42 +10,52 @@ import net.minecraft.util.math.random.Random;
 import net.petemc.contagion.config.ContagionConfig;
 import net.petemc.contagion.damage_type.ContagionDamageTypes;
 
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
+
 public class ContagionInfectionEffect extends StatusEffect {
     public ContagionInfectionEffect(StatusEffectCategory statusEffectCategory, int color) {
         super(statusEffectCategory, color);
     }
 
-    private final long defaultCooldown = 60;
+    private static final long defaultCooldown = 60;
 
-    private long ticks = (long) ContagionConfig.INSTANCE.infectionDuration * 20;
-    private long coolDown = defaultCooldown * 20;
+    public static ConcurrentHashMap<UUID, Long> ticksByPlayerUUID = new ConcurrentHashMap<>();
+    public static ConcurrentHashMap<UUID, Long> cooldownByPlayerUUID = new ConcurrentHashMap<>();
 
-    public long getTicks() {
-        return ticks;
+
+    public long getTicks(LivingEntity livingEntity) {
+        if (ticksByPlayerUUID.containsKey(livingEntity.getUuid())) {
+            return ticksByPlayerUUID.get(livingEntity.getUuid());
+        }
+        return 0;
     }
 
-    public void setTicks(long ticksVal) {
-        ticks = ticksVal;
+    public void setTicks(LivingEntity livingEntity, long ticksVal) {
+        ticksByPlayerUUID.put(livingEntity.getUuid(), ticksVal);
     }
 
-
-    @Override
-    public void onApplied(LivingEntity pLivingEntity, int pAmplifier) {
-        ticks = (long) ContagionConfig.INSTANCE.infectionDuration * 20;
-        coolDown = defaultCooldown * 20;
+    public static void resetValues(LivingEntity pLivingEntity) {
+        ticksByPlayerUUID.put(pLivingEntity.getUuid(), (long) ContagionConfig.INSTANCE.infectionDuration * 20);
+        cooldownByPlayerUUID.put(pLivingEntity.getUuid(), defaultCooldown * 20);
     }
-
 
     @Override
     public boolean applyUpdateEffect(LivingEntity pLivingEntity, int pAmplifier) {
         if (!pLivingEntity.getEntityWorld().isClient()) {
-            --this.ticks;
-            if (this.coolDown != 0) {
-                --this.coolDown;
+            if (!ticksByPlayerUUID.containsKey(pLivingEntity.getUuid())) {
+                ticksByPlayerUUID.put(pLivingEntity.getUuid(), (long) ContagionConfig.INSTANCE.infectionDuration * 20);
+            }
+            if (!cooldownByPlayerUUID.containsKey(pLivingEntity.getUuid())) {
+                cooldownByPlayerUUID.put(pLivingEntity.getUuid(), defaultCooldown * 20);
+            }
+            ticksByPlayerUUID.put(pLivingEntity.getUuid(), ticksByPlayerUUID.get(pLivingEntity.getUuid()) - 1);
+            if (cooldownByPlayerUUID.get(pLivingEntity.getUuid()) != 0) {
+                cooldownByPlayerUUID.put(pLivingEntity.getUuid(), cooldownByPlayerUUID.get(pLivingEntity.getUuid()) - 1);
             }
             if (ContagionConfig.INSTANCE.enableRandomSymptoms) {
-                if ((coolDown == 0) && (this.ticks > (ContagionConfig.INSTANCE.randomSymptomsDuration * 20L))) {
-                    if ((this.ticks % 20) == 0) {
+                if ((cooldownByPlayerUUID.get(pLivingEntity.getUuid()) == 0) && (ticksByPlayerUUID.get(pLivingEntity.getUuid()) > (ContagionConfig.INSTANCE.randomSymptomsDuration * 20L))) {
+                    if ((ticksByPlayerUUID.get(pLivingEntity.getUuid()) % 20) == 0) {
                         int randomValue = MathHelper.nextInt(Random.create(), 1, 100);
                         if (randomValue > (100 - ContagionConfig.INSTANCE.randomSymptomsChance)) {
                             randomValue = MathHelper.nextInt(Random.create(), 1, 4);
@@ -63,20 +73,22 @@ public class ContagionInfectionEffect extends StatusEffect {
                                     pLivingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, (ContagionConfig.INSTANCE.randomSymptomsDuration * 20), 0));
                                     break;
                             }
-                            this.coolDown = (ContagionConfig.INSTANCE.randomSymptomsDuration + defaultCooldown) * 20L;
+                            cooldownByPlayerUUID.put(pLivingEntity.getUuid(), (ContagionConfig.INSTANCE.randomSymptomsDuration + defaultCooldown) * 20);
                         }
                     }
-                } else if (this.ticks == (ContagionConfig.INSTANCE.randomSymptomsDuration * 20L / 2)) {
+                } else if (ticksByPlayerUUID.get(pLivingEntity.getUuid()) == (ContagionConfig.INSTANCE.randomSymptomsDuration * 20L / 2)) {
                     pLivingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.WITHER, (ContagionConfig.INSTANCE.randomSymptomsDuration * 20 / 2), 0));
                 }
             }
 
-            if (this.ticks <= 2) {
+            if (ticksByPlayerUUID.get(pLivingEntity.getUuid()) <= 2) {
                 if (ContagionConfig.INSTANCE.totemPreventsDyingFromInfection) {
                     pLivingEntity.damage(ContagionDamageTypes.of(pLivingEntity.getWorld(), ContagionDamageTypes.INFECTION), 1000.0f);
                 } else {
                     pLivingEntity.kill();
                 }
+                ticksByPlayerUUID.remove(pLivingEntity.getUuid());
+                cooldownByPlayerUUID.remove(pLivingEntity.getUuid());
             }
         }
         return super.applyUpdateEffect(pLivingEntity, pAmplifier);
