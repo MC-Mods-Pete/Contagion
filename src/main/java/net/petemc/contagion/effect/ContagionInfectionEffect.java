@@ -26,7 +26,10 @@ public class ContagionInfectionEffect extends StatusEffect {
 
 
     public long getTicks(LivingEntity livingEntity) {
-        return ticksByPlayerUUID.get(livingEntity.getUuid());
+        if (ticksByPlayerUUID.containsKey(livingEntity.getUuid())) {
+            return ticksByPlayerUUID.get(livingEntity.getUuid());
+        }
+        return 0;
     }
 
     public void setTicks(LivingEntity livingEntity, long ticksVal) {
