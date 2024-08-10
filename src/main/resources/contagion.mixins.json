@@ -5,6 +5,7 @@
 	"mixins": [
 		"BrewingRecipeRegistryMixin",
 		"MilkBucketMixin",
+		"PlayerEntityMixin",
 		"ZombieEntityMixin",
 		"ZoglinEntityMixin"
 	],
