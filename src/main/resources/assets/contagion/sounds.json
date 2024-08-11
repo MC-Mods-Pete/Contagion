@@ -1,0 +1,8 @@
+{
+  "immunity_prevents_infection": {
+    "subtitle": "sounds.contagion.immunity_prevents_infection",
+    "sounds": [
+      "contagion:immunity_prevents_infection"
+    ]
+  }
+}

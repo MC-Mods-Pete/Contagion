@@ -15,10 +15,10 @@ public class ContagionImmunityEffect extends StatusEffect {
         if (!pLivingEntity.getEntityWorld().isClient()) {
             if (pLivingEntity.hasStatusEffect(ContagionEffects.INFECTION)) {
                 pLivingEntity.removeStatusEffect(ContagionEffects.INFECTION);
+                ContagionInfectionEffect.resetValues(pLivingEntity);
                 pLivingEntity.sendMessage(Text.translatable("effect.contagion.cured_msg"));
             }
         }
-
         return super.applyUpdateEffect(pLivingEntity, pAmplifier);
     }
 

@@ -3,7 +3,10 @@
 	"package": "net.petemc.contagion.mixin",
 	"compatibilityLevel": "JAVA_17",
 	"mixins": [
-		"MilkBucketMixin"
+		"MilkBucketMixin",
+		"PlayerEntityMixin",
+		"ZombieEntityMixin",
+		"ZoglinEntityMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
