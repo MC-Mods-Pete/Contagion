@@ -23,7 +23,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(ZoglinEntity.class)
 public abstract class ZoglinEntityMixin {
-    @Inject(method = "tryAttack", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/mob/ZoglinEntity;playSound(Lnet/minecraft/sound/SoundEvent;FF)V", shift = At.Shift.AFTER), cancellable = true)
+    @Inject(method = "tryAttack", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/mob/ZoglinEntity;playSound(Lnet/minecraft/sound/SoundEvent;)V", shift = At.Shift.AFTER), cancellable = true)
     public void tryAttack(Entity target, CallbackInfoReturnable<Boolean> cir) {
         boolean returnValue = Hoglin.tryAttack((LivingEntity) (Object) this, (LivingEntity) target);
         cir.setReturnValue(returnValue);
