@@ -7,11 +7,11 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.text.Text;
 import net.petemc.contagion.config.ContagionConfig;
 
+
 public class ContagionResetInfectionEffect extends StatusEffect {
     public ContagionResetInfectionEffect(StatusEffectCategory statusEffectCategory, int color) {
         super(statusEffectCategory, color);
     }
-
 
     @Override
     public void applyUpdateEffect(LivingEntity pLivingEntity, int pAmplifier) {

@@ -16,7 +16,7 @@ import net.petemc.contagion.mixin.BrewingRecipeRegistryMixin;
 
 public class ContagionPotions {
     public static final Potion CURE_POTION = registerPotion("cure_potion",
-            new Potion(new StatusEffectInstance(ContagionEffects.IMMUNITY, ContagionConfig.INSTANCE.immunityDuration *20, 0)));
+            new Potion(new StatusEffectInstance(ContagionEffects.IMMUNITY, ContagionConfig.INSTANCE.immunityDuration * 20, 0)));
     public static final Potion LONG_CURE_POTION = registerPotion("long_cure_potion",
             new Potion(new StatusEffectInstance(ContagionEffects.IMMUNITY, ContagionConfig.INSTANCE.immunityDuration * 3 * 20, 0)));
 
