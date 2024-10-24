@@ -5,6 +5,7 @@ import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.random.Random;
 import net.petemc.contagion.config.ContagionConfig;
@@ -39,7 +40,7 @@ public class ContagionInfectionEffect extends StatusEffect {
     }
 
     @Override
-    public boolean applyUpdateEffect(LivingEntity pLivingEntity, int pAmplifier) {
+    public boolean applyUpdateEffect(ServerWorld world, LivingEntity pLivingEntity, int pAmplifier) {
         if (!pLivingEntity.getEntityWorld().isClient()) {
             if (pLivingEntity instanceof InfectedPlayer infectedPlayer) {
                 if (!infectedPlayer.contagion_isPlayerInfected()) {
@@ -81,15 +82,15 @@ public class ContagionInfectionEffect extends StatusEffect {
 
                 if (infectedPlayer.contagion_getInfectionTicks() <= 2) {
                     if (ContagionConfig.INSTANCE.totemPreventsDyingFromInfection) {
-                        pLivingEntity.damage(ContagionDamageTypes.of(pLivingEntity.getWorld(), ContagionDamageTypes.INFECTION), 1000.0f);
+                        pLivingEntity.damage(world, ContagionDamageTypes.of(pLivingEntity.getWorld(), ContagionDamageTypes.INFECTION), 1000.0f);
                     } else {
-                        pLivingEntity.kill();
+                        pLivingEntity.kill(world);
                     }
                     infectedPlayer.contagion_setInfection(false);
                 }
             }
         }
-        return super.applyUpdateEffect(pLivingEntity, pAmplifier);
+        return super.applyUpdateEffect(world, pLivingEntity, pAmplifier);
     }
 
 

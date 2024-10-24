@@ -19,7 +19,7 @@ public class ContagionPotions {
     public static RegistryEntry<Potion> LONG_CURE_POTION;
 
     public static RegistryEntry<Potion> registerPotion(String name, StatusEffectInstance statusEffectInstance) {
-        return Registry.registerReference(Registries.POTION, Identifier.of(Contagion.MOD_ID, name), new Potion(statusEffectInstance));
+        return Registry.registerReference(Registries.POTION, Identifier.of(Contagion.MOD_ID, name), new Potion(name, statusEffectInstance));
     }
 
     public static void registerPotions() {

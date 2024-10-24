@@ -15,7 +15,7 @@ public class ContagionDamageTypes {
     public static final RegistryKey<DamageType> INFECTION = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, Identifier.of("contagion", "infection"));
 
     public static DamageSource of(World world, RegistryKey<DamageType> key) {
-        return new DamageSource(world.getRegistryManager().get(RegistryKeys.DAMAGE_TYPE).entryOf(key));
+        return new DamageSource(world.getRegistryManager().getOrThrow(RegistryKeys.DAMAGE_TYPE).getOrThrow(key));
     }
 
     public static void registerDamageTypes() {

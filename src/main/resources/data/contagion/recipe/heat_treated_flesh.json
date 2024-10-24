@@ -3,9 +3,7 @@
   "category": "food",
   "cookingtime": 200,
   "experience": 0.35,
-  "ingredient": {
-    "item": "contagion:contagious_flesh"
-  },
+  "ingredient": "contagion:contagious_flesh",
   "result": {
     "id": "contagion:heat_treated_flesh"
   }

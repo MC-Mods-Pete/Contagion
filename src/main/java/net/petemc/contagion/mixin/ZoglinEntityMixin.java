@@ -6,6 +6,7 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.mob.Hoglin;
 import net.minecraft.entity.mob.ZoglinEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.MathHelper;
@@ -20,12 +21,11 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-
 @Mixin(ZoglinEntity.class)
 public abstract class ZoglinEntityMixin {
     @Inject(method = "tryAttack", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/mob/ZoglinEntity;playSound(Lnet/minecraft/sound/SoundEvent;)V", shift = At.Shift.AFTER), cancellable = true)
-    public void tryAttack(Entity target, CallbackInfoReturnable<Boolean> cir) {
-        boolean returnValue = Hoglin.tryAttack((LivingEntity) (Object) this, (LivingEntity) target);
+    public void tryAttack(ServerWorld world, Entity target, CallbackInfoReturnable<Boolean> cir) {
+        boolean returnValue = Hoglin.tryAttack(world, (LivingEntity) (Object) this, (LivingEntity) target);
         cir.setReturnValue(returnValue);
 
         if (target instanceof PlayerEntity pPlayer) {
@@ -40,7 +40,7 @@ public abstract class ZoglinEntityMixin {
                             if (!pPlayer.getWorld().isClient()) {
                                 pPlayer.addStatusEffect(new StatusEffectInstance(ContagionEffects.INFECTION, ContagionConfig.INSTANCE.infectionDuration * 20, 0));
                                 ContagionInfectionEffect.resetValues(pPlayer);
-                                pPlayer.sendMessage(Text.translatable("effect.contagion.infected_msg"));
+                                pPlayer.sendMessage(Text.translatable("effect.contagion.infected_msg"), false);
                             }
                         }
                     }

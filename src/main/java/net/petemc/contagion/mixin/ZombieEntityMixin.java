@@ -5,6 +5,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.mob.ZombieEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.MathHelper;
@@ -19,11 +20,10 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-
 @Mixin(ZombieEntity.class)
 public class ZombieEntityMixin {
     @Inject(method = "tryAttack", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;getLocalDifficulty(Lnet/minecraft/util/math/BlockPos;)Lnet/minecraft/world/LocalDifficulty;", shift = At.Shift.BEFORE))
-    public void tryAttack(Entity target, CallbackInfoReturnable<Boolean> cir) {
+    public void tryAttack(ServerWorld world, Entity target, CallbackInfoReturnable<Boolean> cir) {
         if (target instanceof PlayerEntity pPlayer) {
             int randomValue = MathHelper.nextInt(Random.create(), 1, 100);
             int effectiveInfectChance = getEffectiveInfectChance(pPlayer);
@@ -35,7 +35,7 @@ public class ZombieEntityMixin {
                         if (!pPlayer.getWorld().isClient()) {
                             pPlayer.addStatusEffect(new StatusEffectInstance(ContagionEffects.INFECTION, ContagionConfig.INSTANCE.infectionDuration * 20, 0));
                             ContagionInfectionEffect.resetValues(pPlayer);
-                            pPlayer.sendMessage(Text.translatable("effect.contagion.infected_msg"));
+                            pPlayer.sendMessage(Text.translatable("effect.contagion.infected_msg"), false);
                         }
                     }
                 }

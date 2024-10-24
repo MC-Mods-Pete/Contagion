@@ -3,6 +3,8 @@ package net.petemc.contagion.effect;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 
 public class ContagionImmunityEffect extends StatusEffect {
@@ -11,15 +13,17 @@ public class ContagionImmunityEffect extends StatusEffect {
     }
 
     @Override
-    public boolean applyUpdateEffect(LivingEntity pLivingEntity, int pAmplifier) {
-        if (!pLivingEntity.getEntityWorld().isClient()) {
-            if (pLivingEntity.hasStatusEffect(ContagionEffects.INFECTION)) {
-                pLivingEntity.removeStatusEffect(ContagionEffects.INFECTION);
-                ContagionInfectionEffect.resetValues(pLivingEntity);
-                pLivingEntity.sendMessage(Text.translatable("effect.contagion.cured_msg"));
+    public boolean applyUpdateEffect(ServerWorld world, LivingEntity pLivingEntity, int pAmplifier) {
+        if (!world.isClient()) {
+            if (pLivingEntity instanceof PlayerEntity pPlayerEntity) {
+                if (pPlayerEntity.hasStatusEffect(ContagionEffects.INFECTION)) {
+                    pPlayerEntity.removeStatusEffect(ContagionEffects.INFECTION);
+                    ContagionInfectionEffect.resetValues(pPlayerEntity);
+                    pPlayerEntity.sendMessage(Text.translatable("effect.contagion.cured_msg"), false);
+                }
             }
         }
-        return super.applyUpdateEffect(pLivingEntity, pAmplifier);
+        return super.applyUpdateEffect(world, pLivingEntity, pAmplifier);
     }
 
     @Override
