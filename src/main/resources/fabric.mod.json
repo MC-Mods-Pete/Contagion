@@ -1,8 +1,8 @@
 {
 	"schemaVersion": 1,
-	"id": "contagion",
+	"id": "${mod_id}",
 	"version": "${version}",
-	"name": "Contagion",
+	"name": "${mod_name}",
 	"description": "This Mod adds the functionality that Zombies are able to give you a deadly infection.",
 	"authors": [
 		"Pete MC Mods, mcmods.pete@gmail.com"
@@ -33,9 +33,9 @@
 		"contagion.mixins.json"
 	],
 	"depends": {
-		"fabricloader": ">=0.15.11",
-		"minecraft": ">=1.21.3",
-		"java": ">=21",
+		"fabricloader": "${fabric_version_range}",
+		"minecraft": "${mc_version_range}",
+		"java": "${java_version_range}",
 		"fabric-api": "*",
 		"cloth-config": ">=16.0.141"
 	},
