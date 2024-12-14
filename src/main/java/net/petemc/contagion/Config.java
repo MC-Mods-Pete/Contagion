@@ -63,7 +63,7 @@ public class Config
     public static boolean armorLowersInfectionChance;
     public static boolean enableRandomSymptoms;
     public static int randomSymptomsDuration;
-    pu  blic static int randomSymptomsChance;
+    public static int randomSymptomsChance;
     //public static int immunityDuration;
     public static boolean milkCuresInfection;
     public static boolean totemPreventsDyingFromInfection;
