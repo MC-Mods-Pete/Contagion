@@ -1,29 +1,30 @@
 package net.petemc.contagion.effect;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.StatusEffect;
-import net.minecraft.entity.effect.StatusEffectCategory;
-import net.minecraft.text.Text;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectCategory;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.LivingEntity;
+import net.petemc.contagion.Config;
+import org.jetbrains.annotations.NotNull;
 
-public class ContagionImmunityEffect extends StatusEffect {
-    public ContagionImmunityEffect(StatusEffectCategory statusEffectCategory, int color) {
+public class ContagionImmunityEffect extends MobEffect {
+    public ContagionImmunityEffect(MobEffectCategory statusEffectCategory, int color) {
         super(statusEffectCategory, color);
     }
 
     @Override
-    public boolean applyUpdateEffect(LivingEntity pLivingEntity, int pAmplifier) {
-        if (!pLivingEntity.getEntityWorld().isClient()) {
-            if (pLivingEntity.hasStatusEffect(ContagionEffects.INFECTION)) {
-                pLivingEntity.removeStatusEffect(ContagionEffects.INFECTION);
+    public boolean applyEffectTick(@NotNull LivingEntity pLivingEntity, int pAmplifier) {
+        if (!pLivingEntity.level().isClientSide()) {
+            if (pLivingEntity.hasEffect(ContagionEffects.INFECTION)) {
+                pLivingEntity.removeEffect(ContagionEffects.INFECTION);
                 ContagionInfectionEffect.resetValues(pLivingEntity);
-                pLivingEntity.sendMessage(Text.translatable("effect.contagion.cured_msg"));
+                pLivingEntity.sendSystemMessage(Component.translatable("effect.contagion.cured_msg"));
             }
         }
-        return super.applyUpdateEffect(pLivingEntity, pAmplifier);
+        return super.applyEffectTick(pLivingEntity, pAmplifier);
     }
 
     @Override
-    public boolean canApplyUpdateEffect(int pDuration, int pAmplifier) {
-        return true;
-    }
+    public boolean shouldApplyEffectTickThisTick(int duration, int amplifier) { return true; }
 }

@@ -1,22 +1,32 @@
 package net.petemc.contagion.effect;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.StatusEffect;
-import net.minecraft.entity.effect.StatusEffectCategory;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.random.Random;
-import net.petemc.contagion.config.ContagionConfig;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectCategory;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.LivingEntity;
+import net.neoforged.neoforge.common.EffectCure;
+import net.petemc.contagion.Config;
 import net.petemc.contagion.damage_type.ContagionDamageTypes;
 import net.petemc.contagion.casts.InfectedPlayer;
+import org.jetbrains.annotations.NotNull;
 
-public class ContagionInfectionEffect extends StatusEffect {
-    public ContagionInfectionEffect(StatusEffectCategory statusEffectCategory, int color) {
-        super(statusEffectCategory, color);
+import java.util.Set;
+
+public class ContagionInfectionEffect extends MobEffect {
+    public ContagionInfectionEffect(MobEffectCategory mobEffectCategory, int color) {
+        super(mobEffectCategory, color);
     }
 
     private static final long defaultCooldown = 60;
+
+    @Override
+    public void fillEffectCures(@NotNull Set<EffectCure> cures, @NotNull MobEffectInstance effectInstance) {
+        if (Config.milkCuresInfection) {
+            super.fillEffectCures(cures, effectInstance);
+        }
+    }
 
     public long getTicks(LivingEntity pLivingEntity) {
         if (pLivingEntity instanceof InfectedPlayer infectedPlayer) {
@@ -33,17 +43,17 @@ public class ContagionInfectionEffect extends StatusEffect {
 
     public static void resetValues(LivingEntity pLivingEntity) {
         if (pLivingEntity instanceof InfectedPlayer infectedPlayer) {
-            infectedPlayer.contagion_setInfectionTicks((long) ContagionConfig.INSTANCE.infectionDuration * 20);
+            infectedPlayer.contagion_setInfectionTicks((long) Config.infectionDuration * 20);
             infectedPlayer.contagion_setInfectionCooldown(defaultCooldown * 20);
         }
     }
 
     @Override
-    public boolean applyUpdateEffect(LivingEntity pLivingEntity, int pAmplifier) {
-        if (!pLivingEntity.getEntityWorld().isClient()) {
+    public boolean applyEffectTick(@NotNull LivingEntity pLivingEntity, int pAmplifier) {
+        if (!pLivingEntity.level().isClientSide()) {
             if (pLivingEntity instanceof InfectedPlayer infectedPlayer) {
                 if (!infectedPlayer.contagion_isPlayerInfected()) {
-                    infectedPlayer.contagion_setInfectionTicks((long) ContagionConfig.INSTANCE.infectionDuration * 20);
+                    infectedPlayer.contagion_setInfectionTicks((long) Config.infectionDuration * 20);
                     infectedPlayer.contagion_setInfectionCooldown(defaultCooldown * 20);
                     infectedPlayer.contagion_setInfection(true);
                 }
@@ -51,37 +61,37 @@ public class ContagionInfectionEffect extends StatusEffect {
                 if (infectedPlayer.contagion_getInfectionCooldown() != 0) {
                     infectedPlayer.contagion_setInfectionCooldown(infectedPlayer.contagion_getInfectionCooldown() - 1);
                 }
-                if (ContagionConfig.INSTANCE.enableRandomSymptoms) {
-                    if ((infectedPlayer.contagion_getInfectionCooldown() == 0) && (infectedPlayer.contagion_getInfectionTicks() > (ContagionConfig.INSTANCE.randomSymptomsDuration * 20L))) {
+                if (Config.enableRandomSymptoms) {
+                    if ((infectedPlayer.contagion_getInfectionCooldown() == 0) && (infectedPlayer.contagion_getInfectionTicks() > (Config.randomSymptomsDuration * 20L))) {
                         if ((infectedPlayer.contagion_getInfectionTicks() % 20) == 0) {
-                            int randomValue = MathHelper.nextInt(Random.create(), 1, 100);
-                            if (randomValue > (100 - ContagionConfig.INSTANCE.randomSymptomsChance)) {
-                                randomValue = MathHelper.nextInt(Random.create(), 1, 4);
+                            int randomValue = RandomSource.create().nextIntBetweenInclusive(1, 100);
+                            if (randomValue > (100 - Config.randomSymptomsChance)) {
+                                randomValue = RandomSource.create().nextIntBetweenInclusive(1, 4);
                                 switch (randomValue) {
                                     case 1:
-                                        pLivingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.WEAKNESS, (ContagionConfig.INSTANCE.randomSymptomsDuration * 20), 0));
+                                        pLivingEntity.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, (Config.randomSymptomsDuration * 20), 0));
                                         break;
                                     case 2:
-                                        pLivingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, (ContagionConfig.INSTANCE.randomSymptomsDuration * 20), 0));
+                                        pLivingEntity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, (Config.randomSymptomsDuration * 20), 0));
                                         break;
                                     case 3:
-                                        pLivingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.HUNGER, (ContagionConfig.INSTANCE.randomSymptomsDuration * 20), 0));
+                                        pLivingEntity.addEffect(new MobEffectInstance(MobEffects.HUNGER, (Config.randomSymptomsDuration * 20), 0));
                                         break;
                                     case 4:
-                                        pLivingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, (ContagionConfig.INSTANCE.randomSymptomsDuration * 20), 0));
+                                        pLivingEntity.addEffect(new MobEffectInstance(MobEffects.CONFUSION, (Config.randomSymptomsDuration * 20), 0));
                                         break;
                                 }
-                                infectedPlayer.contagion_setInfectionCooldown((ContagionConfig.INSTANCE.randomSymptomsDuration + defaultCooldown) * 20);
+                                infectedPlayer.contagion_setInfectionCooldown((Config.randomSymptomsDuration + defaultCooldown) * 20);
                             }
                         }
-                    } else if (infectedPlayer.contagion_getInfectionTicks() == (ContagionConfig.INSTANCE.randomSymptomsDuration * 20L / 2)) {
-                        pLivingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.WITHER, (ContagionConfig.INSTANCE.randomSymptomsDuration * 20 / 2), 0));
+                    } else if (infectedPlayer.contagion_getInfectionTicks() == (Config.randomSymptomsDuration * 20L / 2)) {
+                        pLivingEntity.addEffect(new MobEffectInstance(MobEffects.WITHER, (Config.randomSymptomsDuration * 20 / 2), 0));
                     }
                 }
 
                 if (infectedPlayer.contagion_getInfectionTicks() <= 2) {
-                    if (ContagionConfig.INSTANCE.totemPreventsDyingFromInfection) {
-                        pLivingEntity.damage(ContagionDamageTypes.of(pLivingEntity.getWorld(), ContagionDamageTypes.INFECTION), 1000.0f);
+                    if (Config.totemPreventsDyingFromInfection) {
+                        pLivingEntity.hurt(ContagionDamageTypes.of(pLivingEntity.level(), ContagionDamageTypes.INFECTION), 1000.0f);
                     } else {
                         pLivingEntity.kill();
                     }
@@ -89,12 +99,9 @@ public class ContagionInfectionEffect extends StatusEffect {
                 }
             }
         }
-        return super.applyUpdateEffect(pLivingEntity, pAmplifier);
+        return super.applyEffectTick(pLivingEntity, pAmplifier);
     }
-
 
     @Override
-    public boolean canApplyUpdateEffect(int pDuration, int pAmplifier) {
-        return true;
-    }
+    public boolean shouldApplyEffectTickThisTick(int duration, int amplifier) { return true; }
 }

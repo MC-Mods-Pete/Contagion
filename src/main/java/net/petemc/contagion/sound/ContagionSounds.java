@@ -1,21 +1,26 @@
 package net.petemc.contagion.sound;
 
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.util.Identifier;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.registries.DeferredRegister;
 import net.petemc.contagion.Contagion;
 
+import java.util.function.Supplier;
+
 public class ContagionSounds {
+    public static final DeferredRegister<SoundEvent> SOUND_EVENTS =
+            DeferredRegister.create(BuiltInRegistries.SOUND_EVENT, Contagion.MOD_ID);
 
-    public static final SoundEvent INFECTION_PREVENTED = registerSoundEvent("immunity_prevents_infection");
+    public static final Supplier<SoundEvent> INFECTION_PREVENTED = registerSoundEvent("immunity_prevents_infection");
 
-    private static SoundEvent registerSoundEvent(String name) {
-        Identifier id = Identifier.of(Contagion.MOD_ID, name);
-        return Registry.register(Registries.SOUND_EVENT, id, SoundEvent.of(id));
+    private static Supplier<SoundEvent> registerSoundEvent(String name) {
+        ResourceLocation id = ResourceLocation.fromNamespaceAndPath(Contagion.MOD_ID, name);
+        return SOUND_EVENTS.register(name, () -> SoundEvent.createVariableRangeEvent(id));
     }
 
-    public static void registerSounds() {
-        Contagion.LOGGER.info("Registering Sounds for " + Contagion.MOD_ID);
+    public static void register(IEventBus eventBus) {
+        SOUND_EVENTS.register(eventBus);
     }
 }
