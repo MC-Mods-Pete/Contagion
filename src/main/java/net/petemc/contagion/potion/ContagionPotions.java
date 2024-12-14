@@ -14,9 +14,9 @@ public class ContagionPotions {
             DeferredRegister.create(BuiltInRegistries.POTION, Contagion.MOD_ID);
 
     public static final Holder<Potion> CURE_POTION = POTIONS.register("cure_potion",
-            () -> new Potion(new MobEffectInstance(ContagionEffects.IMMUNITY, 120 * 20, 0)));
+            () -> new Potion("cure_potion", new MobEffectInstance(ContagionEffects.IMMUNITY, 120 * 20, 0)));
     public static final Holder<Potion> LONG_CURE_POTION = POTIONS.register("long_cure_potion",
-            () -> new Potion(new MobEffectInstance(ContagionEffects.IMMUNITY, 120 * 20 * 3, 0)));
+            () -> new Potion("long_cure_potion", new MobEffectInstance(ContagionEffects.IMMUNITY, 120 * 20 * 3, 0)));
 
     public static void register(IEventBus eventBus) {
         POTIONS.register(eventBus);

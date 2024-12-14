@@ -1,6 +1,8 @@
 package net.petemc.contagion.effect;
 
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -14,16 +16,18 @@ public class ContagionResetInfectionEffect extends MobEffect {
     }
 
     @Override
-    public boolean applyEffectTick(@NotNull LivingEntity pLivingEntity, int pAmplifier) {
-        if (!pLivingEntity.level().isClientSide()) {
-            if (pLivingEntity.hasEffect(ContagionEffects.INFECTION)) {
-                pLivingEntity.sendSystemMessage(Component.translatable("effect.contagion.reset_infection_msg"));
-                pLivingEntity.removeEffect(ContagionEffects.INFECTION);
-                ContagionInfectionEffect.resetValues(pLivingEntity);
-                pLivingEntity.addEffect(new MobEffectInstance(ContagionEffects.INFECTION, Config.infectionDuration * 20, 0));
+    public boolean applyEffectTick(ServerLevel level, @NotNull LivingEntity pLivingEntity, int pAmplifier) {
+        if (!level.isClientSide()) {
+            if (pLivingEntity instanceof ServerPlayer pPlayerEntity) {
+                if (pPlayerEntity.hasEffect(ContagionEffects.INFECTION)) {
+                    pPlayerEntity.sendSystemMessage(Component.translatable("effect.contagion.reset_infection_msg"));
+                    pPlayerEntity.removeEffect(ContagionEffects.INFECTION);
+                    ContagionInfectionEffect.resetValues(pPlayerEntity);
+                    pPlayerEntity.addEffect(new MobEffectInstance(ContagionEffects.INFECTION, Config.infectionDuration * 20, 0));
+                }
             }
         }
-        return super.applyEffectTick(pLivingEntity, pAmplifier);
+        return super.applyEffectTick(level, pLivingEntity, pAmplifier);
     }
 
     @Override

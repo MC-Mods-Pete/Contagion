@@ -1,12 +1,12 @@
 package net.petemc.contagion.effect;
 
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
-import net.neoforged.neoforge.common.EffectCure;
 import net.petemc.contagion.Config;
 import net.petemc.contagion.damage_type.ContagionDamageTypes;
 import net.petemc.contagion.casts.InfectedPlayer;
@@ -21,12 +21,15 @@ public class ContagionInfectionEffect extends MobEffect {
 
     private static final long defaultCooldown = 60;
 
+    /*
     @Override
     public void fillEffectCures(@NotNull Set<EffectCure> cures, @NotNull MobEffectInstance effectInstance) {
         if (Config.milkCuresInfection) {
             super.fillEffectCures(cures, effectInstance);
         }
     }
+
+     */
 
     public long getTicks(LivingEntity pLivingEntity) {
         if (pLivingEntity instanceof InfectedPlayer infectedPlayer) {
@@ -49,8 +52,8 @@ public class ContagionInfectionEffect extends MobEffect {
     }
 
     @Override
-    public boolean applyEffectTick(@NotNull LivingEntity pLivingEntity, int pAmplifier) {
-        if (!pLivingEntity.level().isClientSide()) {
+    public boolean applyEffectTick(@NotNull ServerLevel level, @NotNull LivingEntity pLivingEntity, int pAmplifier) {
+        if (!level.isClientSide()) {
             if (pLivingEntity instanceof InfectedPlayer infectedPlayer) {
                 if (!infectedPlayer.contagion_isPlayerInfected()) {
                     infectedPlayer.contagion_setInfectionTicks((long) Config.infectionDuration * 20);
@@ -93,13 +96,13 @@ public class ContagionInfectionEffect extends MobEffect {
                     if (Config.totemPreventsDyingFromInfection) {
                         pLivingEntity.hurt(ContagionDamageTypes.of(pLivingEntity.level(), ContagionDamageTypes.INFECTION), 1000.0f);
                     } else {
-                        pLivingEntity.kill();
+                        pLivingEntity.kill(level);
                     }
                     infectedPlayer.contagion_setInfection(false);
                 }
             }
         }
-        return super.applyEffectTick(pLivingEntity, pAmplifier);
+        return super.applyEffectTick(level, pLivingEntity, pAmplifier);
     }
 
     @Override
