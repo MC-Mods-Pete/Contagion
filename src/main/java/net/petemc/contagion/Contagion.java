@@ -15,7 +15,6 @@ import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import net.petemc.contagion.damage_type.ContagionDamageTypes;
-import net.petemc.contagion.data.DataGenerators;
 import net.petemc.contagion.effect.ContagionEffects;
 import net.petemc.contagion.item.ContagionCreativeModeTabs;
 import net.petemc.contagion.item.ContagionItems;
@@ -48,7 +47,8 @@ public class Contagion {
 		ContagionPotions.register(modEventBus);
 		ContagionLootModifiers.LOOT_MODIFIERS.register(modEventBus);
 
-		modEventBus.addListener(DataGenerators::gatherData);
+		// Todo fix datagen for 1.21.4 and up
+		//modEventBus.addListener(DataGenerators::gatherData);
 
 		// Register the item to a creative tab
 		modEventBus.addListener(this::addCreative);
