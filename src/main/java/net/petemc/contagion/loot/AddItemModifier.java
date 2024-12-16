@@ -1,64 +1,63 @@
 package net.petemc.contagion.loot;
 
 import com.google.common.base.Suppliers;
-import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import net.minecraft.core.Holder;
-import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
-import net.minecraft.world.level.storage.loot.functions.LootItemFunction;
-import net.minecraft.world.level.storage.loot.functions.LootItemFunctions;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
-import net.neoforged.neoforge.common.loot.LootModifier;
-import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
-
+import net.minecraftforge.common.loot.IGlobalLootModifier;
+import net.minecraftforge.common.loot.LootModifier;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
 import java.util.function.Supplier;
 
 public class AddItemModifier extends LootModifier {
 
-    public static final Supplier<MapCodec<AddItemModifier>> CODEC_SUPPLIER =
-            Suppliers.memoize(() -> RecordCodecBuilder.mapCodec(instance -> AddItemModifier.codecStart(instance)
-            .and(BuiltInRegistries.ITEM.byNameCodec().fieldOf("item").forGetter(addItemModifierInstance -> addItemModifierInstance.item))
-            .and(LootItemFunctions.CODEC.listOf().optionalFieldOf("functions", List.of()).forGetter(addItemModifierInstance -> addItemModifierInstance.functions))
+    public static final Supplier<Codec<AddItemModifier>> CODEC_SUPPLIER =
+            Suppliers.memoize(() -> RecordCodecBuilder.create(instance -> AddItemModifier.codecStart(instance)
+            .and(ForgeRegistries.ITEMS.getCodec().fieldOf("item").forGetter(addItemModifierInstance -> addItemModifierInstance.item))
+            .and(Codec.INT.optionalFieldOf("min_count", -1).forGetter(addItemModifierInstance -> addItemModifierInstance.minCount))
+            .and(Codec.INT.optionalFieldOf("max_count", -1).forGetter(addItemModifierInstance -> addItemModifierInstance.maxCount))
             .apply(instance, AddItemModifier::new))
    );
 
     private final Item item;
-    private final List<Holder<LootItemFunction>> functions;
+    private final int minCount;
+    private final int maxCount;
 
-    public AddItemModifier(LootItemCondition[] conditionsIn, Item item, List<Holder<LootItemFunction>> functions) {
+    public AddItemModifier(LootItemCondition[] conditionsIn, Item item, int minCount, int maxCount) {
         super(conditionsIn);
         this.item = item;
-        this.functions = functions;
+        this.minCount = minCount;
+        this.maxCount = maxCount;
     }
 
     @Override
     protected @NotNull ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
-        for (LootItemCondition condition : this.conditions) {
-            if (!condition.test(context)) {
-                return generatedLoot;
-            }
+        RandomSource random = context.getRandom();
+        int itemCount;
+
+        if (minCount >= 0 && maxCount >= 0) {
+            itemCount = random.nextIntBetweenInclusive(minCount, maxCount);
+
+        } else {
+            // Fallback to a default value if neither count nor range is specified
+            itemCount = 1;
         }
 
-        ItemStack itemToAdd = new ItemStack(item);
-
-        for (Holder<LootItemFunction> functionHolder : functions) {
-            LootItemFunction function = functionHolder.value();
-            itemToAdd = function.apply(itemToAdd, context);
-        }
+        ItemStack itemToAdd = new ItemStack(item, itemCount);
 
         generatedLoot.add(itemToAdd);
         return generatedLoot;
     }
 
     @Override
-    public MapCodec<? extends IGlobalLootModifier> codec() {
+    public Codec<? extends IGlobalLootModifier> codec() {
         return CODEC_SUPPLIER.get();
     }
 }

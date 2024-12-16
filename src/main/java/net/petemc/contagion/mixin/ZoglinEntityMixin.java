@@ -1,6 +1,5 @@
 package net.petemc.contagion.mixin;
 
-
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
@@ -22,7 +21,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Zoglin.class)
 public abstract class ZoglinEntityMixin {
-    @Inject(method = "doHurtTarget", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/monster/Zoglin;makeSound(Lnet/minecraft/sounds/SoundEvent;)V", shift = At.Shift.AFTER), cancellable = true)
+    @Inject(method = "doHurtTarget", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/monster/Zoglin;playSound(Lnet/minecraft/sounds/SoundEvent;FF)V", shift = At.Shift.AFTER), cancellable = true)
     public void doHurtTarget(Entity target, CallbackInfoReturnable<Boolean> cir) {
         boolean returnValue = HoglinBase.hurtAndThrowTarget((LivingEntity) (Object) this, (LivingEntity) target);
         cir.setReturnValue(returnValue);
@@ -32,12 +31,12 @@ public abstract class ZoglinEntityMixin {
                 int randomValue = RandomSource.create().nextIntBetweenInclusive(1, 100);
                 int effectiveInfectChance = getEffectiveInfectChance(pPlayer);
                 if (randomValue > effectiveInfectChance) {
-                    if (!pPlayer.hasEffect(ContagionEffects.INFECTION)) {
-                        if (pPlayer.hasEffect(ContagionEffects.IMMUNITY)) {
+                    if (!pPlayer.hasEffect(ContagionEffects.INFECTION.get())) {
+                        if (pPlayer.hasEffect(ContagionEffects.IMMUNITY.get())) {
                             pPlayer.level().playSound(null, pPlayer.getX(), pPlayer.getY(), pPlayer.getZ(), ContagionSounds.INFECTION_PREVENTED.get(), SoundSource.BLOCKS, 1.0F, 3);
                         } else {
                             if (!pPlayer.level().isClientSide()) {
-                                pPlayer.addEffect(new MobEffectInstance(ContagionEffects.INFECTION, Config.infectionDuration * 20, 0));
+                                pPlayer.addEffect(new MobEffectInstance(ContagionEffects.INFECTION.get(), Config.infectionDuration * 20, 0));
                                 ContagionInfectionEffect.resetValues(pPlayer);
                                 pPlayer.sendSystemMessage(Component.translatable("effect.contagion.infected_msg"));
                             }

@@ -2,6 +2,7 @@
 	"required": true,
 	"package": "net.petemc.contagion.mixin",
 	"compatibilityLevel": "JAVA_17",
+	"refmap": "contagion.mixins-refmap.json",
 	"mixins": [
 		"PlayerEntityMixin",
 		"ZoglinEntityMixin",

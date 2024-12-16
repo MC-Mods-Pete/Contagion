@@ -12,7 +12,7 @@ public class ContagionDamageTypes {
      * Store the RegistryKey of the DamageType into a new constant called INFECTION
      * The Identifier in use here points to the JSON file infection.json.
      */
-    public static final ResourceKey<DamageType> INFECTION = ResourceKey.create(Registries.DAMAGE_TYPE, ResourceLocation.fromNamespaceAndPath("contagion", "infection"));
+    public static final ResourceKey<DamageType> INFECTION = ResourceKey.create(Registries.DAMAGE_TYPE, ResourceLocation.tryBuild("contagion", "infection"));
 
     public static DamageSource of(Level world, ResourceKey<DamageType> key) {
         return new DamageSource(world.registryAccess().lookupOrThrow(Registries.DAMAGE_TYPE).getOrThrow(key));

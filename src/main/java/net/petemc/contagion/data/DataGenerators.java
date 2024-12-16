@@ -1,18 +1,26 @@
 package net.petemc.contagion.data;
 
+import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
-import net.neoforged.neoforge.data.event.GatherDataEvent;
+import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.data.event.GatherDataEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.petemc.contagion.Contagion;
 
+import java.util.concurrent.CompletableFuture;
+
+@Mod.EventBusSubscriber(modid = Contagion.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class DataGenerators {
 
+    @SubscribeEvent
     public static void gatherData(GatherDataEvent event) {
         try {
             DataGenerator generator = event.getGenerator();
-            PackOutput output = generator.getPackOutput();
+            PackOutput packOutput = generator.getPackOutput();
             ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
+            CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
 /*
             generator.addProvider(true, new ModEnLangProvider(output));
             generator.addProvider(true, new ModItemStateProvider(output, existingFileHelper));
@@ -23,9 +31,9 @@ public class DataGenerators {
             generator.addProvider(true, new ModLootTables(output, event.getLookupProvider()));
             generator.addProvider(true, new ModWorldGenProvider(output, event.getLookupProvider()));
             generator.addProvider(true, new MainModRecipeProvider(generator, event.getLookupProvider()));
+            */
 
- */
-            generator.addProvider(true, new ModGlobalLootModifiersProvider(output, event.getLookupProvider()));
+            generator.addProvider(event.includeServer(), new ModGlobalLootModifiersProvider(packOutput));
         } catch (RuntimeException e) {
             Contagion.LOGGER.error("Failed to gather data", e);
         }

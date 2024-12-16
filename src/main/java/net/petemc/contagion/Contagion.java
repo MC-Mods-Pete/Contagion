@@ -2,18 +2,21 @@ package net.petemc.contagion;
 
 import com.mojang.logging.LogUtils;
 
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.ModContainer;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.fml.common.Mod;
-import net.neoforged.fml.config.ModConfig;
-import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
-import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
-import net.neoforged.neoforge.event.server.ServerStartingEvent;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.alchemy.PotionBrewing;
+import net.minecraft.world.item.alchemy.Potions;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
+import net.minecraftforge.event.server.ServerStartingEvent;
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModLoadingContext;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.petemc.contagion.damage_type.ContagionDamageTypes;
 import net.petemc.contagion.data.DataGenerators;
 import net.petemc.contagion.effect.ContagionEffects;
@@ -31,14 +34,14 @@ public class Contagion {
 	public static final String MOD_NAME = "Contagion";
 	public static final Logger LOGGER = LogUtils.getLogger();
 
-	public Contagion(IEventBus modEventBus, ModContainer modContainer) {
+	public Contagion() {
+		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+
 		// Register the commonSetup method for modloading
 		modEventBus.addListener(this::commonSetup);
 
-		// Register ourselves for server and other game events we are interested in.
-		// Note that this is necessary if and only if we want *this* class (ExampleMod) to respond directly to events.
-		// Do not add this line if there are no @SubscribeEvent-annotated functions in this class, like onServerStarting() below.
-		NeoForge.EVENT_BUS.register(this);
+		// Register ourselves for server and other game events we are interested in
+		MinecraftForge.EVENT_BUS.register(this);
 
 		ContagionEffects.register(modEventBus);
 		ContagionItems.register(modEventBus);
@@ -46,19 +49,21 @@ public class Contagion {
 		ContagionSounds.register(modEventBus);
 		ContagionDamageTypes.registerDamageTypes();
 		ContagionPotions.register(modEventBus);
-		ContagionLootModifiers.LOOT_MODIFIERS.register(modEventBus);
+		ContagionLootModifiers.register(modEventBus);
 
 		modEventBus.addListener(DataGenerators::gatherData);
 
 		// Register the item to a creative tab
 		modEventBus.addListener(this::addCreative);
 		// Register our mod's ModConfigSpec so that FML can create and load the config file for us
-		modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
+		ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, Config.SPEC);
 	}
 
 	// common setup
 	private void commonSetup(final FMLCommonSetupEvent event) {
 		LOGGER.info("Initializing the {} Mod", MOD_NAME);
+		PotionBrewing.addMix(Potions.AWKWARD, ContagionItems.GOLD_STREAKED_FLESH.get(), ContagionPotions.CURE_POTION.get());
+		PotionBrewing.addMix(ContagionPotions.CURE_POTION.get(), Items.REDSTONE, ContagionPotions.LONG_CURE_POTION.get());
 	}
 
 	// Add the example block item to the building blocks tab
@@ -73,7 +78,7 @@ public class Contagion {
 	}
 
 	// You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
-	@EventBusSubscriber(modid = MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+	@Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 	public static class ClientModEvents {
 		@SubscribeEvent
 		public static void onClientSetup(FMLClientSetupEvent event) {

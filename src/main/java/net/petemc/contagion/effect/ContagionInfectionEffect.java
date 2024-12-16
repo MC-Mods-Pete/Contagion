@@ -6,13 +6,13 @@ import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
-import net.neoforged.neoforge.common.EffectCure;
+import net.minecraft.world.item.ItemStack;
 import net.petemc.contagion.Config;
 import net.petemc.contagion.damage_type.ContagionDamageTypes;
 import net.petemc.contagion.casts.InfectedPlayer;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Set;
+import java.util.List;
 
 public class ContagionInfectionEffect extends MobEffect {
     public ContagionInfectionEffect(MobEffectCategory mobEffectCategory, int color) {
@@ -22,10 +22,11 @@ public class ContagionInfectionEffect extends MobEffect {
     private static final long defaultCooldown = 60;
 
     @Override
-    public void fillEffectCures(@NotNull Set<EffectCure> cures, @NotNull MobEffectInstance effectInstance) {
+    public List<ItemStack> getCurativeItems() {
         if (Config.milkCuresInfection) {
-            super.fillEffectCures(cures, effectInstance);
+            return super.getCurativeItems();
         }
+        return List.of(ItemStack.EMPTY);
     }
 
     public long getTicks(LivingEntity pLivingEntity) {
@@ -49,7 +50,7 @@ public class ContagionInfectionEffect extends MobEffect {
     }
 
     @Override
-    public boolean applyEffectTick(@NotNull LivingEntity pLivingEntity, int pAmplifier) {
+    public void applyEffectTick(@NotNull LivingEntity pLivingEntity, int pAmplifier) {
         if (!pLivingEntity.level().isClientSide()) {
             if (pLivingEntity instanceof InfectedPlayer infectedPlayer) {
                 if (!infectedPlayer.contagion_isPlayerInfected()) {
@@ -99,9 +100,9 @@ public class ContagionInfectionEffect extends MobEffect {
                 }
             }
         }
-        return super.applyEffectTick(pLivingEntity, pAmplifier);
+        super.applyEffectTick(pLivingEntity, pAmplifier);
     }
 
     @Override
-    public boolean shouldApplyEffectTickThisTick(int duration, int amplifier) { return true; }
+    public boolean isDurationEffectTick(int duration, int amplifier) { return true; }
 }

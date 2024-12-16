@@ -6,7 +6,5 @@
   "ingredient": {
     "item": "contagion:contagious_flesh"
   },
-  "result": {
-    "id": "contagion:heat_treated_flesh"
-  }
+  "result": "contagion:heat_treated_flesh"
 }

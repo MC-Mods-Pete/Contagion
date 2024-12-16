@@ -27,12 +27,12 @@ public class ZombieEntityMixin {
             int randomValue = RandomSource.create().nextIntBetweenInclusive(1, 100);
             int effectiveInfectChance = getEffectiveInfectChance(pPlayer);
             if (randomValue > effectiveInfectChance) {
-                if (!pPlayer.hasEffect(ContagionEffects.INFECTION)) {
-                    if (pPlayer.hasEffect(ContagionEffects.IMMUNITY)) {
+                if (!pPlayer.hasEffect(ContagionEffects.INFECTION.get())) {
+                    if (pPlayer.hasEffect(ContagionEffects.IMMUNITY.get())) {
                         pPlayer.level().playSound((Player) null, pPlayer.getX(), pPlayer.getY(), pPlayer.getZ(), ContagionSounds.INFECTION_PREVENTED.get(), SoundSource.BLOCKS, 1.0F, 3);
                     } else {
                         if (!pPlayer.level().isClientSide()) {
-                            pPlayer.addEffect(new MobEffectInstance(ContagionEffects.INFECTION, Config.infectionDuration * 20, 0));
+                            pPlayer.addEffect(new MobEffectInstance(ContagionEffects.INFECTION.get(), Config.infectionDuration * 20, 0));
                             ContagionInfectionEffect.resetValues(pPlayer);
                             pPlayer.sendSystemMessage(Component.translatable("effect.contagion.infected_msg"));
                         }

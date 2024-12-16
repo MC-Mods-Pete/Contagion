@@ -14,18 +14,18 @@ public class ContagionResetInfectionEffect extends MobEffect {
     }
 
     @Override
-    public boolean applyEffectTick(@NotNull LivingEntity pLivingEntity, int pAmplifier) {
+    public void applyEffectTick(@NotNull LivingEntity pLivingEntity, int pAmplifier) {
         if (!pLivingEntity.level().isClientSide()) {
-            if (pLivingEntity.hasEffect(ContagionEffects.INFECTION)) {
+            if (pLivingEntity.hasEffect(ContagionEffects.INFECTION.get())) {
                 pLivingEntity.sendSystemMessage(Component.translatable("effect.contagion.reset_infection_msg"));
-                pLivingEntity.removeEffect(ContagionEffects.INFECTION);
+                pLivingEntity.removeEffect(ContagionEffects.INFECTION.get());
                 ContagionInfectionEffect.resetValues(pLivingEntity);
-                pLivingEntity.addEffect(new MobEffectInstance(ContagionEffects.INFECTION, Config.infectionDuration * 20, 0));
+                pLivingEntity.addEffect(new MobEffectInstance(ContagionEffects.INFECTION.get(), Config.infectionDuration * 20, 0));
             }
         }
-        return super.applyEffectTick(pLivingEntity, pAmplifier);
+        super.applyEffectTick(pLivingEntity, pAmplifier);
     }
 
     @Override
-    public boolean shouldApplyEffectTickThisTick(int duration, int amplifier) { return true; }
+    public boolean isDurationEffectTick(int duration, int amplifier) { return true; }
 }

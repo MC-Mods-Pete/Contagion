@@ -2,30 +2,16 @@
   "type": "contagion:add_item",
   "conditions": [
     {
-      "condition": "neoforge:loot_table_id",
+      "condition": "forge:loot_table_id",
       "loot_table_id": "minecraft:entities/zombie"
     },
     {
-      "condition": "minecraft:random_chance_with_enchanted_bonus",
-      "enchanted_chance": {
-        "type": "minecraft:linear",
-        "base": 0.1,
-        "per_level_above_first": 0.025
-      },
-      "enchantment": "minecraft:looting",
-      "unenchanted_chance": 0.075
+      "chance": 0.075,
+      "condition": "minecraft:random_chance_with_looting",
+      "looting_multiplier": 0.025
     }
   ],
-  "functions": [
-    {
-      "add": false,
-      "count": {
-        "type": "minecraft:uniform",
-        "max": 2.0,
-        "min": 1.0
-      },
-      "function": "minecraft:set_count"
-    }
-  ],
-  "item": "contagion:contagious_flesh"
+  "item": "contagion:contagious_flesh",
+  "max_count": 2,
+  "min_count": 1
 }
