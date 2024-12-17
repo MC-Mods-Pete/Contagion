@@ -44,5 +44,11 @@
   "text.autoconfig.contagion.option.milkCuresInfection": "The infection can be cured by drinking milk",
   "text.autoconfig.contagion.option.milkCuresInfection.@Tooltip": "If enabled, drinking milk will cure the player if infected | default: false",
   "text.autoconfig.contagion.option.totemPreventsDyingFromInfection": "Holding a totem will prevent death from infection",
-  "text.autoconfig.contagion.option.totemPreventsDyingFromInfection.@Tooltip": "If true, holding a totem will prevent the player from dying when the infection timer runs out | default: true"
+  "text.autoconfig.contagion.option.totemPreventsDyingFromInfection.@Tooltip": "If true, holding a totem will prevent the player from dying when the infection timer runs out | default: true",
+  "text.autoconfig.contagion.option.displayCurrentInfectionProtection": "Displays the current infection protection value in the HUD",
+  "text.autoconfig.contagion.option.displayCurrentInfectionProtection.@Tooltip": "If enabled, displays the current protection value in the HUD | default: true",
+  "text.autoconfig.contagion.option.deltaX": "Move the HUD-display in the X-direction",
+  "text.autoconfig.contagion.option.deltaX.@Tooltip": "Move the displayed protection value in the HUD in X-direction | default: 0",
+  "text.autoconfig.contagion.option.deltaY": "Move the HUD-display in the Y-direction",
+  "text.autoconfig.contagion.option.deltaY.@Tooltip": "Move the displayed protection value in the HUD in Y-direction | default: 0"
 }
