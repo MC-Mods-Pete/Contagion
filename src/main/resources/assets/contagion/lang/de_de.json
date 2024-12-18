@@ -25,6 +25,7 @@
   "death.attack.infection": "%1$s ist an der Infektion gestorben",
 
   "text.autoconfig.contagion.title": "Contagion",
+  "text.autoconfig.contagion.option.infectionDuration.@PrefixText": "[Hinweis]\nFür Singleplayer - bitte die untenstehenden Optionen benutzen um die Mod zu konfigurieren\nFür Multiplayer - die Mod muss auf dem Server konfiguriert werden (nicht auf den Clients)\n",
   "text.autoconfig.contagion.option.infectionDuration": "Infektionsdauer (in Sekunden)",
   "text.autoconfig.contagion.option.infectionDuration.@Tooltip": "Dauer in Sekunden bis der Spieler an der Infektion stirbt | Default: 600",
   "text.autoconfig.contagion.option.baseInfectionChance": "Grundinfektionswahrscheinlichkeit (in %)",
@@ -44,5 +45,14 @@
   "text.autoconfig.contagion.option.milkCuresInfection": "Eine Infektion kann durch das Trinken von Milch beseitigt werden",
   "text.autoconfig.contagion.option.milkCuresInfection.@Tooltip": "Wenn aktiviert, können Infektionen durch das Trinken von Milch beseitigt werden | Default: deaktiviert",
   "text.autoconfig.contagion.option.totemPreventsDyingFromInfection": "Ein Totem in der Hand verhindert das Sterben durch Infektionen",
-  "text.autoconfig.contagion.option.totemPreventsDyingFromInfection.@Tooltip": "Wenn aktiviert, verhindert das Halten eines Totems, das der Spieler am Ende der Infektionsdauer stirbt | Default: aktiviert"
+  "text.autoconfig.contagion.option.totemPreventsDyingFromInfection.@Tooltip": "Wenn aktiviert, verhindert das Halten eines Totems, das der Spieler am Ende der Infektionsdauer stirbt | Default: aktiviert",
+  "text.autoconfig.contagion.option.displayCurrentInfectionProtection": "Zeigt den aktuellen Schutz vor einer Infektion im HUD an",
+  "text.autoconfig.contagion.option.displayCurrentInfectionProtection.@Tooltip": "Wenn aktiviert, wird der aktuelle Schutz vor einer Infektion in % im HUD angezeigt | default: true",
+  "text.autoconfig.contagion.option.deltaX": "Verschiebe die Anzeige im HUD in der X-Richtung",
+  "text.autoconfig.contagion.option.deltaX.@Tooltip": "Verschiebt die Infektionsschutzanzeige im HUD in der X-Richtung | default: 0",
+  "text.autoconfig.contagion.option.deltaY": "Verschiebe die Anzeige im HUD in der Y-Richtung",
+  "text.autoconfig.contagion.option.deltaY.@Tooltip": "Verschiebt die Infektionsschutzanzeige im HUD in der Y-Richtung | default: 0",
+
+  "text.autoconfig.contagion.category.default": "Main",
+  "text.autoconfig.contagion.category.client": "Client"
 }

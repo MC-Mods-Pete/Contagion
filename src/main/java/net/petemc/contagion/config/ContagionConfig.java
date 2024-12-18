@@ -43,6 +43,8 @@ public class ContagionConfig implements ConfigData
         }
     }
 
+    @ConfigEntry.Gui.PrefixText
+
     @ConfigEntry.Gui.Tooltip()
     @Comment("Time in seconds until the infection kills the player | default: 600")
     public int infectionDuration = 600;
@@ -82,4 +84,19 @@ public class ContagionConfig implements ConfigData
     @ConfigEntry.Gui.Tooltip()
     @Comment("If true, holding a totem will not prevent the player from dying when the infection timer runs out | default: true")
     public boolean totemPreventsDyingFromInfection = true;
+
+    @ConfigEntry.Category("client")
+    @ConfigEntry.Gui.Tooltip()
+    @Comment("[Client] If true, displays the current protection value in the HUD | default: true")
+    public boolean displayCurrentInfectionProtection = true;
+
+    @ConfigEntry.Category("client")
+    @ConfigEntry.Gui.Tooltip()
+    @Comment("[Client] Move the displayed protection value in the HUD in X-direction | default: 0")
+    public int deltaX = 0;
+
+    @ConfigEntry.Category("client")
+    @ConfigEntry.Gui.Tooltip()
+    @Comment("[Client] Move the displayed protection value in the HUD in Y-direction | default: 0")
+    public int deltaY = 0;
 }
