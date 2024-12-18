@@ -2,9 +2,12 @@ package net.petemc.contagion;
 
 import net.fabricmc.api.ModInitializer;
 
+import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.petemc.contagion.config.ContagionConfig;
 import net.petemc.contagion.damage_type.ContagionDamageTypes;
 import net.petemc.contagion.effect.ContagionEffects;
+import net.petemc.contagion.network.NetworkPayloads;
+import net.petemc.contagion.network.ServerPlayerJoinEvent;
 import net.petemc.contagion.potion.ContagionPotions;
 import net.petemc.contagion.item.ContagionItemGroups;
 import net.petemc.contagion.item.ContagionItems;
@@ -28,5 +31,8 @@ public class Contagion implements ModInitializer {
 		ContagionDamageTypes.registerDamageTypes();
 		ContagionLootTableModifiers.modifyLootTables();
 		ContagionPotions.registerPotions();
+		ServerPlayerJoinEvent.registerEvent();
+
+		PayloadTypeRegistry.playS2C().register(NetworkPayloads.hudDataPayload.ID, NetworkPayloads.hudDataPayload.CODEC);
 	}
 }
