@@ -25,6 +25,7 @@
   "death.attack.infection": "%1$s died from the Infection",
 
   "text.autoconfig.contagion.title": "Contagion",
+  "text.autoconfig.contagion.option.infectionDuration.@PrefixText": "[Please note]\nFor singleplayer - use the options below to control different aspects of the mod\nFor multiplayer - the mod needs be configured on the server (not on the clients).\n",
   "text.autoconfig.contagion.option.infectionDuration": "Infection duration (in seconds)",
   "text.autoconfig.contagion.option.infectionDuration.@Tooltip": "Time in seconds until the infection kills the player | default: 600",
   "text.autoconfig.contagion.option.baseInfectionChance": "Base infection chance (in %)",
@@ -50,5 +51,8 @@
   "text.autoconfig.contagion.option.deltaX": "Move the HUD-display in the X-direction",
   "text.autoconfig.contagion.option.deltaX.@Tooltip": "Move the displayed protection value in the HUD in X-direction | default: 0",
   "text.autoconfig.contagion.option.deltaY": "Move the HUD-display in the Y-direction",
-  "text.autoconfig.contagion.option.deltaY.@Tooltip": "Move the displayed protection value in the HUD in Y-direction | default: 0"
+  "text.autoconfig.contagion.option.deltaY.@Tooltip": "Move the displayed protection value in the HUD in Y-direction | default: 0",
+
+  "text.autoconfig.contagion.category.default": "Main",
+  "text.autoconfig.contagion.category.client": "Client"
 }

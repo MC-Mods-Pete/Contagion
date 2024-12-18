@@ -1,11 +1,9 @@
 package net.petemc.contagion.network;
 
 import net.fabricmc.fabric.api.networking.v1.*;
-import net.minecraft.entity.Entity;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
-import net.minecraft.world.World;
 import net.petemc.contagion.config.ContagionConfig;
 
 public class ServerPlayerJoinEvent {
