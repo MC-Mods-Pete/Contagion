@@ -2,6 +2,7 @@ package net.petemc.contagion;
 
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
@@ -11,11 +12,16 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 import net.petemc.contagion.config.ContagionConfig;
 import net.petemc.contagion.effect.ContagionEffects;
+import net.petemc.contagion.network.NetworkPayloads;
 import org.jetbrains.annotations.NotNull;
 
 public class ContagionClient implements ClientModInitializer, HudRenderCallback {
     private int cachedInfectionProtection = -1;
     private int infectionProtection = -1;
+
+    private int receivedBaseInfectionChance = -1;
+    private int receivedMinimumInfectionChance = -1;
+    private boolean receivedArmorLowersInfectionChance = false;
 
     @Override
     public void onInitializeClient() {
@@ -28,6 +34,16 @@ public class ContagionClient implements ClientModInitializer, HudRenderCallback 
                     HudRenderCallback.EVENT.register(this);
                 }
             }
+        });
+
+        ClientPlayNetworking.registerGlobalReceiver(NetworkPayloads.HUD_DATA_PACKET_ID, (client, handler, buf, responseSender) -> {
+            receivedBaseInfectionChance = buf.readInt();
+            receivedMinimumInfectionChance = buf.readInt();
+            receivedArmorLowersInfectionChance = buf.readBoolean();
+
+            client.execute(() -> {
+                Contagion.LOGGER.info("Data for client HUD-received: {} {} {}:", receivedBaseInfectionChance, receivedMinimumInfectionChance, receivedArmorLowersInfectionChance);
+            });
         });
     }
 
@@ -57,18 +73,18 @@ public class ContagionClient implements ClientModInitializer, HudRenderCallback 
         }
     }
 
-    private static int getEffectiveInfectProtection(@NotNull ClientPlayerEntity clientPlayerEntity) {
+    private int getEffectiveInfectProtection(@NotNull ClientPlayerEntity clientPlayerEntity) {
         int effectInfectProtection;
-        if (ContagionConfig.INSTANCE.baseInfectionChance > 100) {
+        if (receivedBaseInfectionChance > 100) {
             effectInfectProtection = 0;
         } else {
-            effectInfectProtection = 100 - ContagionConfig.INSTANCE.baseInfectionChance;
+            effectInfectProtection = 100 - receivedBaseInfectionChance;
         }
-        if (ContagionConfig.INSTANCE.armorLowersInfectionChance) {
+        if (receivedArmorLowersInfectionChance) {
             effectInfectProtection = effectInfectProtection + (clientPlayerEntity.getArmor() * 3);
         }
-        if (effectInfectProtection > (100 - ContagionConfig.INSTANCE.minimumInfectionChance)) {
-            effectInfectProtection = 100 - ContagionConfig.INSTANCE.minimumInfectionChance;
+        if (effectInfectProtection > (100 - receivedMinimumInfectionChance)) {
+            effectInfectProtection = 100 - receivedMinimumInfectionChance;
         }
         if (clientPlayerEntity.hasStatusEffect(ContagionEffects.IMMUNITY)) {
             effectInfectProtection = 100;
