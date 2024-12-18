@@ -25,7 +25,7 @@
   "death.attack.infection": "%1$s ist an der Infektion gestorben",
 
   "text.autoconfig.contagion.title": "Contagion",
-  "text.autoconfig.contagion.option.infectionDuration.@PrefixText": "[Hinweis]\nFür Singleplayer - bitte die untenstehenden Optionen benutzen um die Mod zu konfigurieren\nFür Multiplayer - die Mod muss auf dem Server konfiguriert werden (nicht auf den Clients).\n",
+  "text.autoconfig.contagion.option.infectionDuration.@PrefixText": "[Hinweis]\nFür Singleplayer - bitte die untenstehenden Optionen benutzen um die Mod zu konfigurieren\nFür Multiplayer - die Mod muss auf dem Server konfiguriert werden (nicht auf den Clients)\n",
   "text.autoconfig.contagion.option.infectionDuration": "Infektionsdauer (in Sekunden)",
   "text.autoconfig.contagion.option.infectionDuration.@Tooltip": "Dauer in Sekunden bis der Spieler an der Infektion stirbt | Default: 600",
   "text.autoconfig.contagion.option.baseInfectionChance": "Grundinfektionswahrscheinlichkeit (in %)",
