@@ -1,21 +1,16 @@
 package net.petemc.contagion.loot;
 
 import com.google.common.base.Suppliers;
-import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.RegistryFileCodec;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.functions.LootItemFunction;
-import net.minecraft.world.level.storage.loot.functions.LootItemFunctionType;
 import net.minecraft.world.level.storage.loot.functions.LootItemFunctions;
-import net.minecraft.world.level.storage.loot.functions.SequenceFunction;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.neoforged.neoforge.common.loot.LootModifier;
 import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
@@ -46,9 +41,11 @@ public class AddItemModifier extends LootModifier {
     protected @NotNull ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
         ItemStack itemToAdd = new ItemStack(item);
 
-        for (Holder<LootItemFunction> functionHolder : functions) {
-            LootItemFunction function = functionHolder.value();
-            itemToAdd = function.apply(itemToAdd, context);
+        if (!functions.isEmpty()) {
+            for (Holder<LootItemFunction> functionHolder : functions) {
+                LootItemFunction function = functionHolder.value();
+                itemToAdd = function.apply(itemToAdd, context);
+            }
         }
 
         generatedLoot.add(itemToAdd);
