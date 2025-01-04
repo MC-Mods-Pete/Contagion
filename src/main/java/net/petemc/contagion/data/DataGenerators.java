@@ -21,7 +21,7 @@ public class DataGenerators {
             PackOutput packOutput = generator.getPackOutput();
             ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
             CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
-/*
+            /*
             generator.addProvider(true, new ModEnLangProvider(output));
             generator.addProvider(true, new ModItemStateProvider(output, existingFileHelper));
             generator.addProvider(true, new ModBlockStateProvider(output, existingFileHelper));
