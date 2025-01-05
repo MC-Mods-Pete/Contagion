@@ -18,7 +18,7 @@ public class ContagionEffects {
     public static final Holder<MobEffect> RESET_INFECTION = MOB_EFFECTS.register("reset_infection",
             () -> new ContagionResetInfectionEffect(MobEffectCategory.BENEFICIAL, 16755200));
     public static final Holder<MobEffect> IMMUNITY = MOB_EFFECTS.register("immunity",
-            () -> new ContagionImmunityEffect(MobEffectCategory.BENEFICIAL, 10118365));
+            () -> new ContagionImmunityEffect(MobEffectCategory.BENEFICIAL, 0x651b74));
 
 
     public static void register(IEventBus eventBus) {
