@@ -28,7 +28,7 @@ import net.petemc.contagion.potion.ContagionPotions;
 import net.petemc.contagion.sound.ContagionSounds;
 import org.slf4j.Logger;
 
-// The value here should match an entry in the META-INF/neoforge.mods.toml file
+// The value here should match an entry in the META-INF/mods.toml file
 @Mod(Contagion.MOD_ID)
 public class Contagion {
 	public static final String MOD_ID = "contagion";

@@ -1,9 +1,12 @@
 package net.petemc.contagion;
 
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
+import net.petemc.contagion.effect.ContagionEffects;
+import net.petemc.contagion.potion.ContagionPotions;
 
 @Mod.EventBusSubscriber(modid = Contagion.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class Config
@@ -39,12 +42,9 @@ public class Config
             .comment("Chance for a random symptom to occur when infected")
             .defineInRange("randomSymptomsChance", 3, 0, 100);
 
-    // Todo fix issue with loading immunity duration
-    /*
-    private static final ForgeConfigSpec.IntValue IMMUNITY_DURATION = BUILDER
+    private static final ForgeConfigSpec.IntValue IMMUNITY_DURATION = BUILDER_SERVER
             .comment("Time the immunity from new infections will last")
             .defineInRange("immunityDuration", 90, 0, Integer.MAX_VALUE);
-     */
 
     private static final ForgeConfigSpec.BooleanValue MILK_CURES_INFECTION = BUILDER_SERVER
             .comment("If true, drinking milk will cure the player if infected")
@@ -74,6 +74,7 @@ public class Config
 
     static final ForgeConfigSpec SPEC_CLIENT = BUILDER_CLIENT.build();
 
+
     public static int infectionDuration;
     public static int baseInfectionChance;
     public static int minimumInfectionChance;
@@ -81,7 +82,7 @@ public class Config
     public static boolean enableRandomSymptoms;
     public static int randomSymptomsDuration;
     public static int randomSymptomsChance;
-    public static int immunityDuration = 120;
+    public static int immunityDuration;
     public static boolean milkCuresInfection;
     public static boolean totemPreventsDyingFromInfection;
     public static boolean displayCurrentInfectionProtection;
@@ -100,7 +101,14 @@ public class Config
             enableRandomSymptoms = ENABLE_RANDOM_SYMPTOMS.get();
             randomSymptomsDuration = RANDOM_SYMPTOMS_DURATION.get();
             randomSymptomsChance = RANDOM_SYMPTOMS_CHANCE.get();
-            //immunityDuration = IMMUNITY_DURATION.get();
+
+            immunityDuration = IMMUNITY_DURATION.get();
+            // update cure potions with immunity value loaded from config file
+            MobEffectInstance cureMobEffectInstance = new MobEffectInstance(ContagionEffects.IMMUNITY.get(), immunityDuration * 20, 0);
+            MobEffectInstance longCureMobEffectInstance = new MobEffectInstance(ContagionEffects.IMMUNITY.get(), immunityDuration * 20 * 3, 0);
+            ContagionPotions.CURE_POTION.get().getEffects().get(0).update(cureMobEffectInstance);
+            ContagionPotions.LONG_CURE_POTION.get().getEffects().get(0).update(longCureMobEffectInstance);
+
             milkCuresInfection = MILK_CURES_INFECTION.get();
             totemPreventsDyingFromInfection = TOTEM_PREVENTS_DYING_FROM_INFECTION.get();
         }
