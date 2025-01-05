@@ -1,5 +1,6 @@
 package net.petemc.contagion.event;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Items;
@@ -40,7 +41,9 @@ public class ContagionEvents {
     @SubscribeEvent
     public static void onPlayerTick(PlayerTickEvent.Post event) {
         if (event.getEntity().level().isClientSide()) {
-            ProtectionHudOverlay.infectionProtection = getEffectiveInfectProtection(event.getEntity());
+            Minecraft mc = Minecraft.getInstance();
+            assert mc.player != null;
+            ProtectionHudOverlay.infectionProtection = getEffectiveInfectProtection(mc.player);
             if (ProtectionHudOverlay.infectionProtection != ProtectionHudOverlay.cachedInfectionProtection) {
                 ProtectionHudOverlay.cachedInfectionProtection = ProtectionHudOverlay.infectionProtection;
             }
