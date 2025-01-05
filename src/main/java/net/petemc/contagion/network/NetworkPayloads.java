@@ -5,10 +5,7 @@ import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.network.codec.PacketCodecs;
 import net.minecraft.network.packet.CustomPayload;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.Uuids;
 import net.petemc.contagion.Contagion;
-
-import java.util.UUID;
 
 public class NetworkPayloads {
     public static final Identifier HUD_DATA_PACKET_ID = Identifier.of(Contagion.MOD_ID, "transmit_data_from_hud_display");
