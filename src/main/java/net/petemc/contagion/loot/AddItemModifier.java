@@ -38,7 +38,7 @@ public class AddItemModifier extends LootModifier {
     }
 
     @Override
-    protected @NotNull ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
+    protected @NotNull ObjectArrayList<ItemStack> doApply(@NotNull ObjectArrayList<ItemStack> generatedLoot, @NotNull LootContext context) {
         ItemStack itemToAdd = new ItemStack(item);
 
         if (!functions.isEmpty()) {

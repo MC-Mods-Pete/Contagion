@@ -14,6 +14,7 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
+import net.petemc.contagion.client.ProtectionHudOverlay;
 import net.petemc.contagion.damage_type.ContagionDamageTypes;
 import net.petemc.contagion.data.DataGenerators;
 import net.petemc.contagion.effect.ContagionEffects;
@@ -53,7 +54,8 @@ public class Contagion {
 		// Register the item to a creative tab
 		modEventBus.addListener(this::addCreative);
 		// Register our mod's ModConfigSpec so that FML can create and load the config file for us
-		modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
+		modContainer.registerConfig(ModConfig.Type.SERVER, Config.SPEC_SERVER);
+		modContainer.registerConfig(ModConfig.Type.CLIENT, Config.SPEC_CLIENT);
 	}
 
 	// common setup
@@ -77,6 +79,7 @@ public class Contagion {
 	public static class ClientModEvents {
 		@SubscribeEvent
 		public static void onClientSetup(FMLClientSetupEvent event) {
+			ProtectionHudOverlay.init();
 		}
 	}
 }
