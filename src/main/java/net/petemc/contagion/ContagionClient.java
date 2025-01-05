@@ -52,26 +52,30 @@ public class ContagionClient implements ClientModInitializer, HudRenderCallback 
     @Override
     public void onHudRender(DrawContext drawContext, RenderTickCounter tickCounter) {
         if (ContagionConfig.INSTANCE.displayCurrentInfectionProtection) {
-            TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;
-            MatrixStack matrixStack = drawContext.getMatrices();
+            MinecraftClient mcClient = MinecraftClient.getInstance();
+            assert mcClient.player != null;
+            if (!mcClient.player.isSpectator()) {
+                TextRenderer textRenderer = mcClient.textRenderer;
+                MatrixStack matrixStack = drawContext.getMatrices();
 
-            int color = 0xffffff;
-            if (infectionProtection == 100) {
-                color = 0xd4af37;
-            } else if (infectionProtection >= 75) {
-                color = 0x3fc400;
-            } else if (infectionProtection < 30) {
-                color = 0xe00000;
+                int color = 0xffffff;
+                if (infectionProtection == 100) {
+                    color = 0xd4af37;
+                } else if (infectionProtection >= 75) {
+                    color = 0x3fc400;
+                } else if (infectionProtection < 30) {
+                    color = 0xe00000;
+                }
+
+                Identifier texture = Identifier.of("contagion", "textures/hud/contagion_armor16.png");
+
+                drawContext.drawTexture(RenderLayer::getGuiTextured, texture, (drawContext.getScaledWindowWidth() / 2) - 170 + ContagionConfig.INSTANCE.deltaX, drawContext.getScaledWindowHeight() - 19 + ContagionConfig.INSTANCE.deltaY, 0, 0, 16, 16, 16, 16);
+                matrixStack.push();
+                matrixStack.translate((float) ((drawContext.getScaledWindowWidth() / 2) + 18 - 170 + ContagionConfig.INSTANCE.deltaX), drawContext.getScaledWindowHeight() - 16 + ContagionConfig.INSTANCE.deltaY, 0);
+                matrixStack.scale(1, 1, 2.5f);
+                drawContext.drawTextWithShadow(textRenderer, infectionProtection + "%", 2, 2, color);
+                matrixStack.pop();
             }
-
-            Identifier texture = Identifier.of("contagion", "textures/hud/contagion_armor16.png");
-
-            drawContext.drawTexture(RenderLayer::getGuiTextured, texture, (drawContext.getScaledWindowWidth()/2) - 170 + ContagionConfig.INSTANCE.deltaX, drawContext.getScaledWindowHeight()-19 + ContagionConfig.INSTANCE.deltaY, 0, 0, 16, 16, 16, 16);
-            matrixStack.push();
-            matrixStack.translate((float)((drawContext.getScaledWindowWidth()/2)+18 - 170 + ContagionConfig.INSTANCE.deltaX), drawContext.getScaledWindowHeight()-16 + ContagionConfig.INSTANCE.deltaY, 0);
-            matrixStack.scale(1, 1, 2.5f);
-            drawContext.drawTextWithShadow(textRenderer, infectionProtection + "%", 2, 2, color);
-            matrixStack.pop();
         }
     }
 
