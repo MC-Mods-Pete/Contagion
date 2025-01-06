@@ -40,7 +40,7 @@ public abstract class ZoglinEntityMixin {
                             if (!level.isClientSide()) {
                                 pPlayer.addEffect(new MobEffectInstance(ContagionEffects.INFECTION, Config.infectionDuration * 20, 0));
                                 ContagionInfectionEffect.resetValues(pPlayer);
-                                pPlayer.sendSystemMessage(Component.translatable("effect.contagion.infected_msg"));
+                                pPlayer.sendSystemMessage(Component.translatable("effect.contagion.infected_msg").withColor(-65536));
                             }
                         }
                     }
