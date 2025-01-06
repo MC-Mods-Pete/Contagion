@@ -29,7 +29,7 @@ public class ProtectionHudOverlay {
             color = 0xe00000;
         }
 
-        if (Config.displayCurrentInfectionProtection) {
+        if ((Config.displayCurrentInfectionProtection) && (receivedBaseInfectionChance != -1)) {
             assert mc.gameMode != null;
             if (mc.gameMode.hasExperience() || mc.gameMode.hasInfiniteItems()) {
                 RenderSystem.setShader(GameRenderer::getPositionTexShader);
