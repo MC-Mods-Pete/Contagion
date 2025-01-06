@@ -34,42 +34,6 @@ public class ContagionEvents {
     }
 
     @SubscribeEvent
-    public static void registerGuiOverlays(RenderGuiEvent.Pre event) {
-        ProtectionHudOverlay.HUD_INSTANCE.render(event.getGuiGraphics(), event.getPartialTick());
-    }
-
-    @SubscribeEvent
-    public static void onPlayerTick(PlayerTickEvent.Post event) {
-        if (event.getEntity().level().isClientSide()) {
-            Minecraft mc = Minecraft.getInstance();
-            assert mc.player != null;
-            ProtectionHudOverlay.infectionProtection = getEffectiveInfectProtection(mc.player);
-            if (ProtectionHudOverlay.infectionProtection != ProtectionHudOverlay.cachedInfectionProtection) {
-                ProtectionHudOverlay.cachedInfectionProtection = ProtectionHudOverlay.infectionProtection;
-            }
-        }
-    }
-
-    private static int getEffectiveInfectProtection(@NotNull Player clientPlayerEntity) {
-        int effectInfectProtection;
-        if (ProtectionHudOverlay.receivedBaseInfectionChance > 100) {
-            effectInfectProtection = 0;
-        } else {
-            effectInfectProtection = 100 - ProtectionHudOverlay.receivedBaseInfectionChance;
-        }
-        if (ProtectionHudOverlay.receivedArmorLowersInfectionChance) {
-            effectInfectProtection = effectInfectProtection + (clientPlayerEntity.getArmorValue() * 3);
-        }
-        if (effectInfectProtection > (100 - ProtectionHudOverlay.receivedMinimumInfectionChance)) {
-            effectInfectProtection = 100 - ProtectionHudOverlay.receivedMinimumInfectionChance;
-        }
-        if (clientPlayerEntity.hasEffect(ContagionEffects.IMMUNITY)) {
-            effectInfectProtection = 100;
-        }
-        return effectInfectProtection;
-    }
-
-    @SubscribeEvent
     public static void onRegisterBrewingRecipes(RegisterBrewingRecipesEvent event) {
         PotionBrewing.Builder builder = event.getBuilder();
         builder.addMix(Potions.AWKWARD, ContagionItems.GOLD_STREAKED_FLESH.get(), ContagionPotions.CURE_POTION);
