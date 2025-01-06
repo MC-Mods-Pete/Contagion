@@ -6,7 +6,9 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.mob.ZombieEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.sound.SoundCategory;
+import net.minecraft.text.Style;
 import net.minecraft.text.Text;
+import net.minecraft.util.Colors;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.random.Random;
 import net.petemc.contagion.config.ContagionConfig;
@@ -35,7 +37,7 @@ public class ZombieEntityMixin {
                         if (!pPlayer.getWorld().isClient()) {
                             pPlayer.addStatusEffect(new StatusEffectInstance(ContagionEffects.INFECTION, ContagionConfig.INSTANCE.infectionDuration * 20, 0));
                             ContagionInfectionEffect.resetValues(pPlayer);
-                            pPlayer.sendMessage(Text.translatable("effect.contagion.infected_msg"));
+                            pPlayer.sendMessage(Text.translatable("effect.contagion.infected_msg").setStyle(Style.EMPTY.withColor(Colors.RED)));
                         }
                     }
                 }

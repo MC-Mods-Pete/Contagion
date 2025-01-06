@@ -26,12 +26,14 @@ public class ContagionClient implements ClientModInitializer, HudRenderCallback 
     @Override
     public void onInitializeClient() {
         ClientTickEvents.START_CLIENT_TICK.register(client -> {
-            if (client.player != null) {
-                infectionProtection = getEffectiveInfectProtection(client.player);
-                if (infectionProtection != cachedInfectionProtection) {
-                    cachedInfectionProtection = infectionProtection;
-                    MinecraftClient.getInstance().getFramebuffer().beginWrite(false);
-                    HudRenderCallback.EVENT.register(this);
+            if (receivedBaseInfectionChance != -1) {
+                if (client.player != null) {
+                    infectionProtection = getEffectiveInfectProtection(client.player);
+                    if (infectionProtection != cachedInfectionProtection) {
+                        cachedInfectionProtection = infectionProtection;
+                        MinecraftClient.getInstance().getFramebuffer().beginWrite(false);
+                        HudRenderCallback.EVENT.register(this);
+                    }
                 }
             }
         });
