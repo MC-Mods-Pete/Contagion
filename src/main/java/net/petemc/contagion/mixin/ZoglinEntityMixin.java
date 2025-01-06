@@ -10,6 +10,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.Zoglin;
 import net.minecraft.world.entity.monster.hoglin.HoglinBase;
 import net.minecraft.world.entity.player.Player;
+import net.neoforged.neoforge.client.model.DynamicFluidContainerModel;
 import net.petemc.contagion.Config;
 import net.petemc.contagion.effect.ContagionEffects;
 import net.petemc.contagion.effect.ContagionInfectionEffect;
@@ -39,7 +40,7 @@ public abstract class ZoglinEntityMixin {
                             if (!pPlayer.level().isClientSide()) {
                                 pPlayer.addEffect(new MobEffectInstance(ContagionEffects.INFECTION, Config.infectionDuration * 20, 0));
                                 ContagionInfectionEffect.resetValues(pPlayer);
-                                pPlayer.sendSystemMessage(Component.translatable("effect.contagion.infected_msg"));
+                                pPlayer.sendSystemMessage(Component.translatable("effect.contagion.infected_msg").withColor(-65536));
                             }
                         }
                     }
