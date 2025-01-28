@@ -5,6 +5,7 @@ import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.item.Items;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.random.Random;
@@ -82,8 +83,12 @@ public class ContagionInfectionEffect extends StatusEffect {
 
                 if (infectedPlayer.contagion_getInfectionTicks() <= 2) {
                     if (ContagionConfig.INSTANCE.totemPreventsDyingFromInfection) {
+                        if (!(pLivingEntity.getMainHandStack().isOf(Items.TOTEM_OF_UNDYING) || pLivingEntity.getOffHandStack().isOf(Items.TOTEM_OF_UNDYING))) {
+                            infectedPlayer.contagion_setPlayerDiedFromInfection(true);
+                        }
                         pLivingEntity.damage(world, ContagionDamageTypes.of(pLivingEntity.getWorld(), ContagionDamageTypes.INFECTION), 1000.0f);
                     } else {
+                        infectedPlayer.contagion_setPlayerDiedFromInfection(true);
                         pLivingEntity.kill(world);
                     }
                     infectedPlayer.contagion_setInfection(false);

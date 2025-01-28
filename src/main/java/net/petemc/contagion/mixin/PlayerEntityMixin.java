@@ -14,6 +14,8 @@ public abstract class PlayerEntityMixin implements InfectedPlayer {
     @Unique
     private boolean infected = false;
     @Unique
+    private boolean playerDiedFromInfection = false;
+    @Unique
     private long infectionTicks = 0;
     @Unique
     private long infectionCooldown = 0;
@@ -26,6 +28,16 @@ public abstract class PlayerEntityMixin implements InfectedPlayer {
     @Unique
     public boolean contagion_isPlayerInfected() {
         return this.infected;
+    }
+
+    @Unique
+    public void contagion_setPlayerDiedFromInfection(boolean value) {
+        this.playerDiedFromInfection = value;
+    }
+
+    @Unique
+    public boolean contagion_playerDiedFromInfection() {
+        return this.playerDiedFromInfection;
     }
 
     @Unique
@@ -51,6 +63,7 @@ public abstract class PlayerEntityMixin implements InfectedPlayer {
     @Inject(method = "readCustomDataFromNbt", at = @At("TAIL"))
     private void injectToReadNbt(NbtCompound nbt, CallbackInfo ci) {
         this.infected = nbt.getBoolean("contagion_is_player_infected");
+        this.playerDiedFromInfection = nbt.getBoolean("contagion_player_died_from_infection");
         this.infectionTicks = nbt.getLong("contagion_infection_ticks");
         this.infectionCooldown = nbt.getLong("contagion_infection_cooldown");
     }
@@ -58,6 +71,7 @@ public abstract class PlayerEntityMixin implements InfectedPlayer {
     @Inject(method = "writeCustomDataToNbt", at = @At("TAIL"))
     private void injectToWriteNbt(NbtCompound nbt, CallbackInfo ci) {
         nbt.putBoolean("contagion_is_player_infected", this.infected);
+        nbt.putBoolean("contagion_player_died_from_infection", this.playerDiedFromInfection);
         nbt.putLong("contagion_infection_ticks", this.infectionTicks);
         nbt.putLong("contagion_infection_cooldown", this.infectionCooldown);
     }
