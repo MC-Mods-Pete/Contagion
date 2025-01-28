@@ -65,7 +65,7 @@ public class ContagionClient implements ClientModInitializer, HudRenderCallback 
                 } else if (infectionProtection >= 75) {
                     color = 0x3fc400;
                 } else if (infectionProtection < 30) {
-                    color = 0xe00000;
+                    color = 0xff5555;
                 }
 
                 Identifier texture = new Identifier("contagion", "textures/hud/contagion_armor16.png");
