@@ -5,11 +5,12 @@ import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.item.Items;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.random.Random;
+import net.petemc.contagion.casts.InfectedPlayer;
 import net.petemc.contagion.config.ContagionConfig;
 import net.petemc.contagion.damage_type.ContagionDamageTypes;
-import net.petemc.contagion.casts.InfectedPlayer;
 
 public class ContagionInfectionEffect extends StatusEffect {
     public ContagionInfectionEffect(StatusEffectCategory statusEffectCategory, int color) {
@@ -81,8 +82,12 @@ public class ContagionInfectionEffect extends StatusEffect {
 
                 if (infectedPlayer.contagion_getInfectionTicks() <= 2) {
                     if (ContagionConfig.INSTANCE.totemPreventsDyingFromInfection) {
+                        if (!(pLivingEntity.getMainHandStack().isOf(Items.TOTEM_OF_UNDYING) || pLivingEntity.getOffHandStack().isOf(Items.TOTEM_OF_UNDYING))) {
+                            infectedPlayer.contagion_setPlayerDiedFromInfection(true);
+                        }
                         pLivingEntity.damage(ContagionDamageTypes.of(pLivingEntity.getWorld(), ContagionDamageTypes.INFECTION), 1000.0f);
                     } else {
+                        infectedPlayer.contagion_setPlayerDiedFromInfection(true);
                         pLivingEntity.kill();
                     }
                     infectedPlayer.contagion_setInfection(false);
