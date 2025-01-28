@@ -36,7 +36,7 @@ public class ProtectionHudOverlay implements LayeredDraw.Layer {
         } else if (infectionProtection >= 75) {
             color = 0x3fc400;
         } else if (infectionProtection < 30) {
-            color = 0xe00000;
+            color = 0xff5555;
         }
 
         if ((Config.displayCurrentInfectionProtection) && (receivedBaseInfectionChance != -1)) {
