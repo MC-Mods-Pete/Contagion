@@ -7,12 +7,11 @@ import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.Items;
 import net.petemc.contagion.Config;
 import net.petemc.contagion.damage_type.ContagionDamageTypes;
 import net.petemc.contagion.casts.InfectedPlayer;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.Set;
 
 public class ContagionInfectionEffect extends MobEffect {
     public ContagionInfectionEffect(MobEffectCategory mobEffectCategory, int color) {
@@ -20,16 +19,6 @@ public class ContagionInfectionEffect extends MobEffect {
     }
 
     private static final long defaultCooldown = 60;
-
-    /*
-    @Override
-    public void fillEffectCures(@NotNull Set<EffectCure> cures, @NotNull MobEffectInstance effectInstance) {
-        if (Config.milkCuresInfection) {
-            super.fillEffectCures(cures, effectInstance);
-        }
-    }
-
-     */
 
     public long getTicks(LivingEntity pLivingEntity) {
         if (pLivingEntity instanceof InfectedPlayer infectedPlayer) {
@@ -94,9 +83,13 @@ public class ContagionInfectionEffect extends MobEffect {
 
                 if (infectedPlayer.contagion_getInfectionTicks() <= 2) {
                     if (Config.totemPreventsDyingFromInfection) {
+                        if (!(pLivingEntity.getMainHandItem().is(Items.TOTEM_OF_UNDYING) || pLivingEntity.getOffhandItem().is(Items.TOTEM_OF_UNDYING))) {
+                            infectedPlayer.contagion_setPlayerDiedFromInfection(true);
+                        }
                         pLivingEntity.hurt(ContagionDamageTypes.of(pLivingEntity.level(), ContagionDamageTypes.INFECTION), 1000.0f);
                     } else {
                         pLivingEntity.kill(level);
+                        infectedPlayer.contagion_setPlayerDiedFromInfection(true);
                     }
                     infectedPlayer.contagion_setInfection(false);
                 }

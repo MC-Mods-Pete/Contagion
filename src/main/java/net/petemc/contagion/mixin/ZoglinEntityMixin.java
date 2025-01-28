@@ -1,7 +1,9 @@
 package net.petemc.contagion.mixin;
 
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
@@ -40,7 +42,7 @@ public abstract class ZoglinEntityMixin {
                             if (!level.isClientSide()) {
                                 pPlayer.addEffect(new MobEffectInstance(ContagionEffects.INFECTION, Config.infectionDuration * 20, 0));
                                 ContagionInfectionEffect.resetValues(pPlayer);
-                                pPlayer.sendSystemMessage(Component.translatable("effect.contagion.infected_msg").withColor(-65536));
+                                pPlayer.sendSystemMessage(Component.translatable("effect.contagion.infected_msg").withStyle(Style.EMPTY.withColor(ChatFormatting.RED)));
                             }
                         }
                     }
