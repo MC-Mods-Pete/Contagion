@@ -7,6 +7,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.petemc.contagion.Config;
 import net.petemc.contagion.damage_type.ContagionDamageTypes;
 import net.petemc.contagion.casts.InfectedPlayer;
@@ -92,8 +93,12 @@ public class ContagionInfectionEffect extends MobEffect {
 
                 if (infectedPlayer.contagion_getInfectionTicks() <= 2) {
                     if (Config.totemPreventsDyingFromInfection) {
+                        if (!(pLivingEntity.getMainHandItem().is(Items.TOTEM_OF_UNDYING) || pLivingEntity.getOffhandItem().is(Items.TOTEM_OF_UNDYING))) {
+                            infectedPlayer.contagion_setPlayerDiedFromInfection(true);
+                        }
                         pLivingEntity.hurt(ContagionDamageTypes.of(pLivingEntity.level(), ContagionDamageTypes.INFECTION), 1000.0f);
                     } else {
+                        infectedPlayer.contagion_setPlayerDiedFromInfection(true);
                         pLivingEntity.kill();
                     }
                     infectedPlayer.contagion_setInfection(false);

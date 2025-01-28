@@ -5,6 +5,10 @@ public interface InfectedPlayer {
 
     boolean contagion_isPlayerInfected();
 
+    void contagion_setPlayerDiedFromInfection(boolean value);
+
+    boolean contagion_playerDiedFromInfection();
+
     void contagion_setInfectionTicks(long infectionTicks);
 
     public long contagion_getInfectionTicks();
