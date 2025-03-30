@@ -13,6 +13,7 @@ import net.petemc.contagion.item.ContagionItemGroups;
 import net.petemc.contagion.item.ContagionItems;
 import net.petemc.contagion.sound.ContagionSounds;
 import net.petemc.contagion.util.ContagionLootTableModifiers;
+import net.petemc.contagion.util.ModCompatibility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,6 +33,7 @@ public class Contagion implements ModInitializer {
 		ContagionLootTableModifiers.modifyLootTables();
 		ContagionPotions.registerPotions();
 		ServerPlayerJoinEvent.registerEvent();
+		ModCompatibility.init();
 
 		PayloadTypeRegistry.playS2C().register(NetworkPayloads.hudDataPayload.ID, NetworkPayloads.hudDataPayload.CODEC);
 	}

@@ -33,7 +33,6 @@ public class ContagionClient implements ClientModInitializer, HudRenderCallback 
                     infectionProtection = getEffectiveInfectProtection(client.player);
                     if (infectionProtection != cachedInfectionProtection) {
                         cachedInfectionProtection = infectionProtection;
-                        MinecraftClient.getInstance().getFramebuffer().beginWrite(false);
                         HudRenderCallback.EVENT.register(this);
                     }
                 }

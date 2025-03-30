@@ -16,7 +16,7 @@ public class NetworkPayloads {
                 PacketCodec.tuple(
                         PacketCodecs.INTEGER, hudDataPayload::baseInfectionChance,
                         PacketCodecs.INTEGER, hudDataPayload::minimumInfectionChance,
-                        PacketCodecs.BOOL, hudDataPayload::armorLowersInfectionChance,
+                        PacketCodecs.BOOLEAN, hudDataPayload::armorLowersInfectionChance,
                         hudDataPayload::new);
 
         @Override
