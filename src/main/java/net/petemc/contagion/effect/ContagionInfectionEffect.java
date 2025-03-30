@@ -64,13 +64,13 @@ public class ContagionInfectionEffect extends MobEffect {
                                         pLivingEntity.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, (Config.randomSymptomsDuration * 20), 0));
                                         break;
                                     case 2:
-                                        pLivingEntity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, (Config.randomSymptomsDuration * 20), 0));
+                                        pLivingEntity.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, (Config.randomSymptomsDuration * 20), 0));
                                         break;
                                     case 3:
                                         pLivingEntity.addEffect(new MobEffectInstance(MobEffects.HUNGER, (Config.randomSymptomsDuration * 20), 0));
                                         break;
                                     case 4:
-                                        pLivingEntity.addEffect(new MobEffectInstance(MobEffects.CONFUSION, (Config.randomSymptomsDuration * 20), 0));
+                                        pLivingEntity.addEffect(new MobEffectInstance(MobEffects.NAUSEA, (Config.randomSymptomsDuration * 20), 0));
                                         break;
                                 }
                                 infectedPlayer.contagion_setInfectionCooldown((Config.randomSymptomsDuration + defaultCooldown) * 20);

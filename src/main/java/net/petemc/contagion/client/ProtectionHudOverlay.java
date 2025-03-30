@@ -6,6 +6,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.LayeredDraw;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.GameType;
 import net.petemc.contagion.Config;
 import net.petemc.contagion.Contagion;
 import org.jetbrains.annotations.NotNull;
@@ -42,7 +43,7 @@ public class ProtectionHudOverlay implements LayeredDraw.Layer {
 
         if ((Config.displayCurrentInfectionProtection) && (receivedBaseInfectionChance != -1)) {
             assert mc.gameMode != null;
-            if (mc.gameMode.hasExperience() || mc.gameMode.hasInfiniteItems()) {
+            if (mc.gameMode.getPlayerMode() == GameType.SURVIVAL || mc.gameMode.getPlayerMode() == GameType.CREATIVE) {
                 // Image
                 guiGraphics.blit(RenderType::guiTexturedOverlay, texture, (screenWidth / 2) - 170 + Config.deltaX, screenHeight - 19 + Config.deltaY, 0, 0, 16, 16 , 16, 16);
                 // Text

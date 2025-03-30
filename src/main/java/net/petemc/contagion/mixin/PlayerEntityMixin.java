@@ -63,10 +63,10 @@ public abstract class PlayerEntityMixin implements InfectedPlayer {
 
     @Inject(method = "readAdditionalSaveData", at = @At("TAIL"))
     private void injectToReadNbt(CompoundTag nbt, CallbackInfo ci) {
-        this.infected = nbt.getBoolean("contagion_is_player_infected");
-        this.playerDiedFromInfection = nbt.getBoolean("contagion_player_died_from_infection");
-        this.infectionTicks = nbt.getLong("contagion_infection_ticks");
-        this.infectionCooldown = nbt.getLong("contagion_infection_cooldown");
+        this.infected = nbt.getBoolean("contagion_is_player_infected").orElse(false);
+        this.playerDiedFromInfection = nbt.getBoolean("contagion_player_died_from_infection").orElse(false);
+        this.infectionTicks = nbt.getLong("contagion_infection_ticks").orElse(0L);
+        this.infectionCooldown = nbt.getLong("contagion_infection_cooldown").orElse(0L);
     }
 
     @Inject(method = "addAdditionalSaveData", at = @At("TAIL"))

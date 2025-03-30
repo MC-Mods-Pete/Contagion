@@ -22,6 +22,7 @@ import net.petemc.contagion.item.ContagionItems;
 import net.petemc.contagion.loot.ContagionLootModifiers;
 import net.petemc.contagion.potion.ContagionPotions;
 import net.petemc.contagion.sound.ContagionSounds;
+import net.petemc.contagion.util.ModCompatibility;
 import org.slf4j.Logger;
 
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
@@ -47,6 +48,7 @@ public class Contagion {
 		ContagionDamageTypes.registerDamageTypes();
 		ContagionPotions.register(modEventBus);
 		ContagionLootModifiers.LOOT_MODIFIERS.register(modEventBus);
+		ModCompatibility.init();
 
 		// Todo fix datagen for 1.21.3 and up
 		//modEventBus.addListener(DataGenerators::gatherData);
