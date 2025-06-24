@@ -1,7 +1,8 @@
 package net.petemc.contagion.mixin;
 
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.petemc.contagion.casts.InfectedPlayer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -62,18 +63,18 @@ public abstract class PlayerEntityMixin implements InfectedPlayer {
     }
 
     @Inject(method = "readAdditionalSaveData", at = @At("TAIL"))
-    private void injectToReadNbt(CompoundTag nbt, CallbackInfo ci) {
-        this.infected = nbt.getBoolean("contagion_is_player_infected").orElse(false);
-        this.playerDiedFromInfection = nbt.getBoolean("contagion_player_died_from_infection").orElse(false);
-        this.infectionTicks = nbt.getLong("contagion_infection_ticks").orElse(0L);
-        this.infectionCooldown = nbt.getLong("contagion_infection_cooldown").orElse(0L);
+    private void injectToReadNbt(ValueInput valueInput, CallbackInfo ci) {
+        this.infected = valueInput.getBooleanOr("contagion_is_player_infected", false);
+        this.playerDiedFromInfection = valueInput.getBooleanOr("contagion_player_died_from_infection", false);
+        this.infectionTicks = valueInput.getLongOr("contagion_infection_ticks", 0L);
+        this.infectionCooldown = valueInput.getLongOr("contagion_infection_cooldown", 0L);
     }
 
     @Inject(method = "addAdditionalSaveData", at = @At("TAIL"))
-    private void injectToWriteNbt(CompoundTag nbt, CallbackInfo ci) {
-        nbt.putBoolean("contagion_is_player_infected", this.infected);
-        nbt.putBoolean("contagion_player_died_from_infection", this.playerDiedFromInfection);
-        nbt.putLong("contagion_infection_ticks", this.infectionTicks);
-        nbt.putLong("contagion_infection_cooldown", this.infectionCooldown);
+    private void injectToWriteNbt(ValueOutput valueOutput, CallbackInfo ci) {
+        valueOutput.putBoolean("contagion_is_player_infected", this.infected);
+        valueOutput.putBoolean("contagion_player_died_from_infection", this.playerDiedFromInfection);
+        valueOutput.putLong("contagion_infection_ticks", this.infectionTicks);
+        valueOutput.putLong("contagion_infection_cooldown", this.infectionCooldown);
     }
 }

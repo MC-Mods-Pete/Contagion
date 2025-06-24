@@ -17,7 +17,7 @@ public class ClientPayloadHandler {
         Contagion.LOGGER.info("Received: {}", data.baseInfectionChance());
     }
 
-    @EventBusSubscriber(modid = Contagion.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
+    @EventBusSubscriber(modid = Contagion.MOD_ID)
     public static class RegisterClientPayloadHandler {
         @SubscribeEvent
         public static void register(final RegisterPayloadHandlersEvent event) {

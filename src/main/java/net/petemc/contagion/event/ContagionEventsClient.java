@@ -12,7 +12,7 @@ import net.petemc.contagion.client.ProtectionHudOverlay;
 import net.petemc.contagion.effect.ContagionEffects;
 import org.jetbrains.annotations.NotNull;
 
-@EventBusSubscriber (value = Dist.CLIENT, modid = Contagion.MOD_ID, bus = EventBusSubscriber.Bus.GAME)
+@EventBusSubscriber (value = Dist.CLIENT, modid = Contagion.MOD_ID)
 public class ContagionEventsClient {
     @SubscribeEvent
     public static void registerGuiOverlays(RenderGuiEvent.Pre event) {

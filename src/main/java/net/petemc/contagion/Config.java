@@ -8,7 +8,7 @@ import net.neoforged.neoforge.common.ModConfigSpec;
 import net.petemc.contagion.effect.ContagionEffects;
 import net.petemc.contagion.potion.ContagionPotions;
 
-@EventBusSubscriber(modid = Contagion.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = Contagion.MOD_ID)
 public class Config
 {
     // Server Config
