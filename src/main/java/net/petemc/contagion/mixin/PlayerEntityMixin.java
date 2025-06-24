@@ -2,6 +2,8 @@ package net.petemc.contagion.mixin;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.storage.ReadView;
+import net.minecraft.storage.WriteView;
 import net.petemc.contagion.casts.InfectedPlayer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -60,19 +62,19 @@ public abstract class PlayerEntityMixin implements InfectedPlayer {
         return infectionCooldown;
     }
 
-    @Inject(method = "readCustomDataFromNbt", at = @At("TAIL"))
-    private void injectToReadNbt(NbtCompound nbt, CallbackInfo ci) {
-        this.infected = nbt.getBoolean("contagion_is_player_infected").orElse(false);
-        this.playerDiedFromInfection = nbt.getBoolean("contagion_player_died_from_infection").orElse(false);
-        this.infectionTicks = nbt.getLong("contagion_infection_ticks").orElse(0L);
-        this.infectionCooldown = nbt.getLong("contagion_infection_cooldown").orElse(0L);
+    @Inject(method = "readCustomData", at = @At("TAIL"))
+    private void injectToReadCustomData(ReadView view, CallbackInfo ci) {
+        this.infected = view.getBoolean("contagion_is_player_infected", false);
+        this.playerDiedFromInfection = view.getBoolean("contagion_player_died_from_infection", false);
+        this.infectionTicks = view.getLong("contagion_infection_ticks", 0L);
+        this.infectionCooldown = view.getLong("contagion_infection_cooldown", 0L);
     }
 
-    @Inject(method = "writeCustomDataToNbt", at = @At("TAIL"))
-    private void injectToWriteNbt(NbtCompound nbt, CallbackInfo ci) {
-        nbt.putBoolean("contagion_is_player_infected", this.infected);
-        nbt.putBoolean("contagion_player_died_from_infection", this.playerDiedFromInfection);
-        nbt.putLong("contagion_infection_ticks", this.infectionTicks);
-        nbt.putLong("contagion_infection_cooldown", this.infectionCooldown);
+    @Inject(method = "writeCustomData", at = @At("TAIL"))
+    private void injectToWriteCustomData(WriteView view, CallbackInfo ci) {
+        view.putBoolean("contagion_is_player_infected", this.infected);
+        view.putBoolean("contagion_player_died_from_infection", this.playerDiedFromInfection);
+        view.putLong("contagion_infection_ticks", this.infectionTicks);
+        view.putLong("contagion_infection_cooldown", this.infectionCooldown);
     }
 }

@@ -42,7 +42,7 @@ public class ContagionInfectionEffect extends StatusEffect {
 
     @Override
     public boolean applyUpdateEffect(ServerWorld world, LivingEntity pLivingEntity, int pAmplifier) {
-        if (!pLivingEntity.getEntityWorld().isClient()) {
+        if (!pLivingEntity.getWorld().isClient()) {
             if (pLivingEntity instanceof InfectedPlayer infectedPlayer) {
                 if (!infectedPlayer.contagion_isPlayerInfected()) {
                     infectedPlayer.contagion_setInfectionTicks((long) ContagionConfig.INSTANCE.infectionDuration * 20);

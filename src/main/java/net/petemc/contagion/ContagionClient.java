@@ -6,16 +6,16 @@ import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
+import net.minecraft.client.gl.RenderPipelines;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.RenderTickCounter;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 import net.petemc.contagion.config.ContagionConfig;
 import net.petemc.contagion.effect.ContagionEffects;
 import net.petemc.contagion.network.NetworkPayloads;
 import org.jetbrains.annotations.NotNull;
+import org.joml.Matrix3x2fStack;
 
 public class ContagionClient implements ClientModInitializer, HudRenderCallback {
     private int cachedInfectionProtection = -1;
@@ -57,25 +57,26 @@ public class ContagionClient implements ClientModInitializer, HudRenderCallback 
             assert mcClient.player != null;
             if (!mcClient.player.isSpectator()) {
                 TextRenderer textRenderer = mcClient.textRenderer;
-                MatrixStack matrixStack = drawContext.getMatrices();
+                Matrix3x2fStack matrixStack = drawContext.getMatrices();
 
-                int color = 0xffffff;
+                int color = 0xffffffff;
                 if (infectionProtection == 100) {
-                    color = 0xd4af37;
+                    color = 0xffd4af37;
                 } else if (infectionProtection >= 75) {
-                    color = 0x3fc400;
+                    color = 0xff3fc400;
                 } else if (infectionProtection < 30) {
-                    color = 0xff5555;
+                    color = 0xffff5555;
                 }
 
                 Identifier texture = Identifier.of("contagion", "textures/hud/contagion_armor16.png");
 
-                drawContext.drawTexture(RenderLayer::getGuiTextured, texture, (drawContext.getScaledWindowWidth() / 2) - 170 + ContagionConfig.INSTANCE.deltaX, drawContext.getScaledWindowHeight() - 19 + ContagionConfig.INSTANCE.deltaY, 0, 0, 16, 16, 16, 16);
-                matrixStack.push();
-                matrixStack.translate((float) ((drawContext.getScaledWindowWidth() / 2) + 18 - 170 + ContagionConfig.INSTANCE.deltaX), drawContext.getScaledWindowHeight() - 16 + ContagionConfig.INSTANCE.deltaY, 0);
-                matrixStack.scale(1, 1, 2.5f);
+                drawContext.drawTexture(RenderPipelines.GUI_TEXTURED, texture, (drawContext.getScaledWindowWidth() / 2) - 170 + ContagionConfig.INSTANCE.deltaX, drawContext.getScaledWindowHeight() - 19 + ContagionConfig.INSTANCE.deltaY, 0, 0, 16, 16, 16, 16);
+
+                matrixStack.pushMatrix();
+                matrixStack.translate((float) ((drawContext.getScaledWindowWidth() / 2) + 18 - 170 + ContagionConfig.INSTANCE.deltaX), drawContext.getScaledWindowHeight() - 16 + ContagionConfig.INSTANCE.deltaY, matrixStack);
+                matrixStack.scale(1, 1, matrixStack);
                 drawContext.drawTextWithShadow(textRenderer, infectionProtection + "%", 2, 2, color);
-                matrixStack.pop();
+                matrixStack.popMatrix();
             }
         }
     }
