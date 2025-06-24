@@ -3,21 +3,22 @@ package net.petemc.contagion;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
-import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
+import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElementRegistry;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gl.RenderPipelines;
-import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.client.render.RenderTickCounter;
 import net.minecraft.util.Identifier;
 import net.petemc.contagion.config.ContagionConfig;
 import net.petemc.contagion.effect.ContagionEffects;
 import net.petemc.contagion.network.NetworkPayloads;
 import org.jetbrains.annotations.NotNull;
-import org.joml.Matrix3x2fStack;
 
-public class ContagionClient implements ClientModInitializer, HudRenderCallback {
+public class ContagionClient implements ClientModInitializer {
+    Identifier hudArmorTexture = Identifier.of("contagion", "textures/hud/contagion_transparent16.png");
+    Identifier contagionHudElement = Identifier.of("contagion", "infection_protection_hud");
+
+    private int hudTextColor;
+
     private int cachedInfectionProtection = -1;
     private int infectionProtection = -1;
 
@@ -33,10 +34,29 @@ public class ContagionClient implements ClientModInitializer, HudRenderCallback 
                     infectionProtection = getEffectiveInfectProtection(client.player);
                     if (infectionProtection != cachedInfectionProtection) {
                         cachedInfectionProtection = infectionProtection;
-                        HudRenderCallback.EVENT.register(this);
+                    }
+                    if (!client.player.isSpectator() && ContagionConfig.INSTANCE.displayCurrentInfectionProtection) {
+                        hudArmorTexture = Identifier.of("contagion", "textures/hud/contagion_armor16.png");
+                        if (infectionProtection == 100) {
+                            hudTextColor = 0xffd4af37;
+                        } else if (infectionProtection >= 75) {
+                            hudTextColor = 0xff3fc400;
+                        } else if (infectionProtection < 30) {
+                            hudTextColor = 0xffff5555;
+                        } else {
+                            hudTextColor = 0xffffffff;
+                        }
+                    } else {
+                        hudArmorTexture = Identifier.of("contagion", "textures/hud/contagion_transparent16.png");
+                        hudTextColor = 0x0;
                     }
                 }
             }
+        });
+
+        HudElementRegistry.addLast(contagionHudElement, (context, tCounter) -> {
+            context.drawTexture(RenderPipelines.GUI_TEXTURED, hudArmorTexture, (context.getScaledWindowWidth() / 2) - 170 + ContagionConfig.INSTANCE.deltaX, context.getScaledWindowHeight() - 19 + ContagionConfig.INSTANCE.deltaY, 0, 0, 16, 16, 16, 16);
+            context.drawTextWithShadow(MinecraftClient.getInstance().textRenderer, infectionProtection + "%", (context.getScaledWindowWidth() / 2) + 18 - 170 + ContagionConfig.INSTANCE.deltaX, context.getScaledWindowHeight() - 14 + ContagionConfig.INSTANCE.deltaY, hudTextColor);
         });
 
         ClientPlayNetworking.registerGlobalReceiver(NetworkPayloads.hudDataPayload.ID, (payload, context) -> {
@@ -48,37 +68,6 @@ public class ContagionClient implements ClientModInitializer, HudRenderCallback 
                 Contagion.LOGGER.info("Data for client HUD-received: {} {} {}:", receivedBaseInfectionChance, receivedMinimumInfectionChance, receivedArmorLowersInfectionChance);
             });
         });
-    }
-
-    @Override
-    public void onHudRender(DrawContext drawContext, RenderTickCounter tickCounter) {
-        if (ContagionConfig.INSTANCE.displayCurrentInfectionProtection) {
-            MinecraftClient mcClient = MinecraftClient.getInstance();
-            assert mcClient.player != null;
-            if (!mcClient.player.isSpectator()) {
-                TextRenderer textRenderer = mcClient.textRenderer;
-                Matrix3x2fStack matrixStack = drawContext.getMatrices();
-
-                int color = 0xffffffff;
-                if (infectionProtection == 100) {
-                    color = 0xffd4af37;
-                } else if (infectionProtection >= 75) {
-                    color = 0xff3fc400;
-                } else if (infectionProtection < 30) {
-                    color = 0xffff5555;
-                }
-
-                Identifier texture = Identifier.of("contagion", "textures/hud/contagion_armor16.png");
-
-                drawContext.drawTexture(RenderPipelines.GUI_TEXTURED, texture, (drawContext.getScaledWindowWidth() / 2) - 170 + ContagionConfig.INSTANCE.deltaX, drawContext.getScaledWindowHeight() - 19 + ContagionConfig.INSTANCE.deltaY, 0, 0, 16, 16, 16, 16);
-
-                matrixStack.pushMatrix();
-                matrixStack.translate((float) ((drawContext.getScaledWindowWidth() / 2) + 18 - 170 + ContagionConfig.INSTANCE.deltaX), drawContext.getScaledWindowHeight() - 16 + ContagionConfig.INSTANCE.deltaY, matrixStack);
-                matrixStack.scale(1, 1, matrixStack);
-                drawContext.drawTextWithShadow(textRenderer, infectionProtection + "%", 2, 2, color);
-                matrixStack.popMatrix();
-            }
-        }
     }
 
     private int getEffectiveInfectProtection(@NotNull ClientPlayerEntity clientPlayerEntity) {
