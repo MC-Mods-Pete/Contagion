@@ -1,6 +1,7 @@
 {
   "item.contagion.cure": "Cure",
   "itemgroup.contagion": "Contagion",
+  "itemGroup.contagion": "Contagion",
 
   "item.contagion.contagious_flesh": "Contagious Zombie Flesh",
   "item.contagion.heat_treated_flesh": "Heat Treated Zombie Flesh",

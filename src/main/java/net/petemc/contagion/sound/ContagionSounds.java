@@ -16,8 +16,7 @@ public class ContagionSounds {
     public static final Supplier<SoundEvent> INFECTION_PREVENTED = registerSoundEvent("immunity_prevents_infection");
 
     private static Supplier<SoundEvent> registerSoundEvent(String name) {
-        ResourceLocation id = ResourceLocation.tryBuild(Contagion.MOD_ID, name);
-        return SOUND_EVENTS.register(name, () -> SoundEvent.createVariableRangeEvent(id));
+        return SOUND_EVENTS.register(name, () -> new SoundEvent(new ResourceLocation(Contagion.MOD_ID, name)));
     }
 
     public static void register(IEventBus eventBus) {

@@ -14,12 +14,11 @@ public class ModEvents {
     public static class ForgeEvents {
         @SubscribeEvent
         public static void onPlayerJoinWorld(EntityJoinLevelEvent event) {
-            if(!event.getLevel().isClientSide()) {
-                if(event.getEntity() instanceof ServerPlayer player) {
+            if (!event.getLevel().isClientSide()) {
+                if (event.getEntity() instanceof ServerPlayer player) {
                     ContagionNetworkMessages.sendToPlayer(new ProtectionHUDSyncS2CPacket(Config.baseInfectionChance, Config.minimumInfectionChance, Config.armorLowersInfectionChance), player);
                 }
             }
         }
     }
-
 }

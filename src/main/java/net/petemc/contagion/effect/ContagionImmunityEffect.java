@@ -13,7 +13,7 @@ public class ContagionImmunityEffect extends MobEffect {
 
     @Override
     public void applyEffectTick(@NotNull LivingEntity pLivingEntity, int pAmplifier) {
-        if (!pLivingEntity.level().isClientSide()) {
+        if (!pLivingEntity.level.isClientSide()) {
             if (pLivingEntity.hasEffect(ContagionEffects.INFECTION.get())) {
                 pLivingEntity.removeEffect(ContagionEffects.INFECTION.get());
                 ContagionInfectionEffect.resetValues(pLivingEntity);

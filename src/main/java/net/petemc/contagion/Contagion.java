@@ -7,7 +7,6 @@ import net.minecraft.world.item.alchemy.PotionBrewing;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -17,15 +16,15 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.petemc.contagion.damage_type.ContagionDamageTypes;
+import net.petemc.contagion.damage_type.ContagionDamageSources;
 import net.petemc.contagion.data.DataGenerators;
 import net.petemc.contagion.effect.ContagionEffects;
-import net.petemc.contagion.item.ContagionCreativeModeTabs;
 import net.petemc.contagion.item.ContagionItems;
 import net.petemc.contagion.loot.ContagionLootModifiers;
 import net.petemc.contagion.network.ContagionNetworkMessages;
 import net.petemc.contagion.potion.ContagionPotions;
 import net.petemc.contagion.sound.ContagionSounds;
+import net.petemc.contagion.util.ModCompatibility;
 import org.slf4j.Logger;
 
 // The value here should match an entry in the META-INF/mods.toml file
@@ -46,16 +45,14 @@ public class Contagion {
 
 		ContagionEffects.register(modEventBus);
 		ContagionItems.register(modEventBus);
-		ContagionCreativeModeTabs.register(modEventBus);
 		ContagionSounds.register(modEventBus);
-		ContagionDamageTypes.registerDamageTypes();
+		ContagionDamageSources.registerDamageTypes();
 		ContagionPotions.register(modEventBus);
 		ContagionLootModifiers.register(modEventBus);
+        ModCompatibility.init();
 
 		modEventBus.addListener(DataGenerators::gatherData);
 
-		// Register the item to a creative tab
-		modEventBus.addListener(this::addCreative);
 		// Register our mod's ModConfigSpec so that FML can create and load the config file for us
 		ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, Config.SPEC_SERVER);
 		ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, Config.SPEC_CLIENT);
@@ -70,11 +67,6 @@ public class Contagion {
 
 		PotionBrewing.addMix(Potions.AWKWARD, ContagionItems.GOLD_STREAKED_FLESH.get(), ContagionPotions.CURE_POTION.get());
 		PotionBrewing.addMix(ContagionPotions.CURE_POTION.get(), Items.REDSTONE, ContagionPotions.LONG_CURE_POTION.get());
-	}
-
-	// Add the example block item to the building blocks tab
-	private void addCreative(BuildCreativeModeTabContentsEvent event) {
-
 	}
 
 	// You can use SubscribeEvent and let the Event Bus discover methods to call

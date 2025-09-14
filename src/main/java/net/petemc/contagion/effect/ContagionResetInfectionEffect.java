@@ -15,7 +15,7 @@ public class ContagionResetInfectionEffect extends MobEffect {
 
     @Override
     public void applyEffectTick(@NotNull LivingEntity pLivingEntity, int pAmplifier) {
-        if (!pLivingEntity.level().isClientSide()) {
+        if (!pLivingEntity.level.isClientSide()) {
             if (pLivingEntity.hasEffect(ContagionEffects.INFECTION.get())) {
                 pLivingEntity.sendSystemMessage(Component.translatable("effect.contagion.reset_infection_msg"));
                 pLivingEntity.removeEffect(ContagionEffects.INFECTION.get());

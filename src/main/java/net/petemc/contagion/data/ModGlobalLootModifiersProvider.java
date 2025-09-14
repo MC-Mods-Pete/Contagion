@@ -1,6 +1,6 @@
 package net.petemc.contagion.data;
 
-import net.minecraft.data.PackOutput;
+import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.storage.loot.predicates.*;
 import net.minecraftforge.common.data.GlobalLootModifierProvider;
@@ -11,7 +11,7 @@ import net.petemc.contagion.loot.AddItemModifier;
 
 // see https://github.com/Luohuayu/CatServer/blob/1c92118fcca69ffac97a48c8e1f6e1bb861b41d1/src/main/java/org/bukkit/loot/LootTables.java#L71 for some loot tables
 public class ModGlobalLootModifiersProvider extends GlobalLootModifierProvider {
-    public ModGlobalLootModifiersProvider(PackOutput output) {
+    public ModGlobalLootModifiersProvider(DataGenerator output) {
         super(output, Contagion.MOD_ID);
     }
 
@@ -49,4 +49,3 @@ public class ModGlobalLootModifiersProvider extends GlobalLootModifierProvider {
                 1, 2));
     }
 }
-

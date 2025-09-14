@@ -154,6 +154,13 @@ repositories {
     // flatDir {
     //     dir 'libs'
     // }
+    // curse maven
+    maven {
+        url "https://cursemaven.com"
+        content {
+            includeGroup "curse.maven"
+        }
+    }
 }
 
 dependencies {
@@ -181,6 +188,7 @@ dependencies {
     // For more info:
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
+    implementation fg.deobf("curse.maven:undead-nights-1166914:6505005")
 }
 
 mixin {

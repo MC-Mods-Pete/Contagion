@@ -9,7 +9,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.petemc.contagion.Config;
-import net.petemc.contagion.damage_type.ContagionDamageTypes;
+import net.petemc.contagion.damage_type.ContagionDamageSources;
 import net.petemc.contagion.casts.InfectedPlayer;
 import org.jetbrains.annotations.NotNull;
 
@@ -52,7 +52,7 @@ public class ContagionInfectionEffect extends MobEffect {
 
     @Override
     public void applyEffectTick(@NotNull LivingEntity pLivingEntity, int pAmplifier) {
-        if (!pLivingEntity.level().isClientSide()) {
+        if (!pLivingEntity.level.isClientSide()) {
             if (pLivingEntity instanceof InfectedPlayer infectedPlayer) {
                 if (!infectedPlayer.contagion_isPlayerInfected()) {
                     infectedPlayer.contagion_setInfectionTicks((long) Config.infectionDuration * 20);
@@ -96,7 +96,7 @@ public class ContagionInfectionEffect extends MobEffect {
                         if (!(pLivingEntity.getMainHandItem().is(Items.TOTEM_OF_UNDYING) || pLivingEntity.getOffhandItem().is(Items.TOTEM_OF_UNDYING))) {
                             infectedPlayer.contagion_setPlayerDiedFromInfection(true);
                         }
-                        pLivingEntity.hurt(ContagionDamageTypes.of(pLivingEntity.level(), ContagionDamageTypes.INFECTION), 1000.0f);
+                        pLivingEntity.hurt(ContagionDamageSources.INFECTION, 1000.0f);
                     } else {
                         infectedPlayer.contagion_setPlayerDiedFromInfection(true);
                         pLivingEntity.kill();
