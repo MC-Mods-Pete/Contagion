@@ -31,9 +31,9 @@ public class ZombieEntityMixin {
             if (randomValue > effectiveInfectChance) {
                 if (!pPlayer.hasStatusEffect(ContagionEffects.INFECTION)) {
                     if (pPlayer.hasStatusEffect(ContagionEffects.IMMUNITY)) {
-                        pPlayer.getWorld().playSound(null, pPlayer.getX(), pPlayer.getY(), pPlayer.getZ(), ContagionSounds.INFECTION_PREVENTED, SoundCategory.BLOCKS, 1.0F, 3);
+                        pPlayer.getEntityWorld().playSound(null, pPlayer.getX(), pPlayer.getY(), pPlayer.getZ(), ContagionSounds.INFECTION_PREVENTED, SoundCategory.BLOCKS, 1.0F, 3);
                     } else {
-                        if (!pPlayer.getWorld().isClient()) {
+                        if (!pPlayer.getEntityWorld().isClient()) {
                             pPlayer.addStatusEffect(new StatusEffectInstance(ContagionEffects.INFECTION, ContagionConfig.INSTANCE.infectionDuration * 20, 0));
                             ContagionInfectionEffect.resetValues(pPlayer);
                             pPlayer.sendMessage(Text.translatable("effect.contagion.infected_msg").formatted(Formatting.RED), false);

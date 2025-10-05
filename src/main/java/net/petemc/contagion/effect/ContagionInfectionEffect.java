@@ -42,7 +42,7 @@ public class ContagionInfectionEffect extends StatusEffect {
 
     @Override
     public boolean applyUpdateEffect(ServerWorld world, LivingEntity pLivingEntity, int pAmplifier) {
-        if (!pLivingEntity.getWorld().isClient()) {
+        if (!pLivingEntity.getEntityWorld().isClient()) {
             if (pLivingEntity instanceof InfectedPlayer infectedPlayer) {
                 if (!infectedPlayer.contagion_isPlayerInfected()) {
                     infectedPlayer.contagion_setInfectionTicks((long) ContagionConfig.INSTANCE.infectionDuration * 20);
@@ -86,7 +86,7 @@ public class ContagionInfectionEffect extends StatusEffect {
                         if (!(pLivingEntity.getMainHandStack().isOf(Items.TOTEM_OF_UNDYING) || pLivingEntity.getOffHandStack().isOf(Items.TOTEM_OF_UNDYING))) {
                             infectedPlayer.contagion_setPlayerDiedFromInfection(true);
                         }
-                        pLivingEntity.damage(world, ContagionDamageTypes.of(pLivingEntity.getWorld(), ContagionDamageTypes.INFECTION), 1000.0f);
+                        pLivingEntity.damage(world, ContagionDamageTypes.of(pLivingEntity.getEntityWorld(), ContagionDamageTypes.INFECTION), 1000.0f);
                     } else {
                         infectedPlayer.contagion_setPlayerDiedFromInfection(true);
                         pLivingEntity.kill(world);
