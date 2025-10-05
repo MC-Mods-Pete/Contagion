@@ -24,7 +24,7 @@ public class ContagionEventsClient {
         if (event.getEntity().level().isClientSide()) {
             Minecraft mc = Minecraft.getInstance();
             assert mc.level != null;
-            if (mc.level.isClientSide) {
+            if (mc.level.isClientSide()) {
                 assert mc.player != null;
                 ProtectionHudOverlay.infectionProtection = getEffectiveInfectProtection(mc.player);
                 if (ProtectionHudOverlay.infectionProtection != ProtectionHudOverlay.cachedInfectionProtection) {
