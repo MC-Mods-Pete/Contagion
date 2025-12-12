@@ -23,7 +23,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(ZombieEntity.class)
 public class ZombieEntityMixin {
-    @Inject(method = "tryAttack", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;getLocalDifficulty(Lnet/minecraft/util/math/BlockPos;)Lnet/minecraft/world/LocalDifficulty;", shift = At.Shift.BEFORE))
+    @Inject(method = "tryAttack", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/LocalDifficulty;getLocalDifficulty()F", shift = At.Shift.BEFORE))
     public void tryAttack(ServerWorld world, Entity target, CallbackInfoReturnable<Boolean> cir) {
         if (target instanceof PlayerEntity pPlayer) {
             int randomValue = MathHelper.nextInt(Random.create(), 1, 100);
