@@ -4,7 +4,7 @@ import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.RenderPipelines;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.GameType;
 import net.petemc.contagion.Config;
 import net.petemc.contagion.Contagion;
@@ -13,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
 public class ProtectionHudOverlay {
     public static ProtectionHudOverlay HUD_INSTANCE;
 
-    private static final ResourceLocation texture = ResourceLocation.fromNamespaceAndPath(Contagion.MOD_ID, "textures/hud/contagion_armor16.png");
+    private static final Identifier texture = Identifier.fromNamespaceAndPath(Contagion.MOD_ID, "textures/hud/contagion_armor16.png");
 
     public static int infectionProtection = -1;
     public static int cachedInfectionProtection = -1;

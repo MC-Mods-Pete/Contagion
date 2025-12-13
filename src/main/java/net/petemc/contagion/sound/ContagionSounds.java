@@ -1,7 +1,7 @@
 package net.petemc.contagion.sound;
 
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvent;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -16,7 +16,7 @@ public class ContagionSounds {
     public static final Supplier<SoundEvent> INFECTION_PREVENTED = registerSoundEvent("immunity_prevents_infection");
 
     private static Supplier<SoundEvent> registerSoundEvent(String name) {
-        ResourceLocation id = ResourceLocation.fromNamespaceAndPath(Contagion.MOD_ID, name);
+        Identifier id = Identifier.fromNamespaceAndPath(Contagion.MOD_ID, name);
         return SOUND_EVENTS.register(name, () -> SoundEvent.createVariableRangeEvent(id));
     }
 

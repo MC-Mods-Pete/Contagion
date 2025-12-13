@@ -10,7 +10,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.monster.Zombie;
+import net.minecraft.world.entity.monster.zombie.Zombie;
 import net.minecraft.world.entity.player.Player;
 import net.petemc.contagion.Config;
 import net.petemc.contagion.effect.ContagionEffects;
@@ -25,7 +25,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Zombie.class)
 public class ZombieEntityMixin {
-    @Inject(method = "doHurtTarget", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;getCurrentDifficultyAt(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/DifficultyInstance;", shift = At.Shift.BEFORE))
+    @Inject(method = "doHurtTarget", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/level/ServerLevel;getCurrentDifficultyAt(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/DifficultyInstance;", shift = At.Shift.BEFORE))
     public void doHurtTarget(ServerLevel level, Entity target, CallbackInfoReturnable<Boolean> cir) {
         if (target instanceof ServerPlayer pPlayer) {
             int randomValue = RandomSource.create().nextIntBetweenInclusive(1, 100);
