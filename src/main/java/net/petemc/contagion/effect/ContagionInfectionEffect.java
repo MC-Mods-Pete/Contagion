@@ -85,7 +85,8 @@ public class ContagionInfectionEffect extends StatusEffect {
                         if (!(pLivingEntity.getMainHandStack().isOf(Items.TOTEM_OF_UNDYING) || pLivingEntity.getOffHandStack().isOf(Items.TOTEM_OF_UNDYING))) {
                             infectedPlayer.contagion_setPlayerDiedFromInfection(true);
                         }
-                        pLivingEntity.damage(ContagionDamageTypes.of(pLivingEntity.getWorld(), ContagionDamageTypes.INFECTION), 1000.0f);
+                        pLivingEntity.setHealth(1.0f);
+                        pLivingEntity.damage(ContagionDamageTypes.of(pLivingEntity.getWorld(), ContagionDamageTypes.INFECTION), 10000.0f);
                     } else {
                         infectedPlayer.contagion_setPlayerDiedFromInfection(true);
                         pLivingEntity.kill();
