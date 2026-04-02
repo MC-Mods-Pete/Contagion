@@ -3,7 +3,7 @@ package net.petemc.contagion;
 import net.fabricmc.api.ModInitializer;
 
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
-import net.petemc.contagion.config.ContagionConfig;
+import net.petemc.contagion.config.MainConfig;
 import net.petemc.contagion.damage_type.ContagionDamageTypes;
 import net.petemc.contagion.effect.ContagionEffects;
 import net.petemc.contagion.network.NetworkPayloads;
@@ -24,7 +24,7 @@ public class Contagion implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		LOGGER.info("Initializing Contagion Mod");
-		ContagionConfig.init();
+		MainConfig.init();
 		ContagionEffects.registerEffects();
 		ContagionItems.registerItems();
 		ContagionItemGroups.registerItemGroups();
@@ -35,6 +35,6 @@ public class Contagion implements ModInitializer {
 		ServerPlayerJoinEvent.registerEvent();
 		ModCompatibility.init();
 
-		PayloadTypeRegistry.playS2C().register(NetworkPayloads.hudDataPayload.ID, NetworkPayloads.hudDataPayload.CODEC);
+		PayloadTypeRegistry.clientboundPlay().register(NetworkPayloads.hudDataPayload.TYPE, NetworkPayloads.hudDataPayload.CODEC);
 	}
 }

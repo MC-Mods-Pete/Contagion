@@ -46,6 +46,8 @@
   "text.autoconfig.contagion.option.milkCuresInfection.@Tooltip": "If enabled, drinking milk will cure the player if infected | default: false",
   "text.autoconfig.contagion.option.totemPreventsDyingFromInfection": "Holding a totem will prevent death from infection",
   "text.autoconfig.contagion.option.totemPreventsDyingFromInfection.@Tooltip": "If true, holding a totem will prevent the player from dying when the infection timer runs out | default: true",
+  "text.autoconfig.contagion.option.ironGolemAttacksInfected": "Iron Golems attack infected players",
+  "text.autoconfig.contagion.option.ironGolemAttacksInfected.@Tooltip": "If enabled, Iron Golems will target and attack infected players | default: false",
   "text.autoconfig.contagion.option.displayCurrentInfectionProtection": "Displays the current infection protection value in the HUD",
   "text.autoconfig.contagion.option.displayCurrentInfectionProtection.@Tooltip": "If enabled, displays the current protection value in the HUD | default: true",
   "text.autoconfig.contagion.option.deltaX": "Move the HUD-display in the X-direction",

@@ -1,14 +1,14 @@
 package net.petemc.contagion.item;
 
-import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroupEntries;
-import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroups;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.util.Identifier;
+import net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents;
+import net.fabricmc.fabric.api.creativetab.v1.FabricCreativeModeTabOutput;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.CreativeModeTabs;
 import net.petemc.contagion.Contagion;
 
 public class ContagionItems {
@@ -16,28 +16,31 @@ public class ContagionItems {
     private static final String nameHeatTreatedFlesh = "heat_treated_flesh";
     private static final String nameGoldStreakedFlesh = "gold_streaked_flesh";
 
-    public static final Item CONTAGIOUS_FLESH = registerItem(nameContagiousFlesh, new Item(new Item.Settings()
-            .food(ContagionFoodComponents.CONTAGIOUS_FLESH, ContagionConsumableComponents.CONTAGIOUS_FLESH)
-            .registryKey(RegistryKey.of(RegistryKeys.ITEM, Identifier.of(Contagion.MOD_ID, nameContagiousFlesh)))));
-    public static final Item HEAT_TREATED_FLESH = registerItem(nameHeatTreatedFlesh, new Item(new Item.Settings()
+    public static final Item CONTAGIOUS_FLESH = registerItem(nameContagiousFlesh, new Item(new Item.Properties()
+            .food(ContagionFoodComponents.CONTAGIOUS_FLESH, ContagionConsumables.CONTAGIOUS_FLESH)
+            .useItemDescriptionPrefix()
+            .setId(ResourceKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath(Contagion.MOD_ID, nameContagiousFlesh)))));
+    public static final Item HEAT_TREATED_FLESH = registerItem(nameHeatTreatedFlesh, new Item(new Item.Properties()
             .food(ContagionFoodComponents.HEAT_TREATED_FLESH)
-            .registryKey(RegistryKey.of(RegistryKeys.ITEM, Identifier.of(Contagion.MOD_ID, nameHeatTreatedFlesh)))));
-    public static final Item GOLD_STREAKED_FLESH = registerItem(nameGoldStreakedFlesh, new Item(new Item.Settings()
-            .food(ContagionFoodComponents.GOLD_STREAKED_FLESH, ContagionConsumableComponents.GOLD_STREAKED_FLESH)
-            .registryKey(RegistryKey.of(RegistryKeys.ITEM, Identifier.of(Contagion.MOD_ID, nameGoldStreakedFlesh)))));
+            .useItemDescriptionPrefix()
+            .setId(ResourceKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath(Contagion.MOD_ID, nameHeatTreatedFlesh)))));
+    public static final Item GOLD_STREAKED_FLESH = registerItem(nameGoldStreakedFlesh, new Item(new Item.Properties()
+            .food(ContagionFoodComponents.GOLD_STREAKED_FLESH, ContagionConsumables.GOLD_STREAKED_FLESH)
+            .useItemDescriptionPrefix()
+            .setId(ResourceKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath(Contagion.MOD_ID, nameGoldStreakedFlesh)))));
 
-    private static void addItemsToFoodDrinkItemGroup(FabricItemGroupEntries entries) {
-        entries.add(CONTAGIOUS_FLESH);
-        entries.add(HEAT_TREATED_FLESH);
-        entries.add(GOLD_STREAKED_FLESH);
+    private static void addItemsToFoodDrinkItemGroup(FabricCreativeModeTabOutput entries) {
+        entries.accept(CONTAGIOUS_FLESH);
+        entries.accept(HEAT_TREATED_FLESH);
+        entries.accept(GOLD_STREAKED_FLESH);
     }
 
     private static Item registerItem(String name, Item item) {
-        return Registry.register(Registries.ITEM, Identifier.of(Contagion.MOD_ID, name), item);
+        return Registry.register(BuiltInRegistries.ITEM, Identifier.fromNamespaceAndPath(Contagion.MOD_ID, name), item);
     }
 
     public static void registerItems() {
         Contagion.LOGGER.info("Registering Mod Items for " + Contagion.MOD_ID);
-        ItemGroupEvents.modifyEntriesEvent(ItemGroups.FOOD_AND_DRINK).register(ContagionItems::addItemsToFoodDrinkItemGroup);
+        CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.FOOD_AND_DRINKS).register(ContagionItems::addItemsToFoodDrinkItemGroup);
     }
 }

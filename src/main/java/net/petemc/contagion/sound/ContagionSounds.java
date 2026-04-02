@@ -1,9 +1,9 @@
 package net.petemc.contagion.sound;
 
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.util.Identifier;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.Identifier;
+import net.minecraft.sounds.SoundEvent;
 import net.petemc.contagion.Contagion;
 
 public class ContagionSounds {
@@ -11,8 +11,8 @@ public class ContagionSounds {
     public static final SoundEvent INFECTION_PREVENTED = registerSoundEvent("immunity_prevents_infection");
 
     private static SoundEvent registerSoundEvent(String name) {
-        Identifier id = Identifier.of(Contagion.MOD_ID, name);
-        return Registry.register(Registries.SOUND_EVENT, id, SoundEvent.of(id));
+        Identifier id = Identifier.fromNamespaceAndPath(Contagion.MOD_ID, name);
+        return Registry.register(BuiltInRegistries.SOUND_EVENT, id, SoundEvent.createVariableRangeEvent(id));
     }
 
     public static void registerSounds() {

@@ -1,37 +1,40 @@
 package net.petemc.contagion.mixin;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.StatusEffect;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.item.consume.ClearAllEffectsConsumeEffect;
-import net.minecraft.registry.entry.RegistryEntry;
-import net.petemc.contagion.config.ContagionConfig;
+import net.minecraft.core.Holder;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.consume_effects.ClearAllStatusEffectsConsumeEffect;
+import net.petemc.contagion.config.MainConfig;
 import net.petemc.contagion.effect.ContagionEffects;
 import net.petemc.contagion.effect.ContagionInfectionEffect;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.item.ItemStack;
 
-@Mixin(ClearAllEffectsConsumeEffect.class)
+@Mixin(ClearAllStatusEffectsConsumeEffect.class)
 public class MilkBucketMixin {
-    @Redirect(method = "onConsume", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;clearStatusEffects()Z"))
-    private boolean finishUsing(LivingEntity user) {
-        if (ContagionConfig.INSTANCE.milkCuresInfection) {
-            return user.clearStatusEffects();
+    @Inject(method = "apply", at = @At("HEAD"), cancellable = true)
+    private void apply(Level level, ItemStack itemStack, LivingEntity user, CallbackInfoReturnable<Boolean> cir) {
+        if (MainConfig.isMilkCuresInfection()) {
+            return; // default: cure everything including infection
         }
-        boolean retVal = false;
-        StatusEffectInstance effectInst = user.getActiveStatusEffects().get(ContagionEffects.INFECTION);
+        MobEffectInstance effectInst = user.getActiveEffectsMap().get(ContagionEffects.INFECTION);
         if (effectInst == null) {
-            return user.clearStatusEffects();
+            return; // no infection present, default behavior
         }
-        RegistryEntry<StatusEffect> effectReg = effectInst.getEffectType();
-        StatusEffect effect = effectReg.value();
+        Holder<MobEffect> effectReg = effectInst.getEffect();
+        MobEffect effect = effectReg.value();
         if (effect instanceof ContagionInfectionEffect infectEffect) {
             int localTicks = (int) infectEffect.getTicks(user);
-            retVal = user.clearStatusEffects();
-            user.addStatusEffect(effectInst);
+            boolean retVal = user.removeAllEffects();
+            user.addEffect(effectInst);
             infectEffect.setTicks(user, localTicks);
+            cir.setReturnValue(retVal);
+            cir.cancel();
         }
-        return retVal;
     }
 }

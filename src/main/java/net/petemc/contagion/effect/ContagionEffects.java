@@ -1,25 +1,25 @@
 package net.petemc.contagion.effect;
 
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
-import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.core.Holder;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectCategory;
 import net.petemc.contagion.Contagion;
-import net.minecraft.entity.effect.StatusEffect;
-import net.minecraft.entity.effect.StatusEffectCategory;
-import net.minecraft.util.Identifier;
 
 public class ContagionEffects {
-    public static RegistryEntry<StatusEffect> INFECTION;
-    public static RegistryEntry<StatusEffect> RESET_INFECTION;
-    public static RegistryEntry<StatusEffect> IMMUNITY;
+    public static Holder<MobEffect> INFECTION;
+    public static Holder<MobEffect> RESET_INFECTION;
+    public static Holder<MobEffect> IMMUNITY;
 
     public static void registerEffects() {
-        INFECTION = registerContagionEffect("infection", new ContagionInfectionEffect(StatusEffectCategory.HARMFUL, 5592405));
-        RESET_INFECTION = registerContagionEffect("reset_infection", new ContagionResetInfectionEffect(StatusEffectCategory.BENEFICIAL, 16755200));
-        IMMUNITY = registerContagionEffect("immunity", new ContagionImmunityEffect(StatusEffectCategory.BENEFICIAL, 0x651b74));
+        INFECTION = registerContagionEffect("infection", new ContagionInfectionEffect(MobEffectCategory.HARMFUL, 5592405));
+        RESET_INFECTION = registerContagionEffect("reset_infection", new ContagionResetInfectionEffect(MobEffectCategory.BENEFICIAL, 16755200));
+        IMMUNITY = registerContagionEffect("immunity", new ContagionImmunityEffect(MobEffectCategory.BENEFICIAL, 0x651b74));
     }
 
-    private static RegistryEntry<StatusEffect> registerContagionEffect(String name, StatusEffect statusEffect) {
-        return Registry.registerReference(Registries.STATUS_EFFECT, Identifier.of(Contagion.MOD_ID, name), statusEffect);
+    private static Holder<MobEffect> registerContagionEffect(String name, MobEffect mobEffect) {
+        return Registry.registerForHolder(BuiltInRegistries.MOB_EFFECT, Identifier.fromNamespaceAndPath(Contagion.MOD_ID, name), mobEffect);
     }
 }

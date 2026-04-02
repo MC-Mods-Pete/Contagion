@@ -1,21 +1,25 @@
 package net.petemc.contagion.damage_type;
 
-import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.damage.DamageType;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.util.Identifier;
-import net.minecraft.world.World;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageType;
+import net.minecraft.world.level.Level;
+import net.petemc.contagion.Contagion;
 
 public class ContagionDamageTypes {
     /*
      * Store the RegistryKey of the DamageType into a new constant called INFECTION
      * The Identifier in use here points to the JSON file infection.json.
      */
-    public static final RegistryKey<DamageType> INFECTION = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, Identifier.of("contagion", "infection"));
+    public static final ResourceKey<DamageType> INFECTION = ResourceKey.create(
+            Registries.DAMAGE_TYPE,
+            Identifier.fromNamespaceAndPath(Contagion.MOD_ID, "infection"));
 
-    public static DamageSource of(World world, RegistryKey<DamageType> key) {
-        return new DamageSource(world.getRegistryManager().getOrThrow(RegistryKeys.DAMAGE_TYPE).getOrThrow(key));
+    public static DamageSource of(Level level, ResourceKey<DamageType> key) {
+        return new DamageSource(
+                level.registryAccess().lookupOrThrow(Registries.DAMAGE_TYPE).getOrThrow(key));
     }
 
     public static void registerDamageTypes() {

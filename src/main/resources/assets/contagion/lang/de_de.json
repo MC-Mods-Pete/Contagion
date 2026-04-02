@@ -46,6 +46,8 @@
   "text.autoconfig.contagion.option.milkCuresInfection.@Tooltip": "Wenn aktiviert, können Infektionen durch das Trinken von Milch beseitigt werden | Default: deaktiviert",
   "text.autoconfig.contagion.option.totemPreventsDyingFromInfection": "Ein Totem in der Hand verhindert das Sterben durch Infektionen",
   "text.autoconfig.contagion.option.totemPreventsDyingFromInfection.@Tooltip": "Wenn aktiviert, verhindert das Halten eines Totems, das der Spieler am Ende der Infektionsdauer stirbt | Default: aktiviert",
+  "text.autoconfig.contagion.option.ironGolemAttacksInfected": "Eisengolems greifen infizierte Spieler an",
+  "text.autoconfig.contagion.option.ironGolemAttacksInfected.@Tooltip": "Wenn aktiviert, suchen und greifen Eisengolems infizierte Spieler an | Default: deaktiviert",
   "text.autoconfig.contagion.option.displayCurrentInfectionProtection": "Zeigt den aktuellen Schutz vor einer Infektion im HUD an",
   "text.autoconfig.contagion.option.displayCurrentInfectionProtection.@Tooltip": "Wenn aktiviert, wird der aktuelle Schutz vor einer Infektion in % im HUD angezeigt | default: true",
   "text.autoconfig.contagion.option.deltaX": "Verschiebe die Anzeige im HUD in der X-Richtung",
