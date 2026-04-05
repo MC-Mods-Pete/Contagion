@@ -4,6 +4,7 @@
 	"package": "net.petemc.contagion.mixin",
 	"compatibilityLevel": "JAVA_21",
 	"mixins": [
+		"IronGolemEntityMixin",
 		"MilkBucketMixin",
 		"PlayerEntityMixin",
 		"ZoglinEntityMixin",

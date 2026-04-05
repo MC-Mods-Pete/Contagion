@@ -13,7 +13,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.Zoglin;
 import net.minecraft.world.entity.monster.hoglin.HoglinBase;
-import net.petemc.contagion.Config;
+import net.petemc.contagion.config.MainConfig;
 import net.petemc.contagion.effect.ContagionEffects;
 import net.petemc.contagion.effect.ContagionInfectionEffect;
 import net.petemc.contagion.sound.ContagionSounds;
@@ -40,7 +40,7 @@ public abstract class ZoglinEntityMixin {
                             level.playSound(null, pPlayer.getX(), pPlayer.getY(), pPlayer.getZ(), ContagionSounds.INFECTION_PREVENTED.get(), SoundSource.BLOCKS, 1.0F, 3);
                         } else {
                             if (!level.isClientSide()) {
-                                pPlayer.addEffect(new MobEffectInstance(ContagionEffects.INFECTION, Config.infectionDuration * 20, 0));
+                                pPlayer.addEffect(new MobEffectInstance(ContagionEffects.INFECTION, MainConfig.getInfectionDuration() * 20, 0));
                                 ContagionInfectionEffect.resetValues(pPlayer);
                                 pPlayer.sendSystemMessage(Component.translatable("effect.contagion.infected_msg").withStyle(Style.EMPTY.withColor(ChatFormatting.RED)));
                             }
@@ -55,16 +55,16 @@ public abstract class ZoglinEntityMixin {
     @Unique
     private static int getEffectiveInfectChance(LivingEntity _entity) {
         int effectInfect;
-        if (Config.baseInfectionChance > 100) {
+        if (MainConfig.getBaseInfectionChance() > 100) {
             effectInfect = 0;
         } else {
-            effectInfect = 100 - Config.baseInfectionChance;
+            effectInfect = 100 - MainConfig.getBaseInfectionChance();
         }
-        if (Config.armorLowersInfectionChance) {
+        if (MainConfig.isArmorLowersInfectionChance()) {
             effectInfect = effectInfect + (_entity.getArmorValue() * 3);
         }
-        if (effectInfect > (100 - Config.minimumInfectionChance)) {
-            effectInfect = 100 - Config.minimumInfectionChance;
+        if (effectInfect > (100 - MainConfig.getMinimumInfectionChance())) {
+            effectInfect = 100 - MainConfig.getMinimumInfectionChance();
         }
         return effectInfect;
     }

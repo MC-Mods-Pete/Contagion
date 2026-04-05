@@ -16,4 +16,8 @@ public interface InfectedPlayer {
     public void contagion_setInfectionCooldown(long infectionCooldown);
 
     public long contagion_getInfectionCooldown();
+
+    public void contagion_setInitialInfectionDuration(long duration);
+
+    public long contagion_getInitialInfectionDuration();
 }

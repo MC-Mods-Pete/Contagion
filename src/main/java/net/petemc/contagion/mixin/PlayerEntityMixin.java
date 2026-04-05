@@ -21,6 +21,8 @@ public abstract class PlayerEntityMixin implements InfectedPlayer {
     private long infectionTicks = 0;
     @Unique
     private long infectionCooldown = 0;
+    @Unique
+    private long initialInfectionDuration = 0;
 
     @Unique
     public void contagion_setInfection(boolean infectedValue) {
@@ -62,19 +64,31 @@ public abstract class PlayerEntityMixin implements InfectedPlayer {
         return infectionCooldown;
     }
 
+    @Unique
+    public void contagion_setInitialInfectionDuration(long duration) {
+        this.initialInfectionDuration = duration;
+    }
+
+    @Unique
+    public long contagion_getInitialInfectionDuration() {
+        return initialInfectionDuration;
+    }
+
     @Inject(method = "readAdditionalSaveData", at = @At("TAIL"))
-    private void injectToReadNbt(ValueInput valueInput, CallbackInfo ci) {
+    private void readAdditionalSaveData(ValueInput valueInput, CallbackInfo ci) {
         this.infected = valueInput.getBooleanOr("contagion_is_player_infected", false);
         this.playerDiedFromInfection = valueInput.getBooleanOr("contagion_player_died_from_infection", false);
         this.infectionTicks = valueInput.getLongOr("contagion_infection_ticks", 0L);
         this.infectionCooldown = valueInput.getLongOr("contagion_infection_cooldown", 0L);
+        this.initialInfectionDuration = valueInput.getLongOr("contagion_initial_infection_duration", 0L);
     }
 
     @Inject(method = "addAdditionalSaveData", at = @At("TAIL"))
-    private void injectToWriteNbt(ValueOutput valueOutput, CallbackInfo ci) {
+    private void addAdditionalSaveData(ValueOutput valueOutput, CallbackInfo ci) {
         valueOutput.putBoolean("contagion_is_player_infected", this.infected);
         valueOutput.putBoolean("contagion_player_died_from_infection", this.playerDiedFromInfection);
         valueOutput.putLong("contagion_infection_ticks", this.infectionTicks);
         valueOutput.putLong("contagion_infection_cooldown", this.infectionCooldown);
+        valueOutput.putLong("contagion_initial_infection_duration", this.initialInfectionDuration);
     }
 }

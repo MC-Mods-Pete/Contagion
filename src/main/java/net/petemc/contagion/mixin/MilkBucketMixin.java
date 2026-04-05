@@ -5,7 +5,7 @@ import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.consume_effects.ClearAllStatusEffectsConsumeEffect;
-import net.petemc.contagion.Config;
+import net.petemc.contagion.config.MainConfig;
 import net.petemc.contagion.effect.ContagionEffects;
 import net.petemc.contagion.effect.ContagionInfectionEffect;
 import org.spongepowered.asm.mixin.Mixin;
@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 public class MilkBucketMixin {
     @Redirect(method = "apply", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;removeAllEffects()Z"))
     private boolean finishUsing(LivingEntity user) {
-        if (Config.milkCuresInfection) {
+        if (MainConfig.isMilkCuresInfection()) {
             return user.removeAllEffects();
         }
         boolean retVal = false;

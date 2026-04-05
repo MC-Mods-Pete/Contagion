@@ -15,6 +15,7 @@ import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import net.petemc.contagion.client.ProtectionHudOverlay;
+import net.petemc.contagion.config.MainConfig;
 import net.petemc.contagion.damage_type.ContagionDamageTypes;
 import net.petemc.contagion.effect.ContagionEffects;
 import net.petemc.contagion.item.ContagionCreativeModeTabs;
@@ -56,8 +57,8 @@ public class Contagion {
 		// Register the item to a creative tab
 		modEventBus.addListener(this::addCreative);
 		// Register our mod's ModConfigSpec so that FML can create and load the config file for us
-		modContainer.registerConfig(ModConfig.Type.SERVER, Config.SPEC_SERVER);
-		modContainer.registerConfig(ModConfig.Type.CLIENT, Config.SPEC_CLIENT);
+		modContainer.registerConfig(ModConfig.Type.SERVER, MainConfig.SPEC_SERVER);
+		modContainer.registerConfig(ModConfig.Type.CLIENT, MainConfig.SPEC_CLIENT);
 	}
 
 	// common setup

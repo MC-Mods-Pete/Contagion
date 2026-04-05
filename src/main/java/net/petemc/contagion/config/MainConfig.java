@@ -1,16 +1,34 @@
-package net.petemc.contagion;
+package net.petemc.contagion.config;
 
 import net.minecraft.world.effect.MobEffectInstance;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.config.ModConfigEvent;
 import net.neoforged.neoforge.common.ModConfigSpec;
+import net.petemc.contagion.Contagion;
 import net.petemc.contagion.effect.ContagionEffects;
+import net.petemc.contagion.item.ContagionConsumables;
 import net.petemc.contagion.potion.ContagionPotions;
 
 @EventBusSubscriber(modid = Contagion.MOD_ID)
-public class Config
+public class MainConfig
 {
+    // Getter
+    public static int getInfectionDuration() { return infectionDuration; }
+    public static int getBaseInfectionChance() { return baseInfectionChance; }
+    public static int getMinimumInfectionChance() { return minimumInfectionChance; }
+    public static boolean isArmorLowersInfectionChance() { return armorLowersInfectionChance; }
+    public static boolean isEnableRandomSymptoms() { return enableRandomSymptoms; }
+    public static int getRandomSymptomsDuration() { return randomSymptomsDuration; }
+    public static int getRandomSymptomsChance() { return randomSymptomsChance; }
+    public static int getImmunityDuration() { return immunityDuration; }
+    public static boolean isMilkCuresInfection() { return milkCuresInfection; }
+    public static boolean isTotemPreventsDyingFromInfection() { return totemPreventsDyingFromInfection; }
+    public static boolean isIronGolemAttacksInfected() { return ironGolemAttacksInfected; }
+    public static boolean isDisplayCurrentInfectionProtection() { return displayCurrentInfectionProtection; }
+    public static int getDeltaX() { return deltaX; }
+    public static int getDeltaY() { return deltaY; }
+
     // Server Config
     private static final ModConfigSpec.Builder BUILDER_SERVER = new ModConfigSpec.Builder();
 
@@ -54,7 +72,11 @@ public class Config
             .comment("If false, holding a totem will not prevent the player from dying when the infection timer runs out")
             .define("totemPreventsDyingFromInfection", true);
 
-    static final ModConfigSpec SPEC_SERVER = BUILDER_SERVER.build();
+    private static final ModConfigSpec.BooleanValue IRON_GOLEM_ATTACKS_INFECTED = BUILDER_SERVER
+            .comment("If true, Iron Golems will attack infected players")
+            .define("ironGolemAttacksInfected", false);
+
+    public static final ModConfigSpec SPEC_SERVER = BUILDER_SERVER.build();
 
 
     // Server Config
@@ -72,23 +94,23 @@ public class Config
             .comment("[Client] Move the displayed protection value in the HUD in Y-direction")
             .defineInRange("deltaY", 0, 0, Integer.MAX_VALUE);
 
-    static final ModConfigSpec SPEC_CLIENT = BUILDER_CLIENT.build();
+    public static final ModConfigSpec SPEC_CLIENT = BUILDER_CLIENT.build();
 
 
-
-    public static int infectionDuration;
-    public static int baseInfectionChance;
-    public static int minimumInfectionChance;
-    public static boolean armorLowersInfectionChance;
-    public static boolean enableRandomSymptoms;
-    public static int randomSymptomsDuration;
-    public static int randomSymptomsChance;
-    public static int immunityDuration;
-    public static boolean milkCuresInfection;
-    public static boolean totemPreventsDyingFromInfection;
-    public static boolean displayCurrentInfectionProtection;
-    public static int deltaX;
-    public static int deltaY;
+    private static int infectionDuration;
+    private static int baseInfectionChance;
+    private static int minimumInfectionChance;
+    private static boolean armorLowersInfectionChance;
+    private static boolean enableRandomSymptoms;
+    private static int randomSymptomsDuration;
+    private static int randomSymptomsChance;
+    private static int immunityDuration;
+    private static boolean milkCuresInfection;
+    private static boolean totemPreventsDyingFromInfection;
+    private static boolean ironGolemAttacksInfected;
+    private static boolean displayCurrentInfectionProtection;
+    private static int deltaX;
+    private static int deltaY;
 
     @SubscribeEvent
     static void onLoad(final ModConfigEvent event)
@@ -112,6 +134,11 @@ public class Config
 
             milkCuresInfection = MILK_CURES_INFECTION.get();
             totemPreventsDyingFromInfection = TOTEM_PREVENTS_DYING_FROM_INFECTION.get();
+            ironGolemAttacksInfected = IRON_GOLEM_ATTACKS_INFECTED.get();
+
+            // update CONTAGIOUS_FLESH infection effect with duration loaded from config file
+            ContagionConsumables.CONTAGIOUS_FLESH_INFECTION_EFFECT.update(
+                    new MobEffectInstance(ContagionEffects.INFECTION, infectionDuration * 20, 0));
         }
         if (SPEC_CLIENT.isLoaded()) {
             displayCurrentInfectionProtection = DISPLAY_CURRENT_INFECTION_PROTECTION.get();

@@ -2,11 +2,11 @@ package net.petemc.contagion.client;
 
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.GameType;
-import net.petemc.contagion.Config;
+import net.petemc.contagion.config.MainConfig;
 import net.petemc.contagion.Contagion;
 import org.jetbrains.annotations.NotNull;
 
@@ -26,7 +26,7 @@ public class ProtectionHudOverlay {
         HUD_INSTANCE = new ProtectionHudOverlay();
     }
 
-    public void render(@NotNull GuiGraphics guiGraphics, @NotNull DeltaTracker deltaTracker) {
+    public void render(@NotNull GuiGraphicsExtractor guiGraphics, @NotNull DeltaTracker deltaTracker) {
         Minecraft mc = Minecraft.getInstance();
         int screenWidth = mc.getWindow().getGuiScaledWidth();
         int screenHeight = mc.getWindow().getGuiScaledHeight();
@@ -40,16 +40,17 @@ public class ProtectionHudOverlay {
             color = 0xffFF5555;
         }
 
-        if ((Config.displayCurrentInfectionProtection) && (receivedBaseInfectionChance != -1)) {
+        if ((MainConfig.isDisplayCurrentInfectionProtection()) && (receivedBaseInfectionChance != -1)) {
             assert mc.gameMode != null;
             if (mc.gameMode.getPlayerMode() == GameType.SURVIVAL || mc.gameMode.getPlayerMode() == GameType.CREATIVE) {
                 // Image
-                guiGraphics.blit(RenderPipelines.GUI_TEXTURED, texture, (screenWidth / 2) - 170 + Config.deltaX, screenHeight - 19 + Config.deltaY, 0, 0, 16, 16 , 16, 16);
+                guiGraphics.blit(RenderPipelines.GUI_TEXTURED, texture, (screenWidth / 2) - 170 + MainConfig.getDeltaX(), screenHeight - 19 + MainConfig.getDeltaY(), 0, 0, 16, 16 , 16, 16);
                 // Text
-                guiGraphics.pose().pushMatrix();
-                guiGraphics.pose().scale(1F, 1F, guiGraphics.pose());
-                guiGraphics.drawString(mc.font, infectionProtection + "%", (screenWidth / 2) + 18 - 170 + Config.deltaX, screenHeight - 14 + Config.deltaY, color);
-                guiGraphics.pose().popMatrix();
+                var pose = guiGraphics.pose();
+                pose.pushMatrix();
+                pose.scale(1F, 1F, guiGraphics.pose());
+                guiGraphics.text(mc.font, infectionProtection + "%", (screenWidth / 2) + 18 - 170 + MainConfig.getDeltaX(), screenHeight - 14 + MainConfig.getDeltaY(), color);
+                pose.popMatrix();
             }
         }
     }
