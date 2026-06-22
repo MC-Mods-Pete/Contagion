@@ -8,6 +8,7 @@ import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.predicates.*;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.neoforged.neoforge.common.data.GlobalLootModifierProvider;
+import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
 import net.neoforged.neoforge.common.loot.LootTableIdCondition;
 import net.petemc.contagion.Contagion;
 import net.petemc.contagion.item.ContagionItems;
@@ -27,36 +28,42 @@ public class ModGlobalLootModifiersProvider extends GlobalLootModifierProvider {
         add("contagious_flesh_item_from_zombie", new AddItemModifier(new LootItemCondition[]{
                 LootTableIdCondition.builder(Identifier.parse("entities/zombie")).build(),
                 LootItemRandomChanceWithEnchantedBonusCondition.randomChanceAndLootingBoost(registries,0.075F, 0.025F).build()},
+                IGlobalLootModifier.DEFAULT_PRIORITY,
                 ContagionItems.CONTAGIOUS_FLESH.get(),
                 List.of(Holder.direct(SetItemCountFunction.setCount(UniformGenerator.between(1, 2)).build())))
                 );
         add("contagious_flesh_item_from_husk", new AddItemModifier(new LootItemCondition[]{
                 LootTableIdCondition.builder(Identifier.parse("entities/husk")).build(),
                 LootItemRandomChanceWithEnchantedBonusCondition.randomChanceAndLootingBoost(registries,0.075F, 0.025F).build()},
+                IGlobalLootModifier.DEFAULT_PRIORITY,
                 ContagionItems.CONTAGIOUS_FLESH.get(),
                 List.of(Holder.direct(SetItemCountFunction.setCount(UniformGenerator.between(1, 2)).build())))
         );
         add("contagious_flesh_item_from_drowned", new AddItemModifier(new LootItemCondition[]{
                 LootTableIdCondition.builder(Identifier.parse("entities/drowned")).build(),
                 LootItemRandomChanceWithEnchantedBonusCondition.randomChanceAndLootingBoost(registries,0.075F, 0.025F).build()},
+                IGlobalLootModifier.DEFAULT_PRIORITY,
                 ContagionItems.CONTAGIOUS_FLESH.get(),
                 List.of(Holder.direct(SetItemCountFunction.setCount(UniformGenerator.between(1, 2)).build())))
         );
         add("contagious_flesh_item_from_zombie_villager", new AddItemModifier(new LootItemCondition[]{
                 LootTableIdCondition.builder(Identifier.parse("entities/zombie_villager")).build(),
                 LootItemRandomChanceWithEnchantedBonusCondition.randomChanceAndLootingBoost(registries,0.075F, 0.025F).build()},
+                IGlobalLootModifier.DEFAULT_PRIORITY,
                 ContagionItems.CONTAGIOUS_FLESH.get(),
                 List.of(Holder.direct(SetItemCountFunction.setCount(UniformGenerator.between(1, 2)).build())))
         );
         add("contagious_flesh_item_from_zombified_piglin", new AddItemModifier(new LootItemCondition[]{
                 LootTableIdCondition.builder(Identifier.parse("entities/zombified_piglin")).build(),
                 LootItemRandomChanceWithEnchantedBonusCondition.randomChanceAndLootingBoost(registries,0.075F, 0.025F).build()},
+                IGlobalLootModifier.DEFAULT_PRIORITY,
                 ContagionItems.CONTAGIOUS_FLESH.get(),
                 List.of(Holder.direct(SetItemCountFunction.setCount(UniformGenerator.between(1, 2)).build())))
         );
         add("contagious_flesh_item_from_zoglin", new AddItemModifier(new LootItemCondition[]{
                 LootTableIdCondition.builder(Identifier.parse("entities/zoglin")).build(),
                 LootItemRandomChanceWithEnchantedBonusCondition.randomChanceAndLootingBoost(registries,0.075F, 0.025F).build()},
+                IGlobalLootModifier.DEFAULT_PRIORITY,
                 ContagionItems.CONTAGIOUS_FLESH.get(),
                 List.of(Holder.direct(SetItemCountFunction.setCount(UniformGenerator.between(1, 2)).build())))
         );

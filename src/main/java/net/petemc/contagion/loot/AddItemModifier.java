@@ -32,8 +32,8 @@ public class AddItemModifier extends LootModifier {
     private final Item item;
     private final List<Holder<LootItemFunction>> functions;
 
-    public AddItemModifier(LootItemCondition[] conditionsIn, Item item, List<Holder<LootItemFunction>> functions) {
-        super(conditionsIn);
+    public AddItemModifier(LootItemCondition[] conditionsIn, int priority, Item item, List<Holder<LootItemFunction>> functions) {
+        super(conditionsIn, priority);
         this.item = item;
         this.functions = functions;
     }
