@@ -12,6 +12,8 @@ import net.neoforged.neoforge.common.loot.LootTableIdCondition;
 import net.petemc.contagion.Contagion;
 import net.petemc.contagion.item.ContagionItems;
 import net.petemc.contagion.loot.AddItemModifier;
+import net.petemc.contagion.util.ModCompatibility;
+import net.petemc.undeadnights.UndeadNights;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -60,5 +62,25 @@ public class ModGlobalLootModifiersProvider extends GlobalLootModifierProvider {
                 ContagionItems.CONTAGIOUS_FLESH.get(),
                 List.of(Holder.direct(SetItemCountFunction.setCount(UniformGenerator.between(1, 2)).build())))
         );
+        if (ModCompatibility.undeadNightsDetected()) {
+            add("contagious_flesh_item_from_horde_zombie", new AddItemModifier(new LootItemCondition[]{
+                    LootTableIdCondition.builder(ResourceLocation.parse("undeadnights:entities/horde_zombie")).build(),
+                    LootItemRandomChanceWithEnchantedBonusCondition.randomChanceAndLootingBoost(registries, 0.075F, 0.025F).build()},
+                    ContagionItems.CONTAGIOUS_FLESH.get(),
+                    List.of(Holder.direct(SetItemCountFunction.setCount(UniformGenerator.between(1, 2)).build())))
+            );
+            add("contagious_flesh_item_from_elite_zombie", new AddItemModifier(new LootItemCondition[]{
+                    LootTableIdCondition.builder(ResourceLocation.parse("undeadnights:entities/elite_zombie")).build(),
+                    LootItemRandomChanceWithEnchantedBonusCondition.randomChanceAndLootingBoost(registries, 0.075F, 0.025F).build()},
+                    ContagionItems.CONTAGIOUS_FLESH.get(),
+                    List.of(Holder.direct(SetItemCountFunction.setCount(UniformGenerator.between(1, 2)).build())))
+            );
+            add("contagious_flesh_item_from_demolition_zombie", new AddItemModifier(new LootItemCondition[]{
+                    LootTableIdCondition.builder(ResourceLocation.parse("undeadnights:entities/demolition_zombie")).build(),
+                    LootItemRandomChanceWithEnchantedBonusCondition.randomChanceAndLootingBoost(registries, 0.075F, 0.025F).build()},
+                    ContagionItems.CONTAGIOUS_FLESH.get(),
+                    List.of(Holder.direct(SetItemCountFunction.setCount(UniformGenerator.between(1, 2)).build())))
+            );
+        }
     }
 }
