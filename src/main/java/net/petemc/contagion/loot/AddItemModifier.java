@@ -12,6 +12,8 @@ import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraftforge.common.loot.IGlobalLootModifier;
 import net.minecraftforge.common.loot.LootModifier;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.petemc.contagion.config.MainConfig;
+import net.petemc.contagion.Contagion;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Supplier;
@@ -50,9 +52,33 @@ public class AddItemModifier extends LootModifier {
             itemCount = 1;
         }
 
-        ItemStack itemToAdd = new ItemStack(item, itemCount);
+        // Calculate drop chance using config values
+        float dropChance = (float) MainConfig.getContagiousFleshDropChance();
+        int lootingLevel = context.getLootingModifier();
+        float lootingBonus = (float) MainConfig.getContagiousFleshLootingBonus() * lootingLevel;
+        float finalChance = Math.max(0.0f, Math.min(1.0f, dropChance + lootingBonus));
+        float roll = random.nextFloat();
+        boolean dropped = roll < finalChance;
 
-        generatedLoot.add(itemToAdd);
+        // Check if the item should drop
+        if (dropped) {
+            ItemStack itemToAdd = new ItemStack(item, itemCount);
+            generatedLoot.add(itemToAdd);
+        }
+
+        if (MainConfig.isEnableDebugMessages()) {
+            Contagion.LOGGER.info(
+                    "Contagious Flesh roll: roll={} finalChance={} baseChance={} lootingBonus={} lootingLevel={} dropped={} amount={}",
+                    roll,
+                    finalChance,
+                    dropChance,
+                    lootingBonus,
+                    lootingLevel,
+                    dropped,
+                    dropped ? itemCount : 0
+            );
+        }
+
         return generatedLoot;
     }
 

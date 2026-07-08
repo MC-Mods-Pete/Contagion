@@ -3,7 +3,9 @@ package net.petemc.contagion.effect;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
+import net.petemc.contagion.casts.InfectedEntity;
 import org.jetbrains.annotations.NotNull;
 
 public class ContagionImmunityEffect extends MobEffect {
@@ -14,9 +16,15 @@ public class ContagionImmunityEffect extends MobEffect {
     @Override
     public void applyEffectTick(@NotNull LivingEntity pLivingEntity, int pAmplifier) {
         if (!pLivingEntity.level().isClientSide()) {
-            if (pLivingEntity.hasEffect(ContagionEffects.INFECTION.get())) {
-                pLivingEntity.removeEffect(ContagionEffects.INFECTION.get());
-                ContagionInfectionEffect.resetValues(pLivingEntity);
+            if (pLivingEntity.hasEffect(ContagionEffects.INFECTION.get()) || pLivingEntity.hasEffect(ContagionEffects.INFECTIOUS.get())) {
+                    pLivingEntity.removeEffect(ContagionEffects.INFECTION.get());
+                    ContagionInfectionEffect.resetValues(pLivingEntity);
+                    pLivingEntity.removeEffect(ContagionEffects.INFECTIOUS.get());
+                    pLivingEntity.removeEffect(MobEffects.WEAKNESS);
+                    pLivingEntity.removeEffect(MobEffects.MOVEMENT_SLOWDOWN);
+                    if (pLivingEntity instanceof InfectedEntity infectedPlayer) {
+                        infectedPlayer.contagion_setInfectious(false); // Revoke infectious flag on immunity cure.
+                    }
                 pLivingEntity.sendSystemMessage(Component.translatable("effect.contagion.cured_msg"));
             }
         }

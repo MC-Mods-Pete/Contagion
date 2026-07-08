@@ -17,6 +17,7 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.petemc.contagion.config.MainConfig;
 import net.petemc.contagion.damage_type.ContagionDamageTypes;
 import net.petemc.contagion.data.DataGenerators;
 import net.petemc.contagion.effect.ContagionEffects;
@@ -57,8 +58,8 @@ public class Contagion {
 		// Register the item to a creative tab
 		modEventBus.addListener(this::addCreative);
 		// Register our mod's ModConfigSpec so that FML can create and load the config file for us
-		ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, Config.SPEC_SERVER);
-		ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, Config.SPEC_CLIENT);
+		ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, MainConfig.SPEC_SERVER);
+		ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, MainConfig.SPEC_CLIENT);
 	}
 
 	// common setup

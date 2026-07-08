@@ -4,11 +4,6 @@
     {
       "condition": "forge:loot_table_id",
       "loot_table_id": "minecraft:entities/drowned"
-    },
-    {
-      "chance": 0.075,
-      "condition": "minecraft:random_chance_with_looting",
-      "looting_multiplier": 0.025
     }
   ],
   "item": "contagion:contagious_flesh",

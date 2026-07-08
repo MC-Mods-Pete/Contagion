@@ -5,7 +5,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.gui.overlay.IGuiOverlay;
-import net.petemc.contagion.Config;
+import net.petemc.contagion.config.MainConfig;
 
 public class ProtectionHudOverlay {
     private static final ResourceLocation texture = new ResourceLocation("contagion", "textures/hud/contagion_armor16.png");
@@ -29,13 +29,13 @@ public class ProtectionHudOverlay {
             color = 0xff5555;
         }
 
-        if ((Config.displayCurrentInfectionProtection) && (receivedBaseInfectionChance != -1)) {
+        if ((MainConfig.isDisplayCurrentInfectionProtection()) && (receivedBaseInfectionChance != -1)) {
             assert mc.gameMode != null;
             if (mc.gameMode.hasExperience() || mc.gameMode.hasInfiniteItems()) {
                 RenderSystem.setShader(GameRenderer::getPositionTexShader);
                 RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-                guiGraphics.blit(texture, (width / 2) - 170 + Config.deltaX, height - 19 + Config.deltaY, 0, 0, 16, 16, 16, 16);
-                guiGraphics.drawString(mc.font, infectionProtection + "%", (width / 2) + 18 - 170 + Config.deltaX, height - 14 + Config.deltaY, color);
+                guiGraphics.blit(texture, (width / 2) - 170 + MainConfig.getDeltaX(), height - 19 + MainConfig.getDeltaY(), 0, 0, 16, 16, 16, 16);
+                guiGraphics.drawString(mc.font, infectionProtection + "%", (width / 2) + 18 - 170 + MainConfig.getDeltaX(), height - 14 + MainConfig.getDeltaY(), color);
             }
         }
     });
