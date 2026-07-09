@@ -91,7 +91,7 @@ public class MainConfig
             .define("milkCuresInfection", false);
 
     private static final ForgeConfigSpec.BooleanValue TOTEM_PREVENTS_DYING_FROM_INFECTION = BUILDER_SERVER
-            .comment("If false, holding a totem will not prevent the player from dying when the infection timer runs out")
+            .comment("If true, holding a totem prevents the player from dying when the infection timer expires | default: true")
             .define("totemPreventsDyingFromInfection", true);
 
     private static final ForgeConfigSpec.BooleanValue IRON_GOLEM_ATTACKS_INFECTED = BUILDER_SERVER

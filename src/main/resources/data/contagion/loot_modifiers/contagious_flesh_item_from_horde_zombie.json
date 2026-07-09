@@ -1,0 +1,12 @@
+{
+  "type": "contagion:add_item",
+  "conditions": [
+    {
+      "condition": "forge:loot_table_id",
+      "loot_table_id": "undeadnights:entities/horde_zombie"
+    }
+  ],
+  "item": "contagion:contagious_flesh",
+  "max_count": 2,
+  "min_count": 1
+}

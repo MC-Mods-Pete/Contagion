@@ -8,6 +8,7 @@ import net.minecraftforge.common.loot.LootTableIdCondition;
 import net.petemc.contagion.Contagion;
 import net.petemc.contagion.item.ContagionItems;
 import net.petemc.contagion.loot.AddItemModifier;
+import net.petemc.contagion.util.ModCompatibility;
 
 // see https://github.com/Luohuayu/CatServer/blob/1c92118fcca69ffac97a48c8e1f6e1bb861b41d1/src/main/java/org/bukkit/loot/LootTables.java#L71 for some loot tables
 public class ModGlobalLootModifiersProvider extends GlobalLootModifierProvider {
@@ -18,35 +19,44 @@ public class ModGlobalLootModifiersProvider extends GlobalLootModifierProvider {
     @Override
     protected void start() {
         add("contagious_flesh_item_from_zombie", new AddItemModifier(new LootItemCondition[] {
-                new LootTableIdCondition.Builder(new ResourceLocation("entities/zombie")).build() ,
-                LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.075f, 0.025f).build()},
+                new LootTableIdCondition.Builder(new ResourceLocation("entities/zombie")).build()},
                 ContagionItems.CONTAGIOUS_FLESH.get(),
                 1, 2));
         add("contagious_flesh_item_from_husk", new AddItemModifier(new LootItemCondition[] {
-                new LootTableIdCondition.Builder(new ResourceLocation("entities/husk")).build() ,
-                LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.075f, 0.025f).build()},
+                new LootTableIdCondition.Builder(new ResourceLocation("entities/husk")).build()},
                 ContagionItems.CONTAGIOUS_FLESH.get(),
                 1, 2));
         add("contagious_flesh_item_from_drowned", new AddItemModifier(new LootItemCondition[] {
-                new LootTableIdCondition.Builder(new ResourceLocation("entities/drowned")).build() ,
-                LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.075f, 0.025f).build()},
+                new LootTableIdCondition.Builder(new ResourceLocation("entities/drowned")).build()},
                 ContagionItems.CONTAGIOUS_FLESH.get(),
                 1, 2));
         add("contagious_flesh_item_from_zombie_villager", new AddItemModifier(new LootItemCondition[] {
-                new LootTableIdCondition.Builder(new ResourceLocation("entities/zombie_villager")).build() ,
-                LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.075f, 0.025f).build()},
+                new LootTableIdCondition.Builder(new ResourceLocation("entities/zombie_villager")).build()},
                 ContagionItems.CONTAGIOUS_FLESH.get(),
                 1, 2));
         add("contagious_flesh_item_from_zombified_piglin", new AddItemModifier(new LootItemCondition[] {
-                new LootTableIdCondition.Builder(new ResourceLocation("entities/zombified_piglin")).build() ,
-                LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.075f, 0.025f).build()},
+                new LootTableIdCondition.Builder(new ResourceLocation("entities/zombified_piglin")).build()},
                 ContagionItems.CONTAGIOUS_FLESH.get(),
                 1, 2));
         add("contagious_flesh_item_from_zoglin", new AddItemModifier(new LootItemCondition[] {
-                new LootTableIdCondition.Builder(new ResourceLocation("entities/zoglin")).build() ,
-                LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.075f, 0.025f).build()},
+                new LootTableIdCondition.Builder(new ResourceLocation("entities/zoglin")).build()},
                 ContagionItems.CONTAGIOUS_FLESH.get(),
                 1, 2));
+
+        if (ModCompatibility.undeadNightsDetected()) {
+            add("contagious_flesh_item_from_horde_zombie", new AddItemModifier(new LootItemCondition[]{
+                    new LootTableIdCondition.Builder(new ResourceLocation("undeadnights:entities/horde_zombie")).build()},
+                    ContagionItems.CONTAGIOUS_FLESH.get(),
+                    1, 2));
+            add("contagious_flesh_item_from_elite_zombie", new AddItemModifier(new LootItemCondition[]{
+                    new LootTableIdCondition.Builder(new ResourceLocation("undeadnights:entities/elite_zombie")).build()},
+                    ContagionItems.CONTAGIOUS_FLESH.get(),
+                    1, 2));
+            add("contagious_flesh_item_from_demolition_zombie", new AddItemModifier(new LootItemCondition[]{
+                    new LootTableIdCondition.Builder(new ResourceLocation("undeadnights:entities/demolition_zombie")).build()},
+                    ContagionItems.CONTAGIOUS_FLESH.get(),
+                    1, 2));
+        }
     }
 }
 

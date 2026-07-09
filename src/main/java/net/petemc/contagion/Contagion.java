@@ -27,6 +27,7 @@ import net.petemc.contagion.loot.ContagionLootModifiers;
 import net.petemc.contagion.network.ContagionNetworkMessages;
 import net.petemc.contagion.potion.ContagionPotions;
 import net.petemc.contagion.sound.ContagionSounds;
+import net.petemc.contagion.util.ModCompatibility;
 import org.slf4j.Logger;
 
 // The value here should match an entry in the META-INF/mods.toml file
@@ -55,6 +56,8 @@ public class Contagion {
 
 		modEventBus.addListener(DataGenerators::gatherData);
 
+		ModCompatibility.init();
+
 		// Register the item to a creative tab
 		modEventBus.addListener(this::addCreative);
 		// Register our mod's ModConfigSpec so that FML can create and load the config file for us
@@ -65,9 +68,7 @@ public class Contagion {
 	// common setup
 	private void commonSetup(final FMLCommonSetupEvent event) {
 		LOGGER.info("Initializing the {} Mod", MOD_NAME);
-		event.enqueueWork(() -> {
-			ContagionNetworkMessages.register();
-		});
+		event.enqueueWork(ContagionNetworkMessages::register);
 
 		PotionBrewing.addMix(Potions.AWKWARD, ContagionItems.GOLD_STREAKED_FLESH.get(), ContagionPotions.CURE_POTION.get());
 		PotionBrewing.addMix(ContagionPotions.CURE_POTION.get(), Items.REDSTONE, ContagionPotions.LONG_CURE_POTION.get());
