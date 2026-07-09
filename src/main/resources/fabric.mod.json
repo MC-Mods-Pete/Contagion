@@ -12,8 +12,8 @@
 		"sources": "https://github.com/MC-Mods-Pete/Contagion",
 		"issues": "https://github.com/MC-Mods-Pete/Contagion/issues"
 	},
-	"license": "MIT",
-	"icon": "assets/contagion/icon.png",
+	"license": "All Rights Reserved",
+	"icon": "contagion.png",
 	"environment": "*",
 	"entrypoints": {
 		"main": [
@@ -32,6 +32,7 @@
 	"mixins": [
 		"contagion.mixins.json"
 	],
+	"accessWidener" : "contagion.accesswidener",
 	"depends": {
 		"fabricloader": ">=${loader_version}",
 		"minecraft": "${minecraft_version_range}",

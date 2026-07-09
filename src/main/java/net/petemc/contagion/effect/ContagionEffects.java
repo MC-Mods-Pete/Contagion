@@ -11,6 +11,7 @@ public class ContagionEffects {
     public static StatusEffect INFECTION;
     public static StatusEffect RESET_INFECTION;
     public static StatusEffect IMMUNITY;
+    public static StatusEffect INFECTIOUS;
 
     public static StatusEffect registerInfectionStatusEffect(String name) {
         return Registry.register(Registries.STATUS_EFFECT, new Identifier(Contagion.MOD_ID, name),
@@ -27,9 +28,15 @@ public class ContagionEffects {
                 new ContagionImmunityEffect(StatusEffectCategory.BENEFICIAL, 0x651b74));
     }
 
+    public static StatusEffect registerInfectiousStatusEffect(String name) {
+        return Registry.register(Registries.STATUS_EFFECT, new Identifier(Contagion.MOD_ID, name),
+                new ContagionInfectiousEffect(StatusEffectCategory.HARMFUL, 0xAA0000));
+    }
+
     public static void registerEffects() {
         INFECTION = registerInfectionStatusEffect("infection");
         RESET_INFECTION = registerResetInfectionStatusEffect("reset_infection");
         IMMUNITY = registerResistanceStatusEffect("immunity");
+        INFECTIOUS = registerInfectiousStatusEffect("infectious");
     }
 }

@@ -8,6 +8,7 @@ import net.minecraft.loot.function.SetCountLootFunction;
 import net.minecraft.loot.provider.number.ConstantLootNumberProvider;
 import net.minecraft.loot.provider.number.UniformLootNumberProvider;
 import net.minecraft.util.Identifier;
+import net.petemc.contagion.config.MainConfig;
 import net.petemc.contagion.item.ContagionItems;
 
 public class ContagionLootTableModifiers {
@@ -29,7 +30,7 @@ public class ContagionLootTableModifiers {
             if(ZOMBIE_ID.equals(id)) {
                 LootPool.Builder poolBuilder = LootPool.builder()
                         .rolls(ConstantLootNumberProvider.create(1))
-                        .conditionally(RandomChanceWithLootingLootCondition.builder(0.075f, 0.025f))
+                        .conditionally(RandomChanceWithLootingLootCondition.builder((float) MainConfig.getContagiousFleshDropChance(), (float) MainConfig.getContagiousFleshLootingBonus()))
                         .with(ItemEntry.builder(ContagionItems.CONTAGIOUS_FLESH))
                         .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f)).build());
 
@@ -39,7 +40,7 @@ public class ContagionLootTableModifiers {
             if(HUSK_ID.equals(id)) {
                 LootPool.Builder poolBuilder = LootPool.builder()
                         .rolls(ConstantLootNumberProvider.create(1))
-                        .conditionally(RandomChanceWithLootingLootCondition.builder(0.075f, 0.025f))
+                        .conditionally(RandomChanceWithLootingLootCondition.builder((float) MainConfig.getContagiousFleshDropChance(), (float) MainConfig.getContagiousFleshLootingBonus()))
                         .with(ItemEntry.builder(ContagionItems.CONTAGIOUS_FLESH))
                         .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f)).build());
 
@@ -49,7 +50,7 @@ public class ContagionLootTableModifiers {
             if(DROWNED_ID.equals(id)) {
                 LootPool.Builder poolBuilder = LootPool.builder()
                         .rolls(ConstantLootNumberProvider.create(1))
-                        .conditionally(RandomChanceWithLootingLootCondition.builder(0.075f, 0.025f))
+                        .conditionally(RandomChanceWithLootingLootCondition.builder((float) MainConfig.getContagiousFleshDropChance(), (float) MainConfig.getContagiousFleshLootingBonus()))
                         .with(ItemEntry.builder(ContagionItems.CONTAGIOUS_FLESH))
                         .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f)).build());
 
@@ -59,7 +60,7 @@ public class ContagionLootTableModifiers {
             if(ZOMBIE_VILLAGER_ID.equals(id)) {
                 LootPool.Builder poolBuilder = LootPool.builder()
                         .rolls(ConstantLootNumberProvider.create(1))
-                        .conditionally(RandomChanceWithLootingLootCondition.builder(0.075f, 0.025f))
+                        .conditionally(RandomChanceWithLootingLootCondition.builder((float) MainConfig.getContagiousFleshDropChance(), (float) MainConfig.getContagiousFleshLootingBonus()))
                         .with(ItemEntry.builder(ContagionItems.CONTAGIOUS_FLESH))
                         .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f)).build());
 
@@ -69,7 +70,7 @@ public class ContagionLootTableModifiers {
             if(ZOMBIFIED_PIGLIN_ID.equals(id)) {
                 LootPool.Builder poolBuilder = LootPool.builder()
                         .rolls(ConstantLootNumberProvider.create(1))
-                        .conditionally(RandomChanceWithLootingLootCondition.builder(0.075f, 0.025f))
+                        .conditionally(RandomChanceWithLootingLootCondition.builder((float) MainConfig.getContagiousFleshDropChance(), (float) MainConfig.getContagiousFleshLootingBonus()))
                         .with(ItemEntry.builder(ContagionItems.CONTAGIOUS_FLESH))
                         .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f)).build());
 
@@ -79,7 +80,7 @@ public class ContagionLootTableModifiers {
             if(ZOGLIN_ID.equals(id)) {
                 LootPool.Builder poolBuilder = LootPool.builder()
                         .rolls(ConstantLootNumberProvider.create(1))
-                        .conditionally(RandomChanceWithLootingLootCondition.builder(0.075f, 0.025f))
+                        .conditionally(RandomChanceWithLootingLootCondition.builder((float) MainConfig.getContagiousFleshDropChance(), (float) MainConfig.getContagiousFleshLootingBonus()))
                         .with(ItemEntry.builder(ContagionItems.CONTAGIOUS_FLESH))
                         .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f)).build());
 

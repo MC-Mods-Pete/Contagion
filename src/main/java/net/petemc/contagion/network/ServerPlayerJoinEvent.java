@@ -4,7 +4,7 @@ import net.fabricmc.fabric.api.networking.v1.*;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
-import net.petemc.contagion.config.ContagionConfig;
+import net.petemc.contagion.config.MainConfig;
 
 public class ServerPlayerJoinEvent {
 
@@ -24,9 +24,9 @@ public class ServerPlayerJoinEvent {
     public static void execute() {
         PacketByteBuf buf = PacketByteBufs.create();
 
-        buf.writeInt(ContagionConfig.INSTANCE.baseInfectionChance);
-        buf.writeInt(ContagionConfig.INSTANCE.minimumInfectionChance);
-        buf.writeBoolean(ContagionConfig.INSTANCE.armorLowersInfectionChance);
+        buf.writeInt(MainConfig.getBaseInfectionChance());
+        buf.writeInt(MainConfig.getMinimumInfectionChance());
+        buf.writeBoolean(MainConfig.isArmorLowersInfectionChance());
         ServerPlayNetworking.send(pHandler.getPlayer(), NetworkPayloads.HUD_DATA_PACKET_ID, buf);
     }
 
