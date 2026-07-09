@@ -25,9 +25,16 @@ public class ContagionLootTableModifiers {
     private static final Identifier ZOGLIN_ID =
             new Identifier("minecraft", "entities/zoglin");
 
+    private static final Identifier HORDE_ZOMBIE_ID =
+            new Identifier("undeadnights", "entities/horde_zombie");
+    private static final Identifier ELITE_ZOMBIE_ID =
+            new Identifier("undeadnights", "entities/elite_zombie");
+    private static final Identifier DEMOLITION_ZOMBIE_ID =
+            new Identifier("undeadnights", "entities/demolition_zombie");
+
     public static void modifyLootTables() {
         LootTableEvents.MODIFY.register((resourceManager, lootManager, id, tableBuilder, source) -> {
-            if(ZOMBIE_ID.equals(id)) {
+            if (ZOMBIE_ID.equals(id)) {
                 LootPool.Builder poolBuilder = LootPool.builder()
                         .rolls(ConstantLootNumberProvider.create(1))
                         .conditionally(RandomChanceWithLootingLootCondition.builder((float) MainConfig.getContagiousFleshDropChance(), (float) MainConfig.getContagiousFleshLootingBonus()))
@@ -37,7 +44,7 @@ public class ContagionLootTableModifiers {
                 tableBuilder.pool(poolBuilder.build());
             }
 
-            if(HUSK_ID.equals(id)) {
+            if (HUSK_ID.equals(id)) {
                 LootPool.Builder poolBuilder = LootPool.builder()
                         .rolls(ConstantLootNumberProvider.create(1))
                         .conditionally(RandomChanceWithLootingLootCondition.builder((float) MainConfig.getContagiousFleshDropChance(), (float) MainConfig.getContagiousFleshLootingBonus()))
@@ -47,7 +54,7 @@ public class ContagionLootTableModifiers {
                 tableBuilder.pool(poolBuilder.build());
             }
 
-            if(DROWNED_ID.equals(id)) {
+            if (DROWNED_ID.equals(id)) {
                 LootPool.Builder poolBuilder = LootPool.builder()
                         .rolls(ConstantLootNumberProvider.create(1))
                         .conditionally(RandomChanceWithLootingLootCondition.builder((float) MainConfig.getContagiousFleshDropChance(), (float) MainConfig.getContagiousFleshLootingBonus()))
@@ -57,7 +64,7 @@ public class ContagionLootTableModifiers {
                 tableBuilder.pool(poolBuilder.build());
             }
 
-            if(ZOMBIE_VILLAGER_ID.equals(id)) {
+            if (ZOMBIE_VILLAGER_ID.equals(id)) {
                 LootPool.Builder poolBuilder = LootPool.builder()
                         .rolls(ConstantLootNumberProvider.create(1))
                         .conditionally(RandomChanceWithLootingLootCondition.builder((float) MainConfig.getContagiousFleshDropChance(), (float) MainConfig.getContagiousFleshLootingBonus()))
@@ -67,7 +74,7 @@ public class ContagionLootTableModifiers {
                 tableBuilder.pool(poolBuilder.build());
             }
 
-            if(ZOMBIFIED_PIGLIN_ID.equals(id)) {
+            if (ZOMBIFIED_PIGLIN_ID.equals(id)) {
                 LootPool.Builder poolBuilder = LootPool.builder()
                         .rolls(ConstantLootNumberProvider.create(1))
                         .conditionally(RandomChanceWithLootingLootCondition.builder((float) MainConfig.getContagiousFleshDropChance(), (float) MainConfig.getContagiousFleshLootingBonus()))
@@ -77,7 +84,7 @@ public class ContagionLootTableModifiers {
                 tableBuilder.pool(poolBuilder.build());
             }
 
-            if(ZOGLIN_ID.equals(id)) {
+            if (ZOGLIN_ID.equals(id)) {
                 LootPool.Builder poolBuilder = LootPool.builder()
                         .rolls(ConstantLootNumberProvider.create(1))
                         .conditionally(RandomChanceWithLootingLootCondition.builder((float) MainConfig.getContagiousFleshDropChance(), (float) MainConfig.getContagiousFleshLootingBonus()))
@@ -85,6 +92,38 @@ public class ContagionLootTableModifiers {
                         .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f)).build());
 
                 tableBuilder.pool(poolBuilder.build());
+            }
+
+            if (ModCompatibility.undeadNightsDetected()) {
+                if (HORDE_ZOMBIE_ID.equals(id)) {
+                    LootPool.Builder poolBuilder = LootPool.builder()
+                            .rolls(ConstantLootNumberProvider.create(1))
+                            .conditionally(RandomChanceWithLootingLootCondition.builder((float) MainConfig.getContagiousFleshDropChance(), (float) MainConfig.getContagiousFleshLootingBonus()))
+                            .with(ItemEntry.builder(ContagionItems.CONTAGIOUS_FLESH))
+                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f)).build());
+
+                    tableBuilder.pool(poolBuilder.build());
+                }
+
+                if (ELITE_ZOMBIE_ID.equals(id)) {
+                    LootPool.Builder poolBuilder = LootPool.builder()
+                            .rolls(ConstantLootNumberProvider.create(1))
+                            .conditionally(RandomChanceWithLootingLootCondition.builder((float) MainConfig.getContagiousFleshDropChance(), (float) MainConfig.getContagiousFleshLootingBonus()))
+                            .with(ItemEntry.builder(ContagionItems.CONTAGIOUS_FLESH))
+                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f)).build());
+
+                    tableBuilder.pool(poolBuilder.build());
+                }
+
+                if (DEMOLITION_ZOMBIE_ID.equals(id)) {
+                    LootPool.Builder poolBuilder = LootPool.builder()
+                            .rolls(ConstantLootNumberProvider.create(1))
+                            .conditionally(RandomChanceWithLootingLootCondition.builder((float) MainConfig.getContagiousFleshDropChance(), (float) MainConfig.getContagiousFleshLootingBonus()))
+                            .with(ItemEntry.builder(ContagionItems.CONTAGIOUS_FLESH))
+                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f)).build());
+
+                    tableBuilder.pool(poolBuilder.build());
+                }
             }
         });
     }
