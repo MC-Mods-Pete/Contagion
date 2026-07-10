@@ -21,19 +21,12 @@ public class ContagionResetInfectionEffect extends StatusEffect {
                 if (pPlayerEntity.hasStatusEffect(ContagionEffects.INFECTION)) {
                     pPlayerEntity.sendMessage(Text.translatable("effect.contagion.reset_infection_msg"));
 
-                    StatusEffectInstance existingEffect = pPlayerEntity.getStatusEffect(ContagionEffects.INFECTION);
-                    long customDuration = (existingEffect != null && existingEffect.getDuration() > 0)
-                            ? (int) existingEffect.getDuration()
-                            : MainConfig.getInfectionDuration() * 20L;
-
+                    pLivingEntity.removeStatusEffect(ContagionEffects.INFECTION);
+                    pLivingEntity.removeStatusEffect(ContagionEffects.INFECTIOUS);
+                    ContagionInfectionEffect.resetValues(pLivingEntity);
                     if (pPlayerEntity instanceof InfectedEntity infectedPlayer) {
-                        infectedPlayer.contagion_setInfection(false);
-                        infectedPlayer.contagion_setInitialInfectionDuration(customDuration);
-                        infectedPlayer.contagion_setInfectionTicks(customDuration);
-                        infectedPlayer.contagion_setInfectionCooldown(60L * 20);
+                        pPlayerEntity.addStatusEffect(new StatusEffectInstance(ContagionEffects.INFECTION, ( int) infectedPlayer.contagion_getInitialInfectionDuration() ,0));
                     }
-
-                    pPlayerEntity.addStatusEffect(new StatusEffectInstance(ContagionEffects.INFECTION, (int) customDuration, 0));
                 }
             }
         }

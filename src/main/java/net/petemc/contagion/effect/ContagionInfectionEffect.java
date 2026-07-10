@@ -41,15 +41,11 @@ public class ContagionInfectionEffect extends StatusEffect {
 
     public static void resetValues(LivingEntity pLivingEntity) {
         if (pLivingEntity instanceof InfectedEntity infectedPlayer) {
-            StatusEffectInstance existingEffect = pLivingEntity.getStatusEffect(ContagionEffects.INFECTION);
-            long duration = (existingEffect != null && existingEffect.getDuration() > 0L) 
-                    ? (int) existingEffect.getDuration() 
-                    : (long) MainConfig.getInfectionDuration() * 20;
             infectedPlayer.contagion_setInfection(false);
             if (infectedPlayer.contagion_getInitialInfectionDuration() == 0L) {
-                infectedPlayer.contagion_setInitialInfectionDuration(duration);
+                infectedPlayer.contagion_setInitialInfectionDuration((long) MainConfig.getInfectionDuration() * 20);
             }
-            infectedPlayer.contagion_setInfectionTicks(duration);
+            infectedPlayer.contagion_setInfectionTicks(infectedPlayer.contagion_getInitialInfectionDuration());
             infectedPlayer.contagion_setInfectionCooldown(defaultCooldown * 20);
         }
     }
