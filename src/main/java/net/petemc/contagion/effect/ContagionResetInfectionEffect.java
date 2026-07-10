@@ -7,7 +7,6 @@ import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.petemc.contagion.casts.InfectedEntity;
-import net.petemc.contagion.config.MainConfig;
 import org.jetbrains.annotations.NotNull;
 
 public class ContagionResetInfectionEffect extends MobEffect {
@@ -22,19 +21,12 @@ public class ContagionResetInfectionEffect extends MobEffect {
                 if (pPlayerEntity.hasEffect(ContagionEffects.INFECTION.get())) {
                     pPlayerEntity.sendSystemMessage(Component.translatable("effect.contagion.reset_infection_msg"));
 
-                    MobEffectInstance existingEffect = pPlayerEntity.getEffect(ContagionEffects.INFECTION.get());
-                    long customDuration = (existingEffect != null && existingEffect.getDuration() > 0)
-                            ? (int) existingEffect.getDuration()
-                            : MainConfig.getInfectionDuration() * 20;
-
-                    if (pPlayerEntity instanceof InfectedEntity infectedPlayer) {
-                        infectedPlayer.contagion_setInfection(false);
-                        infectedPlayer.contagion_setInitialInfectionDuration(customDuration);
-                        infectedPlayer.contagion_setInfectionTicks(customDuration);
-                        infectedPlayer.contagion_setInfectionCooldown(60L * 20);
+                    pLivingEntity.removeEffect(ContagionEffects.INFECTION.get());
+                    pLivingEntity.removeEffect(ContagionEffects.INFECTIOUS.get());
+                    ContagionInfectionEffect.resetValues(pLivingEntity);
+                    if (pPlayerEntity instanceof InfectedEntity infectedEntity) {
+                        pPlayerEntity.addEffect(new MobEffectInstance(ContagionEffects.INFECTION.get(), ( int) infectedEntity.contagion_getInitialInfectionDuration() ,0));
                     }
-
-                    pPlayerEntity.addEffect(new MobEffectInstance(ContagionEffects.INFECTION.get(), (int) customDuration, 0));
                 }
             }
         }

@@ -22,8 +22,8 @@ public class ContagionImmunityEffect extends MobEffect {
                     pLivingEntity.removeEffect(ContagionEffects.INFECTIOUS.get());
                     pLivingEntity.removeEffect(MobEffects.WEAKNESS);
                     pLivingEntity.removeEffect(MobEffects.MOVEMENT_SLOWDOWN);
-                    if (pLivingEntity instanceof InfectedEntity infectedPlayer) {
-                        infectedPlayer.contagion_setInfectious(false); // Revoke infectious flag on immunity cure.
+                    if (pLivingEntity instanceof InfectedEntity infectedEntity) {
+                        infectedEntity.contagion_setInfectious(false); // Revoke infectious flag on immunity cure.
                     }
                 pLivingEntity.sendSystemMessage(Component.translatable("effect.contagion.cured_msg"));
             }
