@@ -25,6 +25,7 @@ public class MainConfig
     public static boolean isMilkCuresInfection() { return milkCuresInfection; }
     public static boolean isTotemPreventsDyingFromInfection() { return totemPreventsDyingFromInfection; }
     public static boolean isIronGolemAttacksInfected() { return ironGolemAttacksInfected; }
+    public static boolean isInfectedPlayerInfectsPlayers() { return infectedPlayerInfectsPlayers; }
     public static boolean isDisplayCurrentInfectionProtection() { return displayCurrentInfectionProtection; }
     public static int getDeltaX() { return deltaX; }
     public static int getDeltaY() { return deltaY; }
@@ -76,6 +77,10 @@ public class MainConfig
             .comment("If true, Iron Golems will attack infected players")
             .define("ironGolemAttacksInfected", false);
 
+    private static final ModConfigSpec.BooleanValue INFECTED_PLAYER_INFECTS_PLAYERS = BUILDER_SERVER
+            .comment("If true, infected players can infect other players by attacking them")
+            .define("infectedPlayerInfectsPlayers", false);
+
     public static final ModConfigSpec SPEC_SERVER = BUILDER_SERVER.build();
 
 
@@ -108,6 +113,7 @@ public class MainConfig
     private static boolean milkCuresInfection;
     private static boolean totemPreventsDyingFromInfection;
     private static boolean ironGolemAttacksInfected;
+    private static boolean infectedPlayerInfectsPlayers;
     private static boolean displayCurrentInfectionProtection;
     private static int deltaX;
     private static int deltaY;
@@ -135,6 +141,7 @@ public class MainConfig
             milkCuresInfection = MILK_CURES_INFECTION.get();
             totemPreventsDyingFromInfection = TOTEM_PREVENTS_DYING_FROM_INFECTION.get();
             ironGolemAttacksInfected = IRON_GOLEM_ATTACKS_INFECTED.get();
+            infectedPlayerInfectsPlayers = INFECTED_PLAYER_INFECTS_PLAYERS.get();
 
             // update CONTAGIOUS_FLESH infection effect with duration loaded from config file
             ContagionConsumables.CONTAGIOUS_FLESH_INFECTION_EFFECT.update(
