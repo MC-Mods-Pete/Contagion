@@ -4,6 +4,7 @@ import net.fabricmc.fabric.api.loot.v3.LootTableEvents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
@@ -16,33 +17,33 @@ import net.petemc.undeadnights.entity.ModEntities;
 public class ContagionLootTableModifiers {
     public static void modifyLootTables() {
         LootTableEvents.MODIFY.register((key, tableBuilder, source, registries) -> {
-            if (EntityType.ZOMBIE.getDefaultLootTable().isPresent()) {
-                if (EntityType.ZOMBIE.getDefaultLootTable().get() == key) {
+            if (EntityTypes.ZOMBIE.getDefaultLootTable().isPresent()) {
+                if (EntityTypes.ZOMBIE.getDefaultLootTable().get() == key) {
                     tableBuilder.withPool(buildPool(registries));
                 }
             }
-            if (EntityType.HUSK.getDefaultLootTable().isPresent()) {
-                if (EntityType.HUSK.getDefaultLootTable().get() == key) {
+            if (EntityTypes.HUSK.getDefaultLootTable().isPresent()) {
+                if (EntityTypes.HUSK.getDefaultLootTable().get() == key) {
                     tableBuilder.withPool(buildPool(registries));
                 }
             }
-            if (EntityType.DROWNED.getDefaultLootTable().isPresent()) {
-                if (EntityType.DROWNED.getDefaultLootTable().get() == key) {
+            if (EntityTypes.DROWNED.getDefaultLootTable().isPresent()) {
+                if (EntityTypes.DROWNED.getDefaultLootTable().get() == key) {
                     tableBuilder.withPool(buildPool(registries));
                 }
             }
-            if (EntityType.ZOMBIE_VILLAGER.getDefaultLootTable().isPresent()) {
-                if (EntityType.ZOMBIE_VILLAGER.getDefaultLootTable().get() == key) {
+            if (EntityTypes.ZOMBIE_VILLAGER.getDefaultLootTable().isPresent()) {
+                if (EntityTypes.ZOMBIE_VILLAGER.getDefaultLootTable().get() == key) {
                     tableBuilder.withPool(buildPool(registries));
                 }
             }
-            if (EntityType.ZOMBIFIED_PIGLIN.getDefaultLootTable().isPresent()) {
-                if (EntityType.ZOMBIFIED_PIGLIN.getDefaultLootTable().get() == key) {
+            if (EntityTypes.ZOMBIFIED_PIGLIN.getDefaultLootTable().isPresent()) {
+                if (EntityTypes.ZOMBIFIED_PIGLIN.getDefaultLootTable().get() == key) {
                     tableBuilder.withPool(buildPool(registries));
                 }
             }
-            if (EntityType.ZOGLIN.getDefaultLootTable().isPresent()) {
-                if (EntityType.ZOGLIN.getDefaultLootTable().get() == key) {
+            if (EntityTypes.ZOGLIN.getDefaultLootTable().isPresent()) {
+                if (EntityTypes.ZOGLIN.getDefaultLootTable().get() == key) {
                     tableBuilder.withPool(buildPool(registries));
                 }
             }

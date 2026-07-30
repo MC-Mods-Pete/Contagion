@@ -48,6 +48,8 @@
   "text.autoconfig.contagion.option.totemPreventsDyingFromInfection.@Tooltip": "If true, holding a totem will prevent the player from dying when the infection timer runs out | default: true",
   "text.autoconfig.contagion.option.ironGolemAttacksInfected": "Iron Golems attack infected players",
   "text.autoconfig.contagion.option.ironGolemAttacksInfected.@Tooltip": "If enabled, Iron Golems will target and attack infected players | default: false",
+  "text.autoconfig.contagion.option.infectedPlayerInfectsPlayers": "Infected players can infect other players",
+  "text.autoconfig.contagion.option.infectedPlayerInfectsPlayers.@Tooltip": "If enabled, infected players can infect other players by attacking them | default: true",
   "text.autoconfig.contagion.option.displayCurrentInfectionProtection": "Displays the current infection protection value in the HUD",
   "text.autoconfig.contagion.option.displayCurrentInfectionProtection.@Tooltip": "If enabled, displays the current protection value in the HUD | default: true",
   "text.autoconfig.contagion.option.deltaX": "Move the HUD-display in the X-direction",

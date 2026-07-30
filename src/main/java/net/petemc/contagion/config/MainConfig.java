@@ -23,6 +23,7 @@ public class MainConfig implements ConfigData
     public static boolean isMilkCuresInfection() { return INSTANCE.milkCuresInfection; }
     public static boolean isTotemPreventsDyingFromInfection() { return INSTANCE.totemPreventsDyingFromInfection; }
     public static boolean isIronGolemAttacksInfected() { return INSTANCE.ironGolemAttacksInfected; }
+    public static boolean isInfectedPlayerInfectsPlayers() { return INSTANCE.infectedPlayerInfectsPlayers; }
     public static boolean isDisplayCurrentInfectionProtection() { return INSTANCE.displayCurrentInfectionProtection; }
     public static int getDeltaX() { return INSTANCE.deltaX; }
     public static int getDeltaY() { return INSTANCE.deltaY; }
@@ -104,6 +105,10 @@ public class MainConfig implements ConfigData
     @ConfigEntry.Gui.Tooltip()
     @Comment("If true, Iron Golems will attack infected players | default: false")
     private boolean ironGolemAttacksInfected = false;
+
+    @ConfigEntry.Gui.Tooltip()
+    @Comment("If true, infected players can infect other players by attacking them | default: true")
+    private boolean infectedPlayerInfectsPlayers = true;
 
     @ConfigEntry.Category("client")
     @ConfigEntry.Gui.Tooltip()
