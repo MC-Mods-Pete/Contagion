@@ -2,13 +2,16 @@ package net.petemc.contagion.mixin;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.npc.villager.Villager;
 import net.minecraft.world.entity.player.Player;
+
 import net.petemc.contagion.config.MainConfig;
 import net.petemc.contagion.effect.ContagionEffects;
 import net.petemc.contagion.effect.ContagionInfectionEffect;
@@ -20,23 +23,22 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 /**
- * When an infected player attacks another player, there is a chance to spread
+ * When an infected player attacks another player or Villager, there is a chance to spread
  * the infection. Uses the same chance mechanics as ZombieEntityMixin.
- * Can be disabled via the config option "infectedPlayerInfectsPlayers".
+ * Can be disabled via the config options "infectedPlayerInfectsPlayers" and "infectedPlayerInfectsVillagers".
  */
 @Mixin(Player.class)
 public class InfectedPlayerAttackMixin {
 
     @Inject(method = "attack", at = @At("RETURN"))
     public void attack(Entity target, CallbackInfo ci) {
-        if (!MainConfig.isInfectedPlayerInfectsPlayers()) return;
-
         Player attacker = (Player) (Object) this;
 
         // Only spread infection if the attacking player is currently infected
         if (!attacker.hasEffect(ContagionEffects.INFECTION)) return;
 
         if (target instanceof Player targetPlayer) {
+            if (!MainConfig.isAllowPlayersToInfectPlayers()) return;
             int randomValue = Mth.nextInt(RandomSource.create(), 1, 100);
             int effectiveInfectChance = getEffectiveInfectChance(targetPlayer);
             if (randomValue > effectiveInfectChance) {
@@ -51,6 +53,20 @@ public class InfectedPlayerAttackMixin {
                             targetPlayer.sendSystemMessage(Component.translatable("effect.contagion.infected_msg").withStyle(ChatFormatting.RED));
                         }
                     }
+                }
+            }
+        } else if (target instanceof Villager villagerTarget) {
+            if (!MainConfig.isAllowPlayersToInfectVillagers()) return;
+            int randomValue = Mth.nextInt(RandomSource.create(), 1, 100);
+            int effectiveInfectChance = getEffectiveInfectChance(villagerTarget);
+            if (randomValue > effectiveInfectChance) {
+                if (!villagerTarget.hasEffect(ContagionEffects.INFECTION)) {
+                    if (!villagerTarget.level().isClientSide()) {
+                        villagerTarget.addEffect(new MobEffectInstance(ContagionEffects.INFECTION, MainConfig.getInfectionDuration() * 20, 0));
+                        ContagionInfectionEffect.resetValues(villagerTarget);
+                    }
+                    villagerTarget.level().playSound(null, villagerTarget.getX(), villagerTarget.getY(), villagerTarget.getZ(),
+                            SoundEvents.VILLAGER_HURT, SoundSource.BLOCKS, 1.0F, 3f);
                 }
             }
         }

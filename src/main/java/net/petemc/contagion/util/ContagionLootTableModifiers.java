@@ -1,6 +1,7 @@
 package net.petemc.contagion.util;
 
 import net.fabricmc.fabric.api.loot.v3.LootTableEvents;
+import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.EntityType;
@@ -11,7 +12,10 @@ import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceWithEnchantedBonusCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
+import net.petemc.contagion.Contagion;
+import net.petemc.contagion.config.MainConfig;
 import net.petemc.contagion.item.ContagionItems;
+import net.petemc.undeadnights.UndeadNights;
 import net.petemc.undeadnights.entity.ModEntities;
 
 public class ContagionLootTableModifiers {
@@ -49,33 +53,21 @@ public class ContagionLootTableModifiers {
             }
 
             if (ModCompatibility.undeadNightsDetected()) {
-                String mobId = "undeadnights:horde_zombie";
-                EntityType<?> mobType = BuiltInRegistries.ENTITY_TYPE.get(Identifier.parse(mobId)).map(ref -> ref.value()).orElse(null);
-                if (mobType != null && mobId.contains(mobType.getDescriptionId())) {
-                    if (ModEntities.HORDE_ZOMBIE.getDefaultLootTable().isPresent()) {
-                        if (ModEntities.HORDE_ZOMBIE.getDefaultLootTable().get() == key) {
-                            tableBuilder.withPool(buildPool(registries));
-                        }
+                if (ModEntities.HORDE_ZOMBIE.getDefaultLootTable().isPresent()) {
+                    if (ModEntities.HORDE_ZOMBIE.getDefaultLootTable().get() == key) {
+                        tableBuilder.withPool(buildPool(registries));
                     }
                 }
 
-                mobId = "undeadnights:elite_zombie";
-                mobType = BuiltInRegistries.ENTITY_TYPE.get(Identifier.parse(mobId)).map(ref -> ref.value()).orElse(null);
-                if (mobType != null && mobId.contains(mobType.getDescriptionId())) {
-                    if (ModEntities.ELITE_ZOMBIE.getDefaultLootTable().isPresent()) {
-                        if (ModEntities.ELITE_ZOMBIE.getDefaultLootTable().get() == key) {
-                            tableBuilder.withPool(buildPool(registries));
-                        }
+                if (ModEntities.ELITE_ZOMBIE.getDefaultLootTable().isPresent()) {
+                    if (ModEntities.ELITE_ZOMBIE.getDefaultLootTable().get() == key) {
+                        tableBuilder.withPool(buildPool(registries));
                     }
                 }
 
-                mobId = "undeadnights:demolition_zombie";
-                mobType = BuiltInRegistries.ENTITY_TYPE.get(Identifier.parse(mobId)).map(ref -> ref.value()).orElse(null);
-                if (mobType != null && mobId.contains(mobType.getDescriptionId())) {
-                    if (ModEntities.DEMOLITION_ZOMBIE.getDefaultLootTable().isPresent()) {
-                        if (ModEntities.DEMOLITION_ZOMBIE.getDefaultLootTable().get() == key) {
-                            tableBuilder.withPool(buildPool(registries));
-                        }
+                if (ModEntities.DEMOLITION_ZOMBIE.getDefaultLootTable().isPresent()) {
+                    if (ModEntities.DEMOLITION_ZOMBIE.getDefaultLootTable().get() == key) {
+                        tableBuilder.withPool(buildPool(registries));
                     }
                 }
             }
@@ -85,7 +77,7 @@ public class ContagionLootTableModifiers {
     private static LootPool.Builder buildPool(net.minecraft.core.HolderLookup.Provider registries) {
         return LootPool.lootPool()
                 .setRolls(ConstantValue.exactly(1))
-                .when(LootItemRandomChanceWithEnchantedBonusCondition.randomChanceAndLootingBoost(registries, 0.075f, 0.025f))
+                .when(LootItemRandomChanceWithEnchantedBonusCondition.randomChanceAndLootingBoost(registries, (float) MainConfig.getContagiousFleshDropChance(), (float) MainConfig.getContagiousFleshLootingBonus()))
                 .add(LootItem.lootTableItem(ContagionItems.CONTAGIOUS_FLESH))
                 .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0f, 2.0f)));
     }
