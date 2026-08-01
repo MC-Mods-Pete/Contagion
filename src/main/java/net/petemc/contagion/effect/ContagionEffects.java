@@ -8,7 +8,6 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.petemc.contagion.Contagion;
 
-
 public class ContagionEffects {
     public static final DeferredRegister<MobEffect> MOB_EFFECTS =
             DeferredRegister.create(BuiltInRegistries.MOB_EFFECT, Contagion.MOD_ID);
@@ -19,6 +18,8 @@ public class ContagionEffects {
             () -> new ContagionResetInfectionEffect(MobEffectCategory.BENEFICIAL, 16755200));
     public static final Holder<MobEffect> IMMUNITY = MOB_EFFECTS.register("immunity",
             () -> new ContagionImmunityEffect(MobEffectCategory.BENEFICIAL, 0x651b74));
+    public static final Holder<MobEffect> INFECTIOUS = MOB_EFFECTS.register("infectious",
+            () -> new ContagionInfectiousEffect(MobEffectCategory.HARMFUL, 0xAA0000));
 
     public static void register(IEventBus eventBus) {
         MOB_EFFECTS.register(eventBus);
