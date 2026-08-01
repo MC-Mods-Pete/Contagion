@@ -12,11 +12,13 @@ public class ContagionEffects {
     public static Holder<MobEffect> INFECTION;
     public static Holder<MobEffect> RESET_INFECTION;
     public static Holder<MobEffect> IMMUNITY;
+    public static Holder<MobEffect> INFECTIOUS;
 
     public static void registerEffects() {
         INFECTION = registerContagionEffect("infection", new ContagionInfectionEffect(MobEffectCategory.HARMFUL, 5592405));
         RESET_INFECTION = registerContagionEffect("reset_infection", new ContagionResetInfectionEffect(MobEffectCategory.BENEFICIAL, 16755200));
         IMMUNITY = registerContagionEffect("immunity", new ContagionImmunityEffect(MobEffectCategory.BENEFICIAL, 0x651b74));
+        INFECTIOUS = registerContagionEffect("infectious", new ContagionInfectiousEffect(MobEffectCategory.HARMFUL, 0xAA0000));
     }
 
     private static Holder<MobEffect> registerContagionEffect(String name, MobEffect mobEffect) {

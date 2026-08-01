@@ -3,7 +3,7 @@ package net.petemc.contagion.mixin;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
-import net.petemc.contagion.casts.InfectedPlayer;
+import net.petemc.contagion.casts.InfectedEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 
 @Mixin(Player.class)
-public abstract class PlayerEntityMixin implements InfectedPlayer {
+public abstract class PlayerEntityMixin implements InfectedEntity {
     @Unique
     private boolean infected = false;
     @Unique
@@ -23,6 +23,8 @@ public abstract class PlayerEntityMixin implements InfectedPlayer {
     private long infectionCooldown = 0;
     @Unique
     private long initialInfectionDuration = 0;
+    @Unique
+    private boolean infectious = false;
 
     @Unique
     public void contagion_setInfection(boolean infectedValue) {
@@ -74,21 +76,32 @@ public abstract class PlayerEntityMixin implements InfectedPlayer {
         return initialInfectionDuration;
     }
 
+    @Unique
+    public void contagion_setInfectious(boolean infectiousValue) {
+        this.infectious = infectiousValue;
+    }
+
+    @Unique
+    public boolean contagion_isInfectious() {
+        return this.infectious;
+    }
     @Inject(method = "readAdditionalSaveData", at = @At("TAIL"))
-    private void readAdditionalSaveData(ValueInput input, CallbackInfo ci) {
-        this.infected = input.getBooleanOr("contagion_is_player_infected", false);
-        this.playerDiedFromInfection = input.getBooleanOr("contagion_player_died_from_infection", false);
-        this.infectionTicks = input.getLongOr("contagion_infection_ticks", 0L);
-        this.infectionCooldown = input.getLongOr("contagion_infection_cooldown", 0L);
-        this.initialInfectionDuration = input.getLongOr("contagion_initial_infection_duration", 0L);
+    private void readAdditionalSaveData(ValueInput valueInput, CallbackInfo ci) {
+        this.infected = valueInput.getBooleanOr("contagion_is_player_infected", false);
+        this.playerDiedFromInfection = valueInput.getBooleanOr("contagion_player_died_from_infection", false);
+        this.infectionTicks = valueInput.getLongOr("contagion_infection_ticks", 0L);
+        this.infectionCooldown = valueInput.getLongOr("contagion_infection_cooldown", 0L);
+        this.initialInfectionDuration = valueInput.getLongOr("contagion_initial_infection_duration", 0L);
+        this.infectious = valueInput.getBooleanOr("contagion_is_infectious", false);
     }
 
     @Inject(method = "addAdditionalSaveData", at = @At("TAIL"))
-    private void addAdditionalSaveData(ValueOutput output, CallbackInfo ci) {
-        output.putBoolean("contagion_is_player_infected", this.infected);
-        output.putBoolean("contagion_player_died_from_infection", this.playerDiedFromInfection);
-        output.putLong("contagion_infection_ticks", this.infectionTicks);
-        output.putLong("contagion_infection_cooldown", this.infectionCooldown);
-        output.putLong("contagion_initial_infection_duration", this.initialInfectionDuration);
+    private void addAdditionalSaveData(ValueOutput valueOutput, CallbackInfo ci) {
+        valueOutput.putBoolean("contagion_is_player_infected", this.infected);
+        valueOutput.putBoolean("contagion_player_died_from_infection", this.playerDiedFromInfection);
+        valueOutput.putLong("contagion_infection_ticks", this.infectionTicks);
+        valueOutput.putLong("contagion_infection_cooldown", this.infectionCooldown);
+        valueOutput.putLong("contagion_initial_infection_duration", this.initialInfectionDuration);
+        valueOutput.putBoolean("contagion_is_infectious", this.infectious);
     }
 }

@@ -1,6 +1,6 @@
 package net.petemc.contagion.casts;
 
-public interface InfectedPlayer {
+public interface InfectedEntity {
     void contagion_setInfection(boolean infectedValue);
 
     boolean contagion_isPlayerInfected();
@@ -20,4 +20,8 @@ public interface InfectedPlayer {
     public void contagion_setInitialInfectionDuration(long duration);
 
     public long contagion_getInitialInfectionDuration();
+
+    void contagion_setInfectious(boolean infectiousValue);
+
+    boolean contagion_isInfectious();
 }

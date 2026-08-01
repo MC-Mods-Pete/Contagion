@@ -3,12 +3,16 @@
 	"package": "net.petemc.contagion.mixin",
 	"compatibilityLevel": "JAVA_25",
 	"mixins": [
+		"AerosolTransmissionEventMixin",
+		"GoldenAppleCureMixin",
+		"InfectedPlayerAttackMixin",
 		"IronGolemEntityMixin",
-		"LivingEntityEffectRemovedMixin",
 		"MilkBucketMixin",
 		"PlayerEntityMixin",
-		"ZoglinEntityMixin",
-		"ZombieEntityMixin"
+		"RemoveStatusEffectMixin",
+		"VillagerEntityMixin",
+		"ZombieEntityMixin",
+		"ZoglinEntityMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

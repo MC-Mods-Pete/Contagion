@@ -10,31 +10,33 @@ import net.petemc.contagion.effect.ContagionEffects;
 import net.petemc.contagion.effect.ContagionInfectionEffect;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.item.ItemStack;
+import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(ClearAllStatusEffectsConsumeEffect.class)
 public class MilkBucketMixin {
-    @Inject(method = "apply", at = @At("HEAD"), cancellable = true)
-    private void apply(Level level, ItemStack itemStack, LivingEntity user, CallbackInfoReturnable<Boolean> cir) {
+    @Redirect(method = "apply", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;removeAllEffects()Z"))
+    private boolean finishUsing(LivingEntity user) {
         if (MainConfig.isMilkCuresInfection()) {
-            return; // default: cure everything including infection
+            return user.removeAllEffects();
         }
-        MobEffectInstance effectInst = user.getActiveEffectsMap().get(ContagionEffects.INFECTION);
+        boolean retVal = false;
+        MobEffectInstance effectInst = null;
+        for (MobEffectInstance mobeffectinstance : user.getActiveEffects()) {
+            if (mobeffectinstance.is(ContagionEffects.INFECTION)) {
+                effectInst = mobeffectinstance;
+            }
+        }
         if (effectInst == null) {
-            return; // no infection present, default behavior
+            return user.removeAllEffects();
         }
-        Holder<MobEffect> effectReg = effectInst.getEffect();
-        MobEffect effect = effectReg.value();
+        Holder<MobEffect> effectHolder = effectInst.getEffect();
+        MobEffect effect = effectHolder.value();
         if (effect instanceof ContagionInfectionEffect infectEffect) {
             int localTicks = (int) infectEffect.getTicks(user);
-            boolean retVal = user.removeAllEffects();
+            retVal = user.removeAllEffects();
             user.addEffect(effectInst);
             infectEffect.setTicks(user, localTicks);
-            cir.setReturnValue(retVal);
-            cir.cancel();
         }
+        return retVal;
     }
 }

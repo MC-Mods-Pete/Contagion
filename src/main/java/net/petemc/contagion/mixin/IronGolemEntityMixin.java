@@ -32,6 +32,3 @@ public abstract class IronGolemEntityMixin extends Mob {
         ));
     }
 }
-
-
-

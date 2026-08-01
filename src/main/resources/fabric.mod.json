@@ -12,8 +12,8 @@
 		"sources": "https://github.com/MC-Mods-Pete/Contagion",
 		"issues": "https://github.com/MC-Mods-Pete/Contagion/issues"
 	},
-	"license": "MIT",
-	"icon": "assets/contagion/icon.png",
+	"license": "All Rights Reserved",
+	"icon": "contagion.png",
 	"environment": "*",
 	"entrypoints": {
 		"main": [
