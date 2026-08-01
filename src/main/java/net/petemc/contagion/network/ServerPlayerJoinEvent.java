@@ -5,7 +5,7 @@ import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
-import net.petemc.contagion.config.ContagionConfig;
+import net.petemc.contagion.config.MainConfig;
 
 public class ServerPlayerJoinEvent {
 
@@ -23,7 +23,7 @@ public class ServerPlayerJoinEvent {
     }
 
     public static void execute() {
-        ServerPlayNetworking.send(pHandler.getPlayer(), new NetworkPayloads.hudDataPayload(ContagionConfig.INSTANCE.baseInfectionChance, ContagionConfig.INSTANCE.minimumInfectionChance, ContagionConfig.INSTANCE.armorLowersInfectionChance));
+        ServerPlayNetworking.send(pHandler.getPlayer(), new NetworkPayloads.hudDataPayload(MainConfig.getBaseInfectionChance(), MainConfig.getMinimumInfectionChance(), MainConfig.isArmorLowersInfectionChance()));
     }
 
     public static void registerEvent() { new ServerPlayerJoinEvent(); }

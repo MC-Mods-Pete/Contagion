@@ -8,7 +8,9 @@ import net.minecraft.loot.entry.ItemEntry;
 import net.minecraft.loot.function.SetCountLootFunction;
 import net.minecraft.loot.provider.number.ConstantLootNumberProvider;
 import net.minecraft.loot.provider.number.UniformLootNumberProvider;
+import net.petemc.contagion.config.MainConfig;
 import net.petemc.contagion.item.ContagionItems;
+import net.petemc.undeadnights.entity.ModEntities;
 
 public class ContagionLootTableModifiers {
     public static void modifyLootTables() {
@@ -16,7 +18,7 @@ public class ContagionLootTableModifiers {
             if (EntityType.ZOMBIE.getLootTableId() == id) {
                 LootPool.Builder poolBuilder = LootPool.builder()
                         .rolls(ConstantLootNumberProvider.create(1))
-                        .conditionally(RandomChanceWithEnchantedBonusLootCondition.builder(registries, 0.075f, 0.025f))
+                        .conditionally(RandomChanceWithEnchantedBonusLootCondition.builder(registries, (float) MainConfig.getContagiousFleshDropChance(), (float) MainConfig.getContagiousFleshLootingBonus()))
                         .with(ItemEntry.builder(ContagionItems.CONTAGIOUS_FLESH))
                         .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f)).build());
                 tableBuilder.pool(poolBuilder.build());
@@ -25,7 +27,7 @@ public class ContagionLootTableModifiers {
             if (EntityType.HUSK.getLootTableId() == id) {
                 LootPool.Builder poolBuilder = LootPool.builder()
                         .rolls(ConstantLootNumberProvider.create(1))
-                        .conditionally(RandomChanceWithEnchantedBonusLootCondition.builder(registries, 0.075f, 0.025f))
+                        .conditionally(RandomChanceWithEnchantedBonusLootCondition.builder(registries, (float) MainConfig.getContagiousFleshDropChance(), (float) MainConfig.getContagiousFleshLootingBonus()))
                         .with(ItemEntry.builder(ContagionItems.CONTAGIOUS_FLESH))
                         .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f)).build());
                 tableBuilder.pool(poolBuilder.build());
@@ -34,7 +36,7 @@ public class ContagionLootTableModifiers {
             if (EntityType.DROWNED.getLootTableId() == id) {
                 LootPool.Builder poolBuilder = LootPool.builder()
                         .rolls(ConstantLootNumberProvider.create(1))
-                        .conditionally(RandomChanceWithEnchantedBonusLootCondition.builder(registries, 0.075f, 0.025f))
+                        .conditionally(RandomChanceWithEnchantedBonusLootCondition.builder(registries, (float) MainConfig.getContagiousFleshDropChance(), (float) MainConfig.getContagiousFleshLootingBonus()))
                         .with(ItemEntry.builder(ContagionItems.CONTAGIOUS_FLESH))
                         .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f)).build());
                 tableBuilder.pool(poolBuilder.build());
@@ -43,7 +45,7 @@ public class ContagionLootTableModifiers {
             if (EntityType.ZOMBIE_VILLAGER.getLootTableId() == id) {
                 LootPool.Builder poolBuilder = LootPool.builder()
                         .rolls(ConstantLootNumberProvider.create(1))
-                        .conditionally(RandomChanceWithEnchantedBonusLootCondition.builder(registries, 0.075f, 0.025f))
+                        .conditionally(RandomChanceWithEnchantedBonusLootCondition.builder(registries, (float) MainConfig.getContagiousFleshDropChance(), (float) MainConfig.getContagiousFleshLootingBonus()))
                         .with(ItemEntry.builder(ContagionItems.CONTAGIOUS_FLESH))
                         .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f)).build());
                 tableBuilder.pool(poolBuilder.build());
@@ -52,7 +54,7 @@ public class ContagionLootTableModifiers {
             if (EntityType.ZOMBIFIED_PIGLIN.getLootTableId() == id) {
                 LootPool.Builder poolBuilder = LootPool.builder()
                         .rolls(ConstantLootNumberProvider.create(1))
-                        .conditionally(RandomChanceWithEnchantedBonusLootCondition.builder(registries, 0.075f, 0.025f))
+                        .conditionally(RandomChanceWithEnchantedBonusLootCondition.builder(registries, (float) MainConfig.getContagiousFleshDropChance(), (float) MainConfig.getContagiousFleshLootingBonus()))
                         .with(ItemEntry.builder(ContagionItems.CONTAGIOUS_FLESH))
                         .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f)).build());
                 tableBuilder.pool(poolBuilder.build());
@@ -61,10 +63,42 @@ public class ContagionLootTableModifiers {
             if (EntityType.ZOGLIN.getLootTableId() == id) {
                 LootPool.Builder poolBuilder = LootPool.builder()
                         .rolls(ConstantLootNumberProvider.create(1))
-                        .conditionally(RandomChanceWithEnchantedBonusLootCondition.builder(registries, 0.075f, 0.025f))
+                        .conditionally(RandomChanceWithEnchantedBonusLootCondition.builder(registries, (float) MainConfig.getContagiousFleshDropChance(), (float) MainConfig.getContagiousFleshLootingBonus()))
                         .with(ItemEntry.builder(ContagionItems.CONTAGIOUS_FLESH))
                         .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f)).build());
                 tableBuilder.pool(poolBuilder.build());
+            }
+
+            if (ModCompatibility.undeadNightsDetected()) {
+                if (ModEntities.HORDE_ZOMBIE.getLootTableId() == id) {
+                    LootPool.Builder poolBuilder = LootPool.builder()
+                            .rolls(ConstantLootNumberProvider.create(1))
+                            .conditionally(RandomChanceWithEnchantedBonusLootCondition.builder(registries, (float) MainConfig.getContagiousFleshDropChance(), (float) MainConfig.getContagiousFleshLootingBonus()))
+                            .with(ItemEntry.builder(ContagionItems.CONTAGIOUS_FLESH))
+                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f)).build());
+
+                    tableBuilder.pool(poolBuilder.build());
+                }
+
+                if (ModEntities.ELITE_ZOMBIE.getLootTableId() == id) {
+                    LootPool.Builder poolBuilder = LootPool.builder()
+                            .rolls(ConstantLootNumberProvider.create(1))
+                            .conditionally(RandomChanceWithEnchantedBonusLootCondition.builder(registries, (float) MainConfig.getContagiousFleshDropChance(), (float) MainConfig.getContagiousFleshLootingBonus()))
+                            .with(ItemEntry.builder(ContagionItems.CONTAGIOUS_FLESH))
+                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f)).build());
+
+                    tableBuilder.pool(poolBuilder.build());
+                }
+
+                if (ModEntities.DEMOLITION_ZOMBIE.getLootTableId() == id) {
+                    LootPool.Builder poolBuilder = LootPool.builder()
+                            .rolls(ConstantLootNumberProvider.create(1))
+                            .conditionally(RandomChanceWithEnchantedBonusLootCondition.builder(registries, (float) MainConfig.getContagiousFleshDropChance(), (float) MainConfig.getContagiousFleshLootingBonus()))
+                            .with(ItemEntry.builder(ContagionItems.CONTAGIOUS_FLESH))
+                            .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f)).build());
+
+                    tableBuilder.pool(poolBuilder.build());
+                }
             }
         });
     }

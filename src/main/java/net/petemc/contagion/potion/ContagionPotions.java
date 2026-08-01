@@ -10,7 +10,7 @@ import net.minecraft.registry.Registry;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.Identifier;
 import net.petemc.contagion.Contagion;
-import net.petemc.contagion.config.ContagionConfig;
+import net.petemc.contagion.config.MainConfig;
 import net.petemc.contagion.effect.ContagionEffects;
 import net.petemc.contagion.item.ContagionItems;
 
@@ -23,8 +23,8 @@ public class ContagionPotions {
     }
 
     public static void registerPotions() {
-        CURE_POTION = registerPotion("cure_potion", new StatusEffectInstance(ContagionEffects.IMMUNITY, ContagionConfig.INSTANCE.immunityDuration *20, 0));
-        LONG_CURE_POTION = registerPotion("long_cure_potion", new StatusEffectInstance(ContagionEffects.IMMUNITY, ContagionConfig.INSTANCE.immunityDuration * 3 * 20, 0));
+        CURE_POTION = registerPotion("cure_potion", new StatusEffectInstance(ContagionEffects.IMMUNITY, MainConfig.getImmunityDuration() *20, 0));
+        LONG_CURE_POTION = registerPotion("long_cure_potion", new StatusEffectInstance(ContagionEffects.IMMUNITY, MainConfig.getImmunityDuration() * 3 * 20, 0));
         registerPotionRecipes();
     }
 
