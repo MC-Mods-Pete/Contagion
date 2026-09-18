@@ -77,8 +77,10 @@ public class MainConfig implements ConfigData
         }
     }
 
-    public static final double DEFAULT_CONTAGIOUS_FLESH_DROP_CHANCE = 0.075;
-    public static final double DEFAULT_CONTAGIOUS_FLESH_LOOTING_BONUS = 0.025;
+    @ConfigEntry.Gui.Excluded
+    private static final double DEFAULT_CONTAGIOUS_FLESH_DROP_CHANCE = 0.075;
+    @ConfigEntry.Gui.Excluded
+    private static final double DEFAULT_CONTAGIOUS_FLESH_LOOTING_BONUS = 0.025;
 
     @ConfigEntry.Gui.PrefixText
 
