@@ -8,6 +8,7 @@
 		"IronGolemEntityMixin",
 		"MilkBucketMixin",
 		"PlayerEntityMixin",
+        "VillagerEntityMixin",
 		"ZoglinEntityMixin",
 		"ZombieEntityMixin"
 	],

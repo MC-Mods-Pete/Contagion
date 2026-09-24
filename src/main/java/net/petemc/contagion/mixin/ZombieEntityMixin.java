@@ -11,6 +11,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.zombie.Zombie;
+import net.minecraft.world.entity.npc.villager.Villager;
 import net.minecraft.world.entity.player.Player;
 import net.petemc.contagion.config.MainConfig;
 import net.petemc.contagion.effect.ContagionEffects;
@@ -25,6 +26,16 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Zombie.class)
 public class ZombieEntityMixin {
+    @Inject(method = "finalizeSpawn", at = @At("TAIL"))
+    public void finalizeSpawn(CallbackInfoReturnable<LivingEntity> cir) {
+        if (MainConfig.isAllowZombiesToSpawnInfectious()) {
+            Zombie zombie = (Zombie) (Object) this;
+            if (zombie.getRandom().nextIntBetweenInclusive(1, 1000) <= MainConfig.getChanceForZombieToSpawnInfectious()) {
+                zombie.addEffect(new MobEffectInstance(ContagionEffects.INFECTIOUS, 600 * 20 ,0));
+            }
+        }
+    }
+
     @Inject(method = "doHurtTarget", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/level/ServerLevel;getCurrentDifficultyAt(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/DifficultyInstance;", shift = At.Shift.BEFORE))
     public void doHurtTarget(ServerLevel level, Entity target, CallbackInfoReturnable<Boolean> cir) {
         if (target instanceof ServerPlayer pPlayer) {
@@ -33,13 +44,25 @@ public class ZombieEntityMixin {
             if (randomValue > effectiveInfectChance) {
                 if (!pPlayer.hasEffect(ContagionEffects.INFECTION)) {
                     if (pPlayer.hasEffect(ContagionEffects.IMMUNITY)) {
-                        level.playSound((Player) null, pPlayer.getX(), pPlayer.getY(), pPlayer.getZ(), ContagionSounds.INFECTION_PREVENTED.get(), SoundSource.BLOCKS, 1.0F, 3);
+                        pPlayer.level().playSound((Player) null, pPlayer.getX(), pPlayer.getY(), pPlayer.getZ(), ContagionSounds.INFECTION_PREVENTED.get(), SoundSource.BLOCKS, 1.0F, 3);
                     } else {
-                        if (!level.isClientSide()) {
+                        if (!pPlayer.level().isClientSide()) {
                             pPlayer.addEffect(new MobEffectInstance(ContagionEffects.INFECTION, MainConfig.getInfectionDuration() * 20, 0));
                             ContagionInfectionEffect.resetValues(pPlayer);
                             pPlayer.sendSystemMessage(Component.translatable("effect.contagion.infected_msg").withStyle(Style.EMPTY.withColor(ChatFormatting.RED)));
                         }
+                    }
+                }
+            }
+        } else if (target instanceof Villager villagerTarget) {
+            if (!MainConfig.isAllowZombiesToInfectVillagers()) return;
+            int randomValue = RandomSource.create().nextIntBetweenInclusive(1, 100);
+            int effectiveInfectChance = getEffectiveInfectChance(villagerTarget);
+            if (randomValue > effectiveInfectChance) {
+                if (!villagerTarget.hasEffect(ContagionEffects.INFECTION)) {
+                    if (!villagerTarget.level().isClientSide()) {
+                        villagerTarget.addEffect(new MobEffectInstance(ContagionEffects.INFECTION, MainConfig.getInfectionDuration() * 20, 0));
+                        ContagionInfectionEffect.resetValues(villagerTarget);
                     }
                 }
             }

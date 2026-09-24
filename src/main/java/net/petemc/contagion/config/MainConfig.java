@@ -13,7 +13,7 @@ import net.petemc.contagion.potion.ContagionPotions;
 @EventBusSubscriber(modid = Contagion.MOD_ID)
 public class MainConfig
 {
-    // Getter
+    // Getter for all config values
     public static int getInfectionDuration() { return infectionDuration; }
     public static int getBaseInfectionChance() { return baseInfectionChance; }
     public static int getMinimumInfectionChance() { return minimumInfectionChance; }
@@ -21,17 +21,36 @@ public class MainConfig
     public static boolean isEnableRandomSymptoms() { return enableRandomSymptoms; }
     public static int getRandomSymptomsDuration() { return randomSymptomsDuration; }
     public static int getRandomSymptomsChance() { return randomSymptomsChance; }
+    public static boolean isInfiniteWeaknessAndSlowness() {return infiniteWeaknessAndSlowness; }
     public static int getImmunityDuration() { return immunityDuration; }
     public static boolean isMilkCuresInfection() { return milkCuresInfection; }
     public static boolean isTotemPreventsDyingFromInfection() { return totemPreventsDyingFromInfection; }
     public static boolean isIronGolemAttacksInfected() { return ironGolemAttacksInfected; }
-    public static boolean isInfectedPlayerInfectsPlayers() { return infectedPlayerInfectsPlayers; }
+    public static boolean isAllowPlayersToInfectPlayers() { return allowPlayersToInfectPlayers; }
+    public static boolean isAllowPlayersToInfectVillagers() { return allowPlayersToInfectVillagers; }
+    public static boolean isAllowZombiesToInfectVillagers() { return allowZombiesToInfectVillagers; }
+    public static boolean isVillagerZombieConversion() { return villagerZombieConversion; }
+    public static boolean isEnableAirborneInfection() { return enableAirborneInfection; }
+    public static boolean isAllowAirborneInfectionForVillagers() { return allowAirborneInfectionForVillagers; }
+    public static boolean isVillagerFleeFromInfectiousEntities() { return villagerFleeFromInfectiousEntities; }
+    public static boolean isAllowZombiesToSpawnInfectious() { return allowZombiesToSpawnInfectious; }
+    public static int getChanceForZombieToSpawnInfectious() { return chanceForZombieToSpawnInfectious; }
+    public static int getAirborneInfectionRadius() { return airborneInfectionRadius; }
+    public static int getAirborneMaxChance() { return airborneMaxChance; }
+    public static boolean isGoldenAppleCuresInfection() { return goldenAppleCuresInfection; }
+    public static boolean isEnchantedGoldenAppleCuresInfection() { return enchantedGoldenAppleCuresInfection; }
+    public static double getContagiousFleshDropChance() { return contagiousFleshDropChance; }
+    public static double getContagiousFleshLootingBonus() { return contagiousFleshLootingBonus; }
+    public static boolean isEnableDebugMessages() { return enableDebugMessages; }
     public static boolean isDisplayCurrentInfectionProtection() { return displayCurrentInfectionProtection; }
     public static int getDeltaX() { return deltaX; }
     public static int getDeltaY() { return deltaY; }
 
+
     // Server Config
     private static final ModConfigSpec.Builder BUILDER_SERVER = new ModConfigSpec.Builder();
+    public static final double DEFAULT_CONTAGIOUS_FLESH_DROP_CHANCE = 0.075;
+    public static final double DEFAULT_CONTAGIOUS_FLESH_LOOTING_BONUS = 0.025;
 
     private static final ModConfigSpec.IntValue INFECTION_DURATION = BUILDER_SERVER
             .comment("Infection duration")
@@ -61,6 +80,10 @@ public class MainConfig
             .comment("Chance for a random symptom to occur when infected")
             .defineInRange("randomSymptomsChance", 3, 0, 100);
 
+    private static final ModConfigSpec.BooleanValue INFINITE_WEAKNESS_AND_SLOWNESS = BUILDER_SERVER
+            .comment("If true, the random effects weakness and slowness effects will last until the infection is cured or drinking milk")
+            .define("infiniteWeaknessAndSlowness", false);
+
     private static final ModConfigSpec.IntValue IMMUNITY_DURATION = BUILDER_SERVER
             .comment("Time the immunity from new infections will last")
             .defineInRange("immunityDuration", 120, 0, Integer.MAX_VALUE);
@@ -70,21 +93,81 @@ public class MainConfig
             .define("milkCuresInfection", false);
 
     private static final ModConfigSpec.BooleanValue TOTEM_PREVENTS_DYING_FROM_INFECTION = BUILDER_SERVER
-            .comment("If false, holding a totem will not prevent the player from dying when the infection timer runs out")
+            .comment("If true, holding a totem prevents the player from dying when the infection timer expires | default: true")
             .define("totemPreventsDyingFromInfection", true);
 
     private static final ModConfigSpec.BooleanValue IRON_GOLEM_ATTACKS_INFECTED = BUILDER_SERVER
             .comment("If true, Iron Golems will attack infected players")
             .define("ironGolemAttacksInfected", false);
 
-    private static final ModConfigSpec.BooleanValue INFECTED_PLAYER_INFECTS_PLAYERS = BUILDER_SERVER
+    private static final ModConfigSpec.BooleanValue ALLOW_PLAYERS_TO_INFECT_PLAYERS = BUILDER_SERVER
             .comment("If true, infected players can infect other players by attacking them")
-            .define("infectedPlayerInfectsPlayers", false);
+            .define("allowPlayersToInfectPlayers", false);
+
+    private static final ModConfigSpec.BooleanValue ALLOW_PLAYERS_TO_INFECT_VILLAGERS = BUILDER_SERVER
+            .comment("If true, infected players can infect Villagers by attacking them")
+            .define("allowPlayersToInfectVillagers", false);
+
+    private static final ModConfigSpec.BooleanValue ALLOW_ZOMBIES_TO_INFECT_VILLAGERS = BUILDER_SERVER
+            .comment("If true, Zombies can infect Villagers by attacking them")
+            .define("allowZombiesToInfectVillagers", false);
+
+    private static final ModConfigSpec.BooleanValue VILLAGER_ZOMBIE_CONVERSION = BUILDER_SERVER
+            .comment("If true, an infected Villager will convert into a Zombie Entity when it dies from the infection")
+            .define("villagerZombieConversion", true);
+
+    private static final ModConfigSpec.BooleanValue ENABLE_AIRBORNE_INFECTION = BUILDER_SERVER
+            .comment("If true, enables airborne (aerosol) transmission of infection between nearby players")
+            .define("enableAirborneInfection", false);
+
+    private static final ModConfigSpec.BooleanValue ALLOW_AIRBORNE_INFECTION_FOR_VILLAGERS = BUILDER_SERVER
+            .comment("If true, Villages are also able to transmit and receive the infection via airborne (aerosol) transmission")
+            .define("allowAirborneInfectionForVillagers", false);
+
+    private static final ModConfigSpec.BooleanValue VILLAGER_FLEE_FROM_INFECTIOUS_ENTITIES = BUILDER_SERVER
+            .comment("If true, Villagers flee from infectious entities")
+            .define("villagerFleeFromInfectiousEntities", true);
+
+    private static final ModConfigSpec.BooleanValue ALLOW_ZOMBIES_TO_SPAWN_INFECTIOUS = BUILDER_SERVER
+            .comment("If true, Zombies will spawn with the infectious effect (as Spreaders)")
+            .define("allowZombiesToSpawnInfectious", false);
+
+    private static final ModConfigSpec.IntValue CHANCE_FOR_ZOMBIE_TO_SPAWN_INFECTIOUS = BUILDER_SERVER
+            .comment("Chance (X in 1000) for a Zombie to spawn with the infectious effect (as Spreaders)")
+            .defineInRange("chanceForZombieToSpawnInfectious", 155, 1, 1000);
+
+    private static final ModConfigSpec.IntValue AIRBORNE_INFECTION_RADIUS = BUILDER_SERVER
+            .comment("Maximum radius (in blocks) for aerosol transmission of infection via breathing/spores (default: 6, min: 1)")
+            .defineInRange("airborneInfectionRadius", 6, 1, Integer.MAX_VALUE);
+
+    private static final ModConfigSpec.IntValue AIRBORNE_MAX_CHANCE = BUILDER_SERVER
+            .comment("Maximum infection chance at (directly adjacent a spreader) for aerosol transmission (default: 50, range: 0-100)")
+            .defineInRange("airborneMaxChance", 50, 0, 100);
+
+    private static final ModConfigSpec.DoubleValue CONTAGIOUS_FLESH_DROP_CHANCE = BUILDER_SERVER
+            .comment("Base drop chance for Contagious Flesh from zombie-type mobs (0.0 to 1.0)")
+            .defineInRange("contagiousFleshDropChance", DEFAULT_CONTAGIOUS_FLESH_DROP_CHANCE, 0.0, 1.0);
+
+    private static final ModConfigSpec.DoubleValue CONTAGIOUS_FLESH_LOOTING_BONUS = BUILDER_SERVER
+            .comment("Looting bonus for Contagious Flesh drops per Looting level (0.0 to 1.0)")
+            .defineInRange("contagiousFleshLootingBonus", DEFAULT_CONTAGIOUS_FLESH_LOOTING_BONUS, 0.0, 1.0);
+
+    private static final ModConfigSpec.BooleanValue GOLDEN_APPLE_CURES_INFECTION = BUILDER_SERVER
+            .comment("If true, eating a golden apple will cure the player's infection")
+            .define("goldenAppleCuresInfection", false);
+
+    private static final ModConfigSpec.BooleanValue ENCHANTED_GOLDEN_APPLE_CURES_INFECTION = BUILDER_SERVER
+            .comment("If true, eating an enchanted golden apple (god apple) will cure the player's infection")
+            .define("enchantedGoldenAppleCuresInfection", false);
+
+    private static final ModConfigSpec.BooleanValue ENABLE_DEBUG_MESSAGES = BUILDER_SERVER
+            .comment("If true, writes debug messages to the log")
+            .define("enableDebugMessages", false);
 
     public static final ModConfigSpec SPEC_SERVER = BUILDER_SERVER.build();
 
 
-    // Server Config
+    // Client Config
     private static final ModConfigSpec.Builder BUILDER_CLIENT = new ModConfigSpec.Builder();
 
     private static final ModConfigSpec.BooleanValue DISPLAY_CURRENT_INFECTION_PROTECTION = BUILDER_CLIENT
@@ -109,11 +192,27 @@ public class MainConfig
     private static boolean enableRandomSymptoms;
     private static int randomSymptomsDuration;
     private static int randomSymptomsChance;
+    private static boolean infiniteWeaknessAndSlowness;
     private static int immunityDuration;
     private static boolean milkCuresInfection;
     private static boolean totemPreventsDyingFromInfection;
     private static boolean ironGolemAttacksInfected;
-    private static boolean infectedPlayerInfectsPlayers;
+    private static boolean allowPlayersToInfectPlayers;
+    private static boolean allowPlayersToInfectVillagers;
+    private static boolean allowZombiesToInfectVillagers;
+    private static boolean villagerZombieConversion;
+    private static boolean enableAirborneInfection;
+    private static boolean allowAirborneInfectionForVillagers;
+    private static boolean villagerFleeFromInfectiousEntities;
+    private static boolean allowZombiesToSpawnInfectious;
+    private static int chanceForZombieToSpawnInfectious;
+    private static int airborneInfectionRadius;
+    private static int airborneMaxChance;
+    private static double contagiousFleshDropChance = DEFAULT_CONTAGIOUS_FLESH_DROP_CHANCE;
+    private static double contagiousFleshLootingBonus = DEFAULT_CONTAGIOUS_FLESH_LOOTING_BONUS;
+    private static boolean goldenAppleCuresInfection;
+    private static boolean enchantedGoldenAppleCuresInfection;
+    private static boolean enableDebugMessages;
     private static boolean displayCurrentInfectionProtection;
     private static int deltaX;
     private static int deltaY;
@@ -130,6 +229,7 @@ public class MainConfig
             enableRandomSymptoms = ENABLE_RANDOM_SYMPTOMS.get();
             randomSymptomsDuration = RANDOM_SYMPTOMS_DURATION.get();
             randomSymptomsChance = RANDOM_SYMPTOMS_CHANCE.get();
+            infiniteWeaknessAndSlowness = INFINITE_WEAKNESS_AND_SLOWNESS.get();
 
             immunityDuration = IMMUNITY_DURATION.get();
             // update cure potions with immunity value loaded from config file
@@ -141,7 +241,22 @@ public class MainConfig
             milkCuresInfection = MILK_CURES_INFECTION.get();
             totemPreventsDyingFromInfection = TOTEM_PREVENTS_DYING_FROM_INFECTION.get();
             ironGolemAttacksInfected = IRON_GOLEM_ATTACKS_INFECTED.get();
-            infectedPlayerInfectsPlayers = INFECTED_PLAYER_INFECTS_PLAYERS.get();
+            allowPlayersToInfectPlayers = ALLOW_PLAYERS_TO_INFECT_PLAYERS.get();
+            allowPlayersToInfectVillagers = ALLOW_PLAYERS_TO_INFECT_VILLAGERS.get();
+            allowZombiesToInfectVillagers = ALLOW_ZOMBIES_TO_INFECT_VILLAGERS.get();
+            villagerZombieConversion = VILLAGER_ZOMBIE_CONVERSION.get();
+            enableAirborneInfection = ENABLE_AIRBORNE_INFECTION.get();
+            allowAirborneInfectionForVillagers = ALLOW_AIRBORNE_INFECTION_FOR_VILLAGERS.get();
+            villagerFleeFromInfectiousEntities = VILLAGER_FLEE_FROM_INFECTIOUS_ENTITIES.get();
+            allowZombiesToSpawnInfectious = ALLOW_ZOMBIES_TO_SPAWN_INFECTIOUS.get();
+            chanceForZombieToSpawnInfectious = CHANCE_FOR_ZOMBIE_TO_SPAWN_INFECTIOUS.get();
+            airborneInfectionRadius = AIRBORNE_INFECTION_RADIUS.get();
+            airborneMaxChance = AIRBORNE_MAX_CHANCE.get();
+            contagiousFleshDropChance = CONTAGIOUS_FLESH_DROP_CHANCE.get();
+            contagiousFleshLootingBonus = CONTAGIOUS_FLESH_LOOTING_BONUS.get();
+            goldenAppleCuresInfection = GOLDEN_APPLE_CURES_INFECTION.get();
+            enchantedGoldenAppleCuresInfection = ENCHANTED_GOLDEN_APPLE_CURES_INFECTION.get();
+            enableDebugMessages = ENABLE_DEBUG_MESSAGES.get();
 
             // update CONTAGIOUS_FLESH infection effect with duration loaded from config file
             ContagionConsumables.CONTAGIOUS_FLESH_INFECTION_EFFECT.update(
