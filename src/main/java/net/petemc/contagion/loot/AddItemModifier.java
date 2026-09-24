@@ -24,6 +24,7 @@ import net.petemc.contagion.config.MainConfig;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Supplier;
 
 public class AddItemModifier extends LootModifier {
@@ -37,8 +38,8 @@ public class AddItemModifier extends LootModifier {
     private final Item item;
     private final List<Holder<LootItemFunction>> functions;
 
-    public AddItemModifier(LootItemCondition[] conditionsIn, int priority, Item item, List<Holder<LootItemFunction>> functions) {
-        super(conditionsIn, priority);
+    public AddItemModifier(Optional<Holder<LootItemCondition>> condition, int priority, Item item, List<Holder<LootItemFunction>> functions) {
+        super(condition, priority);
         this.item = item;
         this.functions = functions;
     }
@@ -68,7 +69,7 @@ public class AddItemModifier extends LootModifier {
     }
 
     private static int getLootingLevel(LootContext context) {
-        if (!(context.getParameter(LootContextParams.ATTACKING_ENTITY) instanceof LivingEntity attackingEntity)) {
+        if (!(context.getOptional(LootContextParams.ATTACKING_ENTITY) instanceof LivingEntity attackingEntity)) {
             return 0;
         }
 

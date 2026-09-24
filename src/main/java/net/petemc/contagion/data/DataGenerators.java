@@ -23,7 +23,7 @@ public class DataGenerators {
             generator.addProvider(true, new ModWorldGenProvider(output, event.getLookupProvider()));
             generator.addProvider(true, new MainModRecipeProvider(generator, event.getLookupProvider()));
  */
-            generator.addProvider(true, new ModGlobalLootModifiersProvider(output, event.getLookupProvider()));
+            generator.addProvider(true, new ModGlobalLootModifiersProvider(output, event.getWorldLookupProvider()));
         } catch (RuntimeException e) {
             Contagion.LOGGER.error("Failed to gather data", e);
         }
