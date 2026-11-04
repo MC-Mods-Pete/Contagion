@@ -57,7 +57,7 @@ public class Contagion {
 		// Register the item to a creative tab
 		modEventBus.addListener(this::addCreative);
 		// Register our mod's ModConfigSpec so that FML can create and load the config file for us
-		modContainer.registerConfig(ModConfig.Type.SERVER, MainConfig.SPEC_SERVER);
+		modContainer.registerConfig(ModConfig.Type.SYNCED, MainConfig.SPEC_SERVER);
 		modContainer.registerConfig(ModConfig.Type.CLIENT, MainConfig.SPEC_CLIENT);
 	}
 

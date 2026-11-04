@@ -31,7 +31,7 @@ public class ModEvents {
      */
     @SubscribeEvent
     public static void onInfectionEffectRemoved(MobEffectEvent.Remove event) {
-        if (event.getEffect() instanceof ContagionInfectionEffect) {
+        if (event.getEffect().value() instanceof ContagionInfectionEffect) {
             LivingEntity entity = event.getEntity();
             ContagionInfectionEffect.resetValues(entity);
         }
