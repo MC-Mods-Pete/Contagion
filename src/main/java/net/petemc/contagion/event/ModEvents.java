@@ -36,43 +36,4 @@ public class ModEvents {
             ContagionInfectionEffect.resetValues(entity);
         }
     }
-
-    /*
-    @SubscribeEvent
-    public static void addContagiousFleshDropsToHordeZombies(LootTableLoadEvent event) {
-        if (ModCompatibility.undeadNightsDetected()) {
-
-            if (ModEntities.HORDE_ZOMBIE.get().getDefaultLootTable().registry() == event.getTable().getLootTableId()) {
-                LootPool.Builder poolBuilder = LootPool.lootPool()
-                        .setRolls(ConstantValue.exactly(1))
-                        .when(LootItemRandomChanceWithEnchantedBonusCondition.randomChanceAndLootingBoost(event.getRegistries(), 0.075f, 0.025f))
-                        .add(LootItem.lootTableItem(ContagionItems.CONTAGIOUS_FLESH))
-                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0f, 2.0f)));
-                event.setTable(LootTable.lootTable().withPool(poolBuilder).build());
-            }
-
-            if (ModEntities.ELITE_ZOMBIE.get().getDefaultLootTable().isPresent()) {
-                if (ModEntities.ELITE_ZOMBIE.get().getDefaultLootTable().get() == event.getKey()) {
-                    LootPool.Builder poolBuilder = LootPool.lootPool()
-                            .setRolls(ConstantValue.exactly(1))
-                            .when(LootItemRandomChanceWithEnchantedBonusCondition.randomChanceAndLootingBoost(event.getRegistries(), 0.075f, 0.025f))
-                            .add(LootItem.lootTableItem(ContagionItems.CONTAGIOUS_FLESH))
-                            .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0f, 2.0f)));
-                    event.setTable(LootTable.lootTable().withPool(poolBuilder).build());
-                }
-            }
-
-            if (ModEntities.DEMOLITION_ZOMBIE.get().getDefaultLootTable().isPresent()) {
-                if (ModEntities.DEMOLITION_ZOMBIE.get().getDefaultLootTable().get() == event.getKey()) {
-                    LootPool.Builder poolBuilder = LootPool.lootPool()
-                            .setRolls(ConstantValue.exactly(1))
-                            .when(LootItemRandomChanceWithEnchantedBonusCondition.randomChanceAndLootingBoost(event.getRegistries(), 0.075f, 0.025f))
-                            .add(LootItem.lootTableItem(ContagionItems.CONTAGIOUS_FLESH))
-                            .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0f, 2.0f)));
-                    event.setTable(LootTable.lootTable().withPool(poolBuilder).build());
-                }
-            }
-        }
-    }
- */
 }
