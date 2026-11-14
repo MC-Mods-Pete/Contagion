@@ -33,6 +33,8 @@ public class MainConfig
     public static boolean isAllowAirborneInfectionForVillagers() { return allowAirborneInfectionForVillagers; }
     public static boolean isVillagerFleeFromInfectiousEntities() { return villagerFleeFromInfectiousEntities; }
     public static boolean isAllowZombiesToSpawnInfectious() { return allowZombiesToSpawnInfectious; }
+    public static boolean isInfectiousModCompat() { return infectiousModCompat; }
+    public static boolean isMutantsZombiesModCompat() { return mutantsZombiesModCompat; }
     public static int getChanceForZombieToSpawnInfectious() { return chanceForZombieToSpawnInfectious; }
     public static int getAirborneInfectionRadius() { return airborneInfectionRadius; }
     public static int getAirborneMaxChance() { return airborneMaxChance; }
@@ -130,6 +132,14 @@ public class MainConfig
             .comment("If true, Zombies will spawn with the infectious effect (as Spreaders)")
             .define("allowZombiesToSpawnInfectious", false);
 
+    private static final ForgeConfigSpec.BooleanValue INFECTIOUS_MOD_COMPAT = BUILDER_SERVER
+            .comment("If true, zombie mobs from Infectious mod can give the player the Contagion infection")
+            .define("infectiousModCompat", false);
+
+    private static final ForgeConfigSpec.BooleanValue MUTANTS_ZOMBIES_MOD_COMPAT = BUILDER_SERVER
+            .comment("If true, zombie mobs from Mutant Zombies Mod can give the player the Contagion infection")
+            .define("mutantsZombiesModCompat", true);
+
     private static final ForgeConfigSpec.IntValue CHANCE_FOR_ZOMBIE_TO_SPAWN_INFECTIOUS = BUILDER_SERVER
             .comment("Chance (X in 1000) for a Zombie to spawn with the infectious effect (as Spreaders)")
             .defineInRange("chanceForZombieToSpawnInfectious", 155, 1, 1000);
@@ -203,6 +213,8 @@ public class MainConfig
     private static boolean allowAirborneInfectionForVillagers;
     private static boolean villagerFleeFromInfectiousEntities;
     private static boolean allowZombiesToSpawnInfectious;
+    private static boolean infectiousModCompat;
+    private static boolean mutantsZombiesModCompat;
     private static int chanceForZombieToSpawnInfectious;
     private static int airborneInfectionRadius;
     private static int airborneMaxChance;
@@ -247,6 +259,8 @@ public class MainConfig
             allowAirborneInfectionForVillagers = ALLOW_AIRBORNE_INFECTION_FOR_VILLAGERS.get();
             villagerFleeFromInfectiousEntities = VILLAGER_FLEE_FROM_INFECTIOUS_ENTITIES.get();
             allowZombiesToSpawnInfectious = ALLOW_ZOMBIES_TO_SPAWN_INFECTIOUS.get();
+            infectiousModCompat = INFECTIOUS_MOD_COMPAT.get();
+            mutantsZombiesModCompat = MUTANTS_ZOMBIES_MOD_COMPAT.get();
             chanceForZombieToSpawnInfectious = CHANCE_FOR_ZOMBIE_TO_SPAWN_INFECTIOUS.get();
             airborneInfectionRadius = AIRBORNE_INFECTION_RADIUS.get();
             airborneMaxChance = AIRBORNE_MAX_CHANCE.get();

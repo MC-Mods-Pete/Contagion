@@ -17,6 +17,7 @@ import net.petemc.contagion.casts.InfectedEntity;
 import net.petemc.contagion.config.MainConfig;
 import net.petemc.contagion.effect.ContagionEffects;
 import net.petemc.contagion.effect.ContagionInfectionEffect;
+import net.petemc.contagion.util.ModCompatibility;
 
 /**
  * Handles Aerosol Transmission of infection from infected Players and Villagers.
@@ -59,7 +60,10 @@ public class AerosolTransmissionEvent {
                 entityId, tickCount, (tickCount + entityId) % TICK_INTERVAL);
         }
 
-        if (!(source instanceof ServerPlayer || source instanceof Villager || source instanceof Zombie)) {
+        boolean flag = ModCompatibility.isMobHasMutantsAndZombiesZombieId(source);
+        boolean flag2 = ModCompatibility.isMobHasInfectiousZombieId(source);
+
+        if (!(source instanceof ServerPlayer || source instanceof Villager || source instanceof Zombie || flag || flag2)) {
             return;
         }
 
@@ -119,6 +123,10 @@ public class AerosolTransmissionEvent {
                 continue;
             }
 
+            if (target.hasEffect(ContagionEffects.AEROSOL_PROTECTION.get())) {
+                continue;
+            }
+
             float roll = serverLevel.getRandom().nextFloat();
             if (roll < prob) {
                 debugLog("-> INFECTING player '{}'! pos={}/{} prob={} distSq={}", 
@@ -152,6 +160,10 @@ public class AerosolTransmissionEvent {
             }
 
             if (target.hasEffect(ContagionEffects.IMMUNITY.get())) {
+                continue;
+            }
+
+            if (target.hasEffect(ContagionEffects.AEROSOL_PROTECTION.get())) {
                 continue;
             }
 

@@ -7,6 +7,7 @@
  	"mixins": [
  		"InfectedPlayerAttackMixin",
  		"IronGolemEntityMixin",
+		"MobMixin",
  		"PlayerEntityMixin",
         "VillagerEntityMixin",
  		"ZoglinEntityMixin",

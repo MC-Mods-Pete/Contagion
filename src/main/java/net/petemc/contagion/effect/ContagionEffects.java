@@ -24,6 +24,9 @@ public class ContagionEffects {
     public static final RegistryObject<MobEffect> INFECTIOUS = MOB_EFFECTS.register("infectious",
             () -> new ContagionInfectiousEffect(MobEffectCategory.HARMFUL, 0xAA0000));
 
+    public static final RegistryObject<MobEffect> AEROSOL_PROTECTION = MOB_EFFECTS.register("aerosol_protection",
+            () -> new ContagionAerosolProtectionEffect(MobEffectCategory.BENEFICIAL, 0x87CEEB));
+
     public static void register(IEventBus eventBus) {
         MOB_EFFECTS.register(eventBus);
     }
