@@ -1,6 +1,5 @@
 package net.petemc.contagion.mixin;
 
-
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
@@ -37,9 +36,9 @@ public abstract class ZoglinEntityMixin {
                 if (randomValue > effectiveInfectChance) {
                     if (!pPlayer.hasEffect(ContagionEffects.INFECTION)) {
                         if (pPlayer.hasEffect(ContagionEffects.IMMUNITY)) {
-                            level.playSound(null, pPlayer.getX(), pPlayer.getY(), pPlayer.getZ(), ContagionSounds.INFECTION_PREVENTED.get(), SoundSource.BLOCKS, 1.0F, 3);
+                            pPlayer.level().playSound(null, pPlayer.getX(), pPlayer.getY(), pPlayer.getZ(), ContagionSounds.INFECTION_PREVENTED.get(), SoundSource.BLOCKS, 1.0F, 3);
                         } else {
-                            if (!level.isClientSide()) {
+                            if (!pPlayer.level().isClientSide()) {
                                 pPlayer.addEffect(new MobEffectInstance(ContagionEffects.INFECTION, MainConfig.getInfectionDuration() * 20, 0));
                                 ContagionInfectionEffect.resetValues(pPlayer);
                                 pPlayer.sendSystemMessage(Component.translatable("effect.contagion.infected_msg").withStyle(Style.EMPTY.withColor(ChatFormatting.RED)));
