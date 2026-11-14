@@ -16,6 +16,7 @@ import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import net.petemc.contagion.client.ProtectionHudOverlay;
 import net.petemc.contagion.damage_type.ContagionDamageTypes;
+import net.petemc.contagion.data.DataGenerators;
 import net.petemc.contagion.effect.ContagionEffects;
 import net.petemc.contagion.item.ContagionCreativeModeTabs;
 import net.petemc.contagion.item.ContagionItems;

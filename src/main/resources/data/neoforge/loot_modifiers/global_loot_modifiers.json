@@ -1,9 +1,12 @@
 {
   "entries": [
+    "contagion:contagious_flesh_item_from_horde_zombie",
     "contagion:contagious_flesh_item_from_drowned",
     "contagion:contagious_flesh_item_from_zombie",
     "contagion:contagious_flesh_item_from_zombie_villager",
     "contagion:contagious_flesh_item_from_husk",
+    "contagion:contagious_flesh_item_from_elite_zombie",
+    "contagion:contagious_flesh_item_from_demolition_zombie",
     "contagion:contagious_flesh_item_from_zombified_piglin",
     "contagion:contagious_flesh_item_from_zoglin"
   ],
