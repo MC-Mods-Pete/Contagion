@@ -12,8 +12,8 @@ import net.petemc.contagion.client.ProtectionHudOverlay;
 import net.petemc.contagion.effect.ContagionEffects;
 import org.jetbrains.annotations.NotNull;
 
-@EventBusSubscriber (value = Dist.CLIENT, modid = Contagion.MOD_ID)
-public class ContagionEventsClient {
+@EventBusSubscriber(value = Dist.CLIENT, modid = Contagion.MOD_ID)
+public class ClientEvents {
     @SubscribeEvent
     public static void registerGuiOverlays(RenderGuiEvent.Pre event) {
         ProtectionHudOverlay.HUD_INSTANCE.render(event.getGuiGraphics(), event.getPartialTick());
@@ -34,7 +34,7 @@ public class ContagionEventsClient {
         }
     }
 
-    private static int getEffectiveInfectProtection(@NotNull Player clientPlayerEntity) {
+   private static int getEffectiveInfectProtection(@NotNull Player clientPlayerEntity) {
         int effectInfectProtection;
         if (ProtectionHudOverlay.receivedBaseInfectionChance > 100) {
             effectInfectProtection = 0;
